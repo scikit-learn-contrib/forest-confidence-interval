@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
