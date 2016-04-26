@@ -4,8 +4,8 @@ import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
 import sklearn.cross_validation as xval
-from skltreeci import (random_forest_error, calc_inbag, _core_computation,
-                       _bias_correction)
+from sklforestci import (random_forest_error, calc_inbag, _core_computation,
+                         _bias_correction)
 
 
 def test_core_computation():
