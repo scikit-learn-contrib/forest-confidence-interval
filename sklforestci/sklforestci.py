@@ -96,7 +96,6 @@ def random_forest_error(forest, inbag, X_train, X_test):
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
     n_trees = forest.n_estimators
-    n_train_samples = inbag.shape[0]
     V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
     return V_IJ_unbiased
