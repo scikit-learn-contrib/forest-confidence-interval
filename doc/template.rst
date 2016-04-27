@@ -1,7 +1,7 @@
-Template
+sklforestci
 ========
 
 The documentation of the template module.
 
-.. automodule:: skltemplate.template
+.. automodule:: sklforestci
    :members:

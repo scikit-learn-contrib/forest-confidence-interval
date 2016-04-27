@@ -2,16 +2,16 @@ machine:
   environment:
     # The github organization or username of the repository which hosts the
     # project and documentation.
-    USERNAME: "scikit-learn-contrib"
+    USERNAME: "uwescience"
 
     # The repository where the documentation will be hosted
-    DOC_REPO: "project-template"
+    DOC_REPO: "sklearn-forest-ci"
 
     # The base URL for the Github page where the documentation will be hosted
     DOC_URL: ""
 
     # The email is to be used for commits in the Github Page
-    EMAIL: "vnb222+ci@nyu.edu"
+    EMAIL: "arokem+ci@uw.edu"
 
 dependencies:
 
@@ -50,7 +50,7 @@ general:
   artifacts:
     - "doc/_build/html"
     - "~/log.txt"
-  # Restric the build to the branch master only
+  # Restrict the build to the branch master only
   branches:
     ignore:
        - gh-pages
