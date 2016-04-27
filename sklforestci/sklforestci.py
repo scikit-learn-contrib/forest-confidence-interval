@@ -1,6 +1,9 @@
 import numpy as np
 from sklearn.ensemble.forest import _generate_sample_indices
 
+__all__ = ["calc_inbag", "random_forest_error", "_bias_correction",
+           "_core_computation"]
+
 
 def calc_inbag(n_samples, forest):
     """
