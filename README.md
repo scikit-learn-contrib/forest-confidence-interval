@@ -1,4 +1,4 @@
-#project-template - A template for scikit-learn extensions
+# `sklearn-forest-ci`: Confidence intervals for Forest algorithms
 
 [![Travis Status](https://travis-ci.org/uwescience/sklearn-forest-ci.svg?branch=master)](https://travis-ci.org/uwescience/sklearn-forest-ci)
 [![Coveralls Status](https://coveralls.io/repos/uwescience/sklearn-forest-ci/badge.svg?branch=master&service=github)](https://coveralls.io/r/uwescience/sklearn-forest-ci)
