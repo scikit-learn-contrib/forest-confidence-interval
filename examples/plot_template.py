@@ -1,17 +1,16 @@
 """
 ===========================
-Plotting Template Estimator
+Plotting something
 ===========================
 
-An example plot of TemplateEstimator
+An example plot
+
 """
 import numpy as np
-from skltemplate import TemplateEstimator
+from sklforestci import calc_inbag, random_forest_error
 from matplotlib import pyplot as plt
 
 X = np.arange(100).reshape(100, 1)
-y = np.zeros((100, ))
-estimator = TemplateEstimator()
-estimator.fit(X, y)
-plt.plot(estimator.predict(X))
+y = np.random.randn((100, ))
+plt.plot(x, y)
 plt.show()
