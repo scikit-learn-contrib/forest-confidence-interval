@@ -1,8 +1,8 @@
 #project-template - A template for scikit-learn extensions
 
-[![Travis Status](https://travis-ci.org/scikit-learn-contrib/project-template.svg?branch=master)](https://travis-ci.org/scikit-learn-contrib/project-template)
-[![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/project-template/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/project-template)
-[![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/project-template.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/project-template/tree/master)
+[![Travis Status](https://travis-ci.org/uwescience/sklearn-forest-ci.svg?branch=master)](https://travis-ci.org/uwescience/sklearn-forest-ci)
+[![Coveralls Status](https://coveralls.io/repos/uwescience/sklearn-forest-ci/badge.svg?branch=master&service=github)](https://coveralls.io/r/uwescience/sklearn-forest-ci)
+[![CircleCI Status](https://circleci.com/gh/uwescience/sklearn-forest-ci.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/uwescience/sklearn-forest-ci/tree/master)
 
 **project-template** is a template project for
 [scikit-learn](http://scikit-learn.org/)
