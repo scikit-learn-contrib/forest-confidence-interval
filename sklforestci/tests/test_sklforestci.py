@@ -1,7 +1,6 @@
 import numpy as np
 import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
-from sklforestci import (random_forest_error, calc_inbag)
 import sklforestci as fci
 
 def test_random_forest_error():
@@ -24,8 +23,8 @@ def test_random_forest_error():
     n_trees = 4
     forest = RandomForestRegressor(n_estimators=n_trees)
     forest.fit(X_train, y_train)
-    inbag = calc_inbag(X_train.shape[0], forest)
-    V_IJ_unbiased = random_forest_error(forest, inbag, X_train, X_test)
+    inbag = fci.calc_inbag(X_train.shape[0], forest)
+    V_IJ_unbiased = fci.random_forest_error(forest, inbag, X_train, X_test)
     npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
 
 
@@ -42,8 +41,8 @@ def test_core_computation():
     pred_centered_ex = np.array([[-20, -20, 10, 30], [-20, 30, -20, 10]])
     n_trees = 4
 
-    our_vij = fci_core_computation(X_train_ex, X_test_ex, inbag_ex,
-                                   pred_centered_ex, n_trees)
+    our_vij = fci._core_computation(X_train_ex, X_test_ex, inbag_ex,
+                                    pred_centered_ex, n_trees)
 
     r_vij = np.array([112.5,  387.5])
 
