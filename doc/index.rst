@@ -12,7 +12,7 @@ This is bla bla bla explanation
        auto_examples/index
        ...
 
-See the `README <https://github.com/arokem/sklearn-tree-ci.git/blob/master/README.md>`_
+See the `README <https://github.com/arokem/sklearn-forest-ci.git/blob/master/README.md>`_
 for more information.
 
 
