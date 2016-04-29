@@ -9,7 +9,10 @@ Explanation explanation explanation [Reference2001]_
    Journal of important results 1: 1
 
 """
-import urllib
+try:
+    from urllib import urlretrieve
+except ImportError:
+    from urllib.request import urlretrieve
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
@@ -23,7 +26,7 @@ def get_mpg_data():
     url = ("http://archive.ics.uci.edu/ml/machine-learning-"
            "databases/auto-mpg/auto-mpg.data")
     outputfile = "auto-mpg-data.txt"
-    urllib.urlretrieve(url, outputfile)
+    urlretrieve(url, outputfile)
     mpg_names = ["mpg", "cyl", "disp", "hp", "weight",
                  "accel", "year", "origin", "name"]
     mpg_data = np.recfromcsv(outputfile, delimiter=None,
