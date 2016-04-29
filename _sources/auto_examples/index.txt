@@ -1,0 +1,33 @@
+.. _general_examples:
+
+General examples
+================
+
+Introductory examples.
+
+
+Something something somthing
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Explanation explanation explanation [Reference2001]_">
+
+.. only:: html
+
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_template_thumb.png
+
+        :ref:`sphx_glr_auto_examples_plot_template.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_template
+.. raw:: html
+
+    <div style='clear:both'></div>
+
