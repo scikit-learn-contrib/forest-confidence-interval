@@ -51,7 +51,8 @@ spam_y = spam_data["spam"]
 
 spam_X_train, spam_X_test, spam_y_train, spam_y_test = xval.train_test_split(
                                                        spam_X, spam_y,
-                                                       test_size=0.2)
+                                                       test_size=0.2,
+                                                       random_state=42)
 
 n_trees = 2000
 spam_RFC = RandomForestClassifier(max_features=5, n_estimators=n_trees,

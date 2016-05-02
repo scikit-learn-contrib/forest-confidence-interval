@@ -25,7 +25,7 @@ import sklforestci as fci
 def get_mpg_data():
     url = ("http://archive.ics.uci.edu/ml/machine-learning-"
            "databases/auto-mpg/auto-mpg.data")
-    outputfile = "auto-mpg-data.txt"
+    outputfile = "auto-mpg_data.txt"
     urlretrieve(url, outputfile)
     mpg_names = ["mpg", "cyl", "disp", "hp", "weight",
                  "accel", "year", "origin", "name"]
@@ -47,6 +47,7 @@ mpg_y = mpg_data["mpg"]
 mpg_X_train, mpg_X_test, mpg_y_train, mpg_y_test = xval.train_test_split(
                                                    mpg_X, mpg_y,
                                                    test_size=0.25,
+                                                   random_state=42
                                                    )
 
 n_trees = 2000
