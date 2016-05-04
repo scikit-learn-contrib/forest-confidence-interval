@@ -3,7 +3,7 @@
 Plotting Regresssion Forest Error Bars
 ======================================
 
-Plot error bars for scikti learn RandomForest Regression objects. The
+Plot error bars for scikit learn RandomForest Regression objects. The
 calculation of error is based on the infinite jackknife variance, as described
 in [Wager2014]_
 

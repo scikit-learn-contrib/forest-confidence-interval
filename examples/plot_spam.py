@@ -1,13 +1,15 @@
 """
-======================================
+=========================================
 Plotting Classification Forest Error Bars
-======================================
+=========================================
 
-Explanation explanation explanation [Reference2001]_
+Plot error bars for scikit learn RandomForest Classification objects. The
+calculation of error is based on the infinite jackknife variance, as described
+in [Wager2014]_
 
-.. [Reference2001] Author, A., Author, B. (2001). Title of the paper.
-   Journal of important results 1: 1
-
+.. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
+   Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
+   of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
 """
 
 # Classification example
