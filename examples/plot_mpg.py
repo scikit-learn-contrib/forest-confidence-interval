@@ -3,8 +3,9 @@
 Plotting Regresssion Forest Error Bars
 ======================================
 
-Plot error bars for sklearn RandomForest Regression objects. The calculation of
-error is based on the infinite jackknife variance, as described in [Wager2014]_
+Plot error bars for scikti learn RandomForest Regression objects. The
+calculation of error is based on the infinite jackknife variance, as described
+in [Wager2014]_
 
 .. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
    Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal

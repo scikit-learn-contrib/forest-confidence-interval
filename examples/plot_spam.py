@@ -3,8 +3,9 @@
 Plotting Classification Forest Error Bars
 =========================================
 
-Plot error bars for sklearn RandomForest Classifier objects. The calculation of
-error is based on the infinite jackknife variance, as described in [Wager2014]_
+Plot error bars for scikit learn RandomForest Classifier objects. The
+calculation of error is based on the infinite jackknife variance, as described
+in [Wager2014]_
 
 .. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
    Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
@@ -72,7 +73,6 @@ spam_data = get_spam_data()
 
 spam_X = np.matrix(np.array(spam_data.tolist()))
 spam_X = np.delete(spam_X, -1, 1)
-
 spam_y = spam_data["spam"]
 
 spam_X_train, spam_X_test, spam_y_train, spam_y_test = xval.train_test_split(
