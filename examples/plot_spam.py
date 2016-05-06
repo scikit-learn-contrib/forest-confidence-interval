@@ -101,4 +101,6 @@ plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
 idx = np.where(spam_y_test == 0)[0]
 plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
              fmt='.', alpha=0.75)
+plt.xlabel('Prediction')
+plt.ylabel('Standard Deviation Estimate')
 plt.show()
