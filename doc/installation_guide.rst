@@ -3,8 +3,21 @@
 Installation Guide
 ==================
 
-In order to use the
+Before installing the `sklforestci` module, you will need `numpy`, `scipy`
+and `scikit-learn`
 
-.. code-block:: python
+.. code-block:: bash
 
-   Some python code.
+   pip install numpy scipy scikit-learn
+
+To install `sklforestci`:
+
+.. code-block:: bash
+
+   pip install sklforestci
+
+or
+
+.. code-block:: bash
+
+   python setup.py install
