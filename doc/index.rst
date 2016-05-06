@@ -2,7 +2,9 @@
 Confidence Intervals for Scikit Learn Random Forests
 =====================================================
 
-This is bla bla bla explanation
+`sklforestci` calculates confidence intervals from scikit-learn
+RandomForest regressor or classifier objects. The unbiased variance for a
+RandomForest object is returned in an array for plotting error bars.
 
 
     .. toctree::
