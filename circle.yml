@@ -8,7 +8,7 @@ machine:
     DOC_REPO: "sklearn-forest-ci"
 
     # The base URL for the Github page where the documentation will be hosted
-    DOC_URL: "http://uwescience.github.io"
+    DOC_URL: ""
 
     # The email is to be used for commits in the Github Page
     EMAIL: "arokem+ci@uw.edu"
