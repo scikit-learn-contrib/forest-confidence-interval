@@ -13,19 +13,19 @@ in [Wager2014]_
 """
 
 # Classification example
-try:
-    from urllib import urlretrieve
-except ImportError:
-    from urllib.request import urlretrieve
-import tempfile
-import os
-import os.path as op
+# try:
+#     from urllib import urlretrieve
+# except ImportError:
+#     from urllib.request import urlretrieve
+# import tempfile
+# import os
+# import os.path as op
 import numpy as np
 from matplotlib import pyplot as plt
-import sklearn.datasets as ds
+# import sklearn.datasets as ds
 import sklearn.cross_validation as xval
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
+# from sklearn.ensemble import RandomForestRegressor
+# from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestClassifier
 import sklforestci as fci
 

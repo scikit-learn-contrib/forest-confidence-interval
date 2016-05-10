@@ -17,8 +17,6 @@ in [Wager2014]_
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier
 import sklearn.cross_validation as xval
 from sklearn.datasets.mldata import fetch_mldata
 import sklforestci as fci
