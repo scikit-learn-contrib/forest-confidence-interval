@@ -12,78 +12,13 @@ in [Wager2014]_
    of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
 """
 
-# Classification example
-# try:
-#     from urllib import urlretrieve
-# except ImportError:
-#     from urllib.request import urlretrieve
-# import tempfile
-# import os
-# import os.path as op
 import numpy as np
 from matplotlib import pyplot as plt
-# import sklearn.datasets as ds
 import sklearn.cross_validation as xval
-# from sklearn.ensemble import RandomForestRegressor
-# from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestClassifier
 import sklforestci as fci
-
-
-# def get_spam_data():
-#     """
-#     Stores .npy file that is the spam email data set from the UCI machine
-#     learning database
-#
-#     Parameters
-#     ----------
-#     None
-#
-#     Returns
-#     -------
-#     Numpy ndarray with email characteristics
-#
-#     """
-#     data_home = ds.get_data_home()
-#     spam_file = op.join(data_home, "spam_data.npy")
-#     if not op.exists(spam_file):
-#
-#         spam_data_url = ("http://archive.ics.uci.edu/ml/machine-learning-"
-#                          "databases/spambase/spambase.data")
-#         spam_csv_file = op.join(data_home, 'spam.csv')
-#         urlretrieve(spam_data_url, spam_csv_file)
-#
-#         spam_names_url = ("http://archive.ics.uci.edu/ml/machine-learning-"
-#                           "databases/spambase/spambase.names")
-#         spam_names_file = op.join(data_home, 'spam.names')
-#         urlretrieve(spam_names_url, spam_names_file)
-#         spam_names = np.recfromcsv(spam_names_file, skip_header=30,
-#                                    usecols=np.arange(1))
-#         spam_names = spam_names['1']
-#         try:  # Python 2
-#             spam_names = [n.split(':')[0] for n in spam_names] + ['spam']
-#         except TypeError:  # Python 3
-#             spam_names = ([n.decode().split(':')[0] for n in spam_names] +
-#                           ['spam'])
-#
-#         spam_data = np.recfromcsv(spam_csv_file, delimiter=",",
-#                                   names=spam_names)
-#         np.save(spam_file, spam_data)
-#         os.remove(spam_csv_file)
-#         os.remove(spam_names_file)
-#
-#     spam_data = np.load(spam_file)
-#     return spam_data
-#
-# # retreive spam email data from machine learning library
-# spam_data = get_spam_data()
-
-# # separate spam email data into predictors and outcome variable
-# spam_X = np.matrix(np.array(spam_data.tolist()))
-# spam_X = np.delete(spam_X, -1, 1)
-# spam_y = spam_data["spam"]
-
 from sklearn.datasets import make_classification
+
 spam_X, spam_y = make_classification(5000)
 
 # split mpg data into training and test set
