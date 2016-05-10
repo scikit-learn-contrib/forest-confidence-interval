@@ -6,7 +6,7 @@ Introduction
 RandomForest regressor or classifier objects. The unbiased variance for a
 RandomForest object is returned in an array for plotting.
 
-The calculation of error is based on the infinite jackknife variance, as
+The calculation of error is based on the infinitesimal jackknife variance, as
 described in [Wager2014]_ and is a Python implementation of the R code
 provided at: https://github.com/swager/randomForestCI
 

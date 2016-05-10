@@ -87,8 +87,8 @@ def random_forest_error(forest, inbag, X_train, X_test):
 
     Notes
     -----
-    The calculation of error is based on the infinite jackknife variance, as
-    described in [Wager2014]_ and is a Python implementation of the R code
+    The calculation of error is based on the infinitesimal jackknife variance,
+    as described in [Wager2014]_ and is a Python implementation of the R code
     provided at: https://github.com/swager/randomForestCI
 
     .. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
