@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; Confidence Intervals for sklearn Forests 0.1.0 documentation</title>
+  <title>Random Forest Confidence Intervals &mdash; Confidence Intervals for sklearn Forests 0.1.0 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -108,7 +108,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -116,8 +116,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>Random Forest Confidence Intervals</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/sklforestci.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
@@ -126,19 +130,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="random-forest-confidence-intervals">
+<h1>Random Forest Confidence Intervals<a class="headerlink" href="#random-forest-confidence-intervals" title="Permalink to this headline">¶</a></h1>
+<p>This module creates an in-bag and calculates the variance for a scikit-learn
+RandomForest regressor or classifier objects. The variance can be used to plot
+error bars for RandomForest objects</p>
+<p>The inbag is a matrix documenting which sample entered which decision tree</p>
+<p>The error bar calculation is based on Wager&#8217;s (2014) infinitesimal jackknife variance</p>
+<p>See the <a class="reference external" href="https://github.com/uwescience/sklearn-forest-ci/blob/master/README.md">README</a>
+for more information.</p>
+<span class="target" id="module-sklforestci"></span></div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
@@ -180,7 +182,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -196,14 +197,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

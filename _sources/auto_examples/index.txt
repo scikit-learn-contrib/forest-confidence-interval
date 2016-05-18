@@ -5,18 +5,20 @@ General examples
 
 Introductory examples.
 
-
-Something something somthing
+These examples use data from standard machine learning libraries to show
+`sklforestci` calculate error bars on RandomForest regression and
+classification objects. The regression forest example predicts car MPG while the
+classification forest example attempts to distinguish spam from non-spam emails
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Explanation explanation explanation [Reference2001]_">
+    <div class="sphx-glr-thumbcontainer" tooltip="Plot error bars for scikit learn RandomForest Regression objects. The calculation of error is b...">
 
 .. only:: html
 
-    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_template_thumb.png
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_mpg_thumb.png
 
-        :ref:`sphx_glr_auto_examples_plot_template.py`
+        :ref:`sphx_glr_auto_examples_plot_mpg.py`
 
 .. raw:: html
 
@@ -26,7 +28,27 @@ Something something somthing
 .. toctree::
    :hidden:
 
-   /auto_examples/plot_template
+   /auto_examples/plot_mpg
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Plot error bars for scikit learn RandomForest Classification objects. The calculation of error ...">
+
+.. only:: html
+
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_spam_thumb.png
+
+        :ref:`sphx_glr_auto_examples_plot_spam.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_spam
 .. raw:: html
 
     <div style='clear:both'></div>
