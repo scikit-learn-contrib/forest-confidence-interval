@@ -17,7 +17,7 @@ except ImportError:
     print('scipy is required during installation')
     sys.exit(1)
 
-setup(name='skltreeci',
+setup(name='sklforestci',
       version='0.1',
       description='Confidence intervals for scikit-learn forest algorithms',
       author='Ariel Rokem, Bryna Hazelton, Kivan Polimis',
