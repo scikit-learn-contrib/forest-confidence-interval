@@ -29,10 +29,10 @@ To install the module execute:
 ```
 pip install sklforestci
 ```
-or
+or, if you are installing from the source code:
 ```shell
 $ python setup.py install
 ```
 
-## Example
-See examples gallery
+## Examples
+See [examples gallery](http://uwescience.github.io/sklearn-forest-ci/auto_examples/index.html)
