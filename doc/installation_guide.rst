@@ -10,13 +10,13 @@ and `scikit-learn`
 
    pip install numpy scipy scikit-learn
 
-To install `sklforestci`:
+Then, to install `sklforestci`:
 
 .. code-block:: bash
 
    pip install sklforestci
 
-or
+If you wish to install from the source code (available `here <https://github.com/uwescience/sklearn-forest-ci>`_ ), change your working directory to the top-level directory of the source code, and issue:
 
 .. code-block:: bash
 
