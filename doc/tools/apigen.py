@@ -431,7 +431,7 @@ class ApiDocWriter(object):
 
             for m in mods:
                 print("  -> " + m)
-                head, body = self.generate_api_doc(m)
+                head, body = self.generate_api_doc(str(m))
 
                 document_head.append(head)
                 document_body.append(body)

@@ -296,6 +296,7 @@ import buildmodref
 
 # autogenerate api documentation
 # (see https://github.com/rtfd/readthedocs.org/issues/1139)
+
 def generateapidoc(_):
     output_path = os.path.join(currentdir, 'reference')
     buildmodref.writeapi(project, output_path, source_version, True)
