@@ -1,45 +1,20 @@
 import numpy as np
 from sklearn.ensemble.forest import _generate_sample_indices
-from .due import due, BibTeX
+from .due import _due, _BibTeX
 
 __all__ = ["calc_inbag", "random_forest_error", "_bias_correction",
            "_core_computation"]
 
-due.cite(BibTeX("""
+_due.cite(_BibTeX("""
 @ARTICLE{Wager2014-wn,
-  title       = "Confidence Intervals for Random Forests: The Jackknife and the
-                 Infinitesimal Jackknife",
+  title       = "Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife",
   author      = "Wager, Stefan and Hastie, Trevor and Efron, Bradley",
-  affiliation = "Department of Statistics, Stanford University, Stanford, CA
-                 94305, USA. Department of Statistics, Stanford University,
-                 Stanford, CA 94305, USA. Department of Statistics, Stanford
-                 University, Stanford, CA 94305, USA.",
-  abstract    = "We study the variability of predictions made by bagged
-                 learners and random forests, and show how to estimate standard
-                 errors for these methods. Our work builds on variance
-                 estimates for bagging proposed by Efron (1992, 2013) that are
-                 based on the jackknife and the infinitesimal jackknife (IJ).
-                 In practice, bagged predictors are computed using a finite
-                 number B of bootstrap replicates, and working with a large B
-                 can be computationally expensive. Direct applications of
-                 jackknife and IJ estimators to bagging require B = $\Theta$(n
-                 (1.5)) bootstrap replicates to converge, where n is the size
-                 of the training set. We propose improved versions that only
-                 require B = $\Theta$(n) replicates. Moreover, we show that the
-                 IJ estimator requires 1.7 times less bootstrap replicates than
-                 the jackknife to achieve a given accuracy. Finally, we study
-                 the sampling distributions of the jackknife and IJ variance
-                 estimates themselves. We illustrate our findings with multiple
-                 experiments and simulation studies.",
   journal     = "J. Mach. Learn. Res.",
   volume      =  15,
   number      =  1,
   pages       = "1625--1651",
   month       =  jan,
-  year        =  2014,
-  keywords    = "Monte Carlo noise; bagging; jackknife methods; variance
-                 estimation"}
-                 """),
+  year        =  2014,}"""),
          description=("Confidence Intervals for Random Forests:",
                       "The Jackknife and the Infinitesimal Jackknife"),
          path='sklforestci')

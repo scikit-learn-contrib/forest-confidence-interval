@@ -25,6 +25,7 @@ and previously implemented in R (`here <https://github.com/swager/randomForestCI
 .. figure:: _static/eScience_Logo_HR.png
    :align: center
    :figclass: align-center
+   :target: http://escience.washington.edu
 
    Acknowledgements: this work was supported by a grant from the
    `Gordon & Betty Moore Foundation <https://www.moore.org/>`_,  and from the
