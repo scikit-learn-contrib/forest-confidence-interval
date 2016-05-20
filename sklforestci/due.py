@@ -3,31 +3,27 @@
 # ## ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### #
 """
 
-Stub file for a guaranteed safe import of duecredit constructs:  if duecredit
-is not available.
+Due-credit
+==========
 
-To use it, place it into your project codebase to be imported, e.g. copy as
-
-    cp stub.py /path/tomodule/module/due.py
-
-Note that it might be better to avoid naming it duecredit.py to avoid shadowing
-installed duecredit.
-
-Then use in your code as
-
-    from .due import due, Doi, BibTeX
+`duecredit <http://duecredit.org>`_  is a framework conceived to address the
+problem of inadequate citation of scientific software and methods. It automates
+the insertion of citations into code. We use it here to refer to the original
+publication introducing the method we have implemented.
 
 See  https://github.com/duecredit/duecredit/blob/master/README.md for examples.
 
-Origin:     Originally a part of the duecredit
+Origin:     Originally a part of the duecredit software package
+
 Copyright:  2015-2016  DueCredit developers
+
 License:    BSD-2
 """
 
 __version__ = '0.0.5'
 
 
-class InactiveDueCreditCollector(object):
+class _InactiveDueCreditCollector(object):
     """Just a stub at the Collector which would not do anything"""
     def _donothing(self, *args, **kwargs):
         """Perform no good and no bad"""
@@ -50,8 +46,11 @@ def _donothing_func(*args, **kwargs):
     pass
 
 try:
-    from duecredit import due, BibTeX, Doi, Url
-    if 'due' in locals() and not hasattr(due, 'cite'):
+    from duecredit import due as _due
+    from duecredit import BibTeX as _BibTeX
+    from duecredit import Doi as _Doi
+    from duecredit import Url as _Url
+    if '_due' in locals() and not hasattr(_due, 'cite'):
         raise RuntimeError(
             "Imported due lacks .cite. DueCredit is now disabled")
 except Exception as e:
@@ -60,8 +59,8 @@ except Exception as e:
         logging.getLogger("duecredit").error(
             "Failed to import duecredit due to %s" % str(e))
     # Initiate due stub
-    due = InactiveDueCreditCollector()
-    BibTeX = Doi = Url = _donothing_func
+    _due = _InactiveDueCreditCollector()
+    _BibTeX = _Doi = _Url = _donothing_func
 
 # Emacs mode definitions
 # Local Variables:

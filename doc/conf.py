@@ -46,8 +46,8 @@ extensions = [
     'sphinx.ext.pngmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'sphinx_gallery.gen_gallery'
-
+    'sphinx_gallery.gen_gallery',
+    'sphinx.ext.autosummary'
 ]
 
 sphinx_gallery_conf = {
@@ -72,7 +72,7 @@ plot_gallery = True
 master_doc = 'index'
 
 # General information about the project.
-project = u'Confidence Intervals for sklearn Forests'
+project = u'sklforestci'
 copyright = u'2016, Kivan Polimis, Ariel Rokem, Bryna Hazelton, The University of Washington eScience Institute'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -283,9 +283,28 @@ def generate_example_rst(app, what, name, obj, options, lines):
         # touch file
         open(examples_path, 'w').close()
 
+currentdir = os.path.abspath(os.path.dirname(__file__))
+ver_file = os.path.join(currentdir, '..', project, 'version.py')
+with open(ver_file) as f:
+    exec(f.read())
+source_version = __version__
+
+
+currentdir = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(currentdir, 'tools'))
+import buildmodref
+
+# autogenerate api documentation
+# (see https://github.com/rtfd/readthedocs.org/issues/1139)
+
+def generateapidoc(_):
+    output_path = os.path.join(currentdir, 'reference')
+    buildmodref.writeapi(project, output_path, source_version, True)
+
 
 def setup(app):
     app.connect('autodoc-process-docstring', generate_example_rst)
+    app.connect('builder-inited', generateapidoc)
 
 # Documents to append as an appendix to all manuals.
 #texinfo_appendices = []
@@ -301,4 +320,5 @@ def setup(app):
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {'http://docs.python.org/': None,
+                       'http://scikit-learn.org/stable/': None}

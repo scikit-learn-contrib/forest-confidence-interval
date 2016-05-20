@@ -3,13 +3,10 @@
 Plotting Classification Forest Error Bars
 =========================================
 
-Plot error bars for scikit learn RandomForest Classification objects. The
-calculation of error is based on the infinitesimal jackknife variance, as
-described in [Wager2014]_
+This example demonstrates the calculation of confidence intervals for :ref:`sklearn.ensemble.RandomForestClassifier` objects.
 
-.. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
-   Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
-   of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
+The data used here are synthetically generated to simulate a data-set in which email messages are labeled as spam based on 20 different features (the default
+of :ref:`sklearn.datasets.make_classification`).
 """
 
 import numpy as np
@@ -21,7 +18,7 @@ from sklearn.datasets import make_classification
 
 spam_X, spam_y = make_classification(5000)
 
-# split mpg data into training and test set
+# split the datainto training and test set
 spam_X_train, spam_X_test, spam_y_train, spam_y_test = xval.train_test_split(
                                                        spam_X, spam_y,
                                                        test_size=0.2)
@@ -47,6 +44,7 @@ plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
 idx = np.where(spam_y_test == 0)[0]
 plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
              fmt='.', alpha=0.75)
-plt.xlabel('Prediction')
-plt.ylabel('Standard Deviation Estimate')
+
+plt.xlabel('Prediction (probability spam)')
+plt.ylabel('Standard deviation')
 plt.show()

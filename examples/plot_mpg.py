@@ -3,14 +3,11 @@
 Plotting Regresssion Forest Error Bars
 ======================================
 
-Plot error bars for scikit learn RandomForest Regression objects. The
-calculation of error is based on the infinitesimal jackknife variance, as
-described in [Wager2014]_
+This example demonstrates using `sklforestci` to calculate the error bars of
+the predictions of a :ref:`sklearn.ensemble.RandomForestRegressor` object.
 
-.. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
-   Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
-   of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
-
+The data used here are a classical machine learning data-set, describing
+various features of different cars, and their MPG. 
 """
 
 # Regression Forest Example
