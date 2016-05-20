@@ -21,7 +21,7 @@ except ImportError:
 ver_file = os.path.join('sklforestci', 'version.py')
 with open(ver_file) as f:
     exec(f.read())
-1/0.
+
 opts = dict(name=NAME,
             maintainer=MAINTAINER,
             maintainer_email=MAINTAINER_EMAIL,
