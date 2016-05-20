@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Plotting Regresssion Forest Error Bars &mdash; Confidence Intervals for sklearn Forests 0.1.0 documentation</title>
+  <title>Plotting Regresssion Forest Error Bars &mdash; sklforestci 0.1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="Confidence Intervals for sklearn Forests 0.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="sklforestci 0.1.0 documentation" href="../index.html"/>
         <link rel="up" title="General examples" href="index.html"/>
         <link rel="next" title="Plotting Classification Forest Error Bars" href="plot_spam.html"/>
         <link rel="prev" title="General examples" href="index.html"/> 
@@ -53,7 +53,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Confidence Intervals for sklearn Forests
+            <a href="../index.html" class="icon icon-home"> sklforestci
           
 
           
@@ -85,14 +85,13 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation_guide.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">General examples</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Plotting Regresssion Forest Error Bars</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_spam.html">Plotting Classification Forest Error Bars</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Reference</a></li>
 </ul>
 
             
@@ -106,7 +105,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">Confidence Intervals for sklearn Forests</a>
+        <a href="../index.html">sklforestci</a>
       </nav>
 
 
@@ -141,17 +140,10 @@
             
   <div class="section" id="plotting-regresssion-forest-error-bars">
 <span id="sphx-glr-auto-examples-plot-mpg-py"></span><h1>Plotting Regresssion Forest Error Bars<a class="headerlink" href="#plotting-regresssion-forest-error-bars" title="Permalink to this headline">¶</a></h1>
-<p>Plot error bars for scikit learn RandomForest Regression objects. The
-calculation of error is based on the infinitesimal jackknife variance, as
-described in <a class="reference internal" href="../introduction.html#wager2014" id="id1">[Wager2014]</a></p>
-<table class="docutils citation" frame="void" id="wager2014" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[Wager2014]</a></td><td>S. Wager, T. Hastie, B. Efron. &#8220;Confidence Intervals for
-Random Forests: The Jackknife and the Infinitesimal Jackknife&#8221;, Journal
-of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</td></tr>
-</tbody>
-</table>
+<p>This example demonstrates using <cite>sklforestci</cite> to calculate the error bars of
+the predictions of a <span class="xref std std-ref">sklearn.ensemble.RandomForestRegressor</span> object.</p>
+<p>The data used here are a classical machine learning data-set, describing
+various features of different cars, and their MPG.</p>
 <img alt="../_images/sphx_glr_plot_mpg_001.png" class="align-center" src="../_images/sphx_glr_plot_mpg_001.png" />
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Regression Forest Example</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -195,7 +187,7 @@ of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</td></tr>
 </pre></div>
 </div>
 <p><strong>Total running time of the script:</strong>
-(0 minutes 6.169 seconds)</p>
+(0 minutes 5.618 seconds)</p>
 <div class="sphx-glr-download container">
 <strong>Download Python source code:</strong> <a class="reference download internal" href="../_downloads/plot_mpg.py" download=""><code class="xref download docutils literal"><span class="pre">plot_mpg.py</span></code></a></div>
 <div class="sphx-glr-download container">

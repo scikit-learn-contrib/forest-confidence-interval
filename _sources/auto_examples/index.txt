@@ -12,7 +12,7 @@ classification forest example attempts to distinguish spam from non-spam emails
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Plot error bars for scikit learn RandomForest Regression objects. The calculation of error is b...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates using `sklforestci` to calculate the error bars of the predictions of...">
 
 .. only:: html
 
@@ -32,7 +32,7 @@ classification forest example attempts to distinguish spam from non-spam emails
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Plot error bars for scikit learn RandomForest Classification objects. The calculation of error ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates the calculation of confidence intervals for :ref:`sklearn.ensemble.Ra...">
 
 .. only:: html
 

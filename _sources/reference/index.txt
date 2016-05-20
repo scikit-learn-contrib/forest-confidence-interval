@@ -1,0 +1,9 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+API Reference
+=============
+
+.. toctree::
+
+   sklforestci.rst
+   sklforestci.due.rst

@@ -1,0 +1,13 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`due`
+==========
+.. automodule:: sklforestci.due
+
+.. currentmodule:: sklforestci.due
+.. autosummary::
+
+
+
+.. currentmodule:: sklforestci.due
+
