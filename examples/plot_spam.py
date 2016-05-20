@@ -6,7 +6,7 @@ Plotting Classification Forest Error Bars
 This example demonstrates the calculation of confidence intervals for :ref:`sklearn.ensemble.RandomForestClassifier` objects.
 
 The data used here are synthetically generated to simulate a data-set in which email messages are labeled as spam based on 20 different features (the default
-of :ref:`sklearn.datasets.make_classification`).
+of :class:`sklearn.datasets.make_classification`).
 """
 
 import numpy as np
