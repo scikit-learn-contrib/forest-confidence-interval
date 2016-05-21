@@ -4,10 +4,10 @@ Plotting Regresssion Forest Error Bars
 ======================================
 
 This example demonstrates using `sklforestci` to calculate the error bars of
-the predictions of a :ref:`sklearn.ensemble.RandomForestRegressor` object.
+the predictions of a :class:`sklearn.ensemble.RandomForestRegressor` object.
 
 The data used here are a classical machine learning data-set, describing
-various features of different cars, and their MPG. 
+various features of different cars, and their MPG.
 """
 
 # Regression Forest Example

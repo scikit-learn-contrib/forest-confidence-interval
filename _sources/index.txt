@@ -10,6 +10,8 @@ intervals of the predictions generated from scikit-learn
 This is an implementation of an algorithm developed by Wager et al. [Wager2014]_
 and previously implemented in R (`here <https://github.com/swager/randomForestCI>`_).
 
+To examine and download the source code, visit our `github repo <https://github.com/uwescience/sklearn-forest-ci#readme>`_.
+
 .. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
