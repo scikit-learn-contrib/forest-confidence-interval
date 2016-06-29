@@ -148,9 +148,9 @@
 <span class="s2">  pages       = &quot;1625--1651&quot;,</span>
 <span class="s2">  month       =  jan,</span>
 <span class="s2">  year        =  2014,}&quot;&quot;&quot;</span><span class="p">),</span>
-         <span class="n">description</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Confidence Intervals for Random Forests:&quot;</span><span class="p">,</span>
-                      <span class="s2">&quot;The Jackknife and the Infinitesimal Jackknife&quot;</span><span class="p">),</span>
-         <span class="n">path</span><span class="o">=</span><span class="s1">&#39;sklforestci&#39;</span><span class="p">)</span>
+          <span class="n">description</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Confidence Intervals for Random Forests:&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;The Jackknife and the Infinitesimal Jackknife&quot;</span><span class="p">),</span>
+          <span class="n">path</span><span class="o">=</span><span class="s1">&#39;sklforestci&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="calc_inbag"><a class="viewcode-back" href="../../sklforestci.html#sklforestci.calc_inbag">[docs]</a><span class="k">def</span> <span class="nf">calc_inbag</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">forest</span><span class="p">):</span>
@@ -179,8 +179,8 @@
     <span class="n">sample_idx</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">t_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_trees</span><span class="p">):</span>
         <span class="n">sample_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-          <span class="n">_generate_sample_indices</span><span class="p">(</span><span class="n">forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
-                                   <span class="n">n_samples</span><span class="p">))</span>
+            <span class="n">_generate_sample_indices</span><span class="p">(</span><span class="n">forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
+                                     <span class="n">n_samples</span><span class="p">))</span>
         <span class="n">inbag</span><span class="p">[:,</span> <span class="n">t_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">sample_idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">minlength</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">inbag</span></div>
 
@@ -201,7 +201,7 @@
     <span class="n">n_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">inbag</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_trees</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="o">-</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">inbag</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_trees</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">view</span><span class="p">())</span>
     <span class="n">boot_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">pred_centered</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_trees</span>
-    <span class="n">bias_correction</span> <span class="o">=</span> <span class="n">n_train_samples</span> <span class="o">*</span> <span class="n">n_var</span> <span class="o">*</span> <span class="n">boot_var</span><span class="o">/</span><span class="n">n_trees</span>
+    <span class="n">bias_correction</span> <span class="o">=</span> <span class="n">n_train_samples</span> <span class="o">*</span> <span class="n">n_var</span> <span class="o">*</span> <span class="n">boot_var</span> <span class="o">/</span> <span class="n">n_trees</span>
     <span class="n">V_IJ_unbiased</span> <span class="o">=</span> <span class="n">V_IJ</span> <span class="o">-</span> <span class="n">bias_correction</span>
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
 
