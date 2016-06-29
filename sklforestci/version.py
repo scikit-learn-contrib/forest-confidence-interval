@@ -1,5 +1,3 @@
-from os.path import join as pjoin
-
 # Format expected by setup.py and doc/source/conf.py: string of form "X.Y.Z"
 _version_major = 0
 _version_minor = 1
@@ -25,7 +23,8 @@ CLASSIFIERS = ["Development Status :: 3 - Alpha",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "sklforestci: confidence intervals for scikit-learn forest algorithms"
+description = "sklforestci: confidence intervals for scikit-learn "
+description += "forest algorithms"
 # Long description will go up on the pypi page
 long_description = """
 

@@ -15,9 +15,9 @@ _due.cite(_BibTeX("""
   pages       = "1625--1651",
   month       =  jan,
   year        =  2014,}"""),
-         description=("Confidence Intervals for Random Forests:",
-                      "The Jackknife and the Infinitesimal Jackknife"),
-         path='sklforestci')
+          description=("Confidence Intervals for Random Forests:",
+                       "The Jackknife and the Infinitesimal Jackknife"),
+          path='sklforestci')
 
 
 def calc_inbag(n_samples, forest):
@@ -46,8 +46,8 @@ def calc_inbag(n_samples, forest):
     sample_idx = []
     for t_idx in range(n_trees):
         sample_idx.append(
-          _generate_sample_indices(forest.estimators_[t_idx].random_state,
-                                   n_samples))
+            _generate_sample_indices(forest.estimators_[t_idx].random_state,
+                                     n_samples))
         inbag[:, t_idx] = np.bincount(sample_idx[-1], minlength=n_samples)
     return inbag
 
@@ -68,7 +68,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     n_var = np.mean(np.square(inbag[0:n_trees]).mean(axis=1).T.view() -
                     np.square(inbag[0:n_trees].mean(axis=1)).T.view())
     boot_var = np.square(pred_centered).sum(axis=1) / n_trees
-    bias_correction = n_train_samples * n_var * boot_var/n_trees
+    bias_correction = n_train_samples * n_var * boot_var / n_trees
     V_IJ_unbiased = V_IJ - bias_correction
     return V_IJ_unbiased
 
