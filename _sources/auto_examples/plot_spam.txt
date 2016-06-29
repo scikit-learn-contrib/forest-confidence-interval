@@ -65,7 +65,7 @@ of :func:`sklearn.datasets.make_classification`).
     plt.show()
 
 **Total running time of the script:**
-(2 minutes 35.137 seconds)
+(2 minutes 59.559 seconds)
 
 
 
