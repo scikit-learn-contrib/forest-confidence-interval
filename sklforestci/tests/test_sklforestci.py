@@ -3,6 +3,7 @@ import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
 import sklforestci as fci
 
+
 def test_random_forest_error():
     X = np.array([[5, 2],
                   [5, 5],
@@ -29,9 +30,9 @@ def test_random_forest_error():
 
 
 def test_core_computation():
-    inbag_ex = np.array([[1.,  2.,  0.,  1.],
-                         [1.,  0.,  2.,  0.],
-                         [1.,  1.,  1.,  2.]])
+    inbag_ex = np.array([[1., 2., 0., 1.],
+                         [1., 0., 2., 0.],
+                         [1., 1., 1., 2.]])
 
     X_train_ex = np.array([[3, 3],
                            [6, 4],
@@ -44,15 +45,15 @@ def test_core_computation():
     our_vij = fci._core_computation(X_train_ex, X_test_ex, inbag_ex,
                                     pred_centered_ex, n_trees)
 
-    r_vij = np.array([112.5,  387.5])
+    r_vij = np.array([112.5, 387.5])
 
     npt.assert_almost_equal(our_vij, r_vij)
 
 
 def test_bias_correction():
-    inbag_ex = np.array([[1.,  2.,  0.,  1.],
-                         [1.,  0.,  2.,  0.],
-                         [1.,  1.,  1.,  2.]])
+    inbag_ex = np.array([[1., 2., 0., 1.],
+                         [1., 0., 2., 0.],
+                         [1., 1., 1., 2.]])
 
     X_train_ex = np.array([[3, 3],
                            [6, 4],
@@ -70,5 +71,4 @@ def test_bias_correction():
                                             pred_centered_ex,
                                             n_trees)
     r_unbiased_vij = np.array([-42.1875, 232.8125])
-    r_vij = np.array([112.5,  387.5])
     npt.assert_almost_equal(our_vij_unbiased, r_unbiased_vij)
