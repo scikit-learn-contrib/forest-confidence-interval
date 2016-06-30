@@ -45,6 +45,7 @@ def writeapi(package, outdir, source_version, other_defines=True):
 
     docwriter.package_skip_patterns += [r'\.%s$' % package,
                                         r'.*test.*$',
+                                        r'.*duecredit.*$',
                                         r'\.version.*$']
     docwriter.write_api_docs(outdir)
     docwriter.write_index(outdir, 'index', relative_to=outdir)
