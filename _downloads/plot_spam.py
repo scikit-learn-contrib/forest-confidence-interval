@@ -3,9 +3,11 @@
 Plotting Classification Forest Error Bars
 =========================================
 
-This example demonstrates the calculation of confidence intervals for :class:`sklearn.ensemble.RandomForestClassifier` objects.
+This example demonstrates the calculation of confidence intervals for
+:class:`sklearn.ensemble.RandomForestClassifier` objects.
 
-The data used here are synthetically generated to simulate a data-set in which email messages are labeled as spam based on 20 different features (the default
+The data used here are synthetically generated to simulate a data-set in which
+email messages are labeled as spam based on 20 different features (the default
 of :func:`sklearn.datasets.make_classification`).
 """
 
@@ -39,12 +41,13 @@ spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_inbag,
 # Blue points are spam emails; Green points are non-spam emails
 idx = np.where(spam_y_test == 1)[0]
 plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
-             fmt='.', alpha=0.75)
+             fmt='.', alpha=0.75, label='spam')
 
 idx = np.where(spam_y_test == 0)[0]
 plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
-             fmt='.', alpha=0.75)
+             fmt='.', alpha=0.75, label='ham')
 
 plt.xlabel('Prediction (probability spam)')
 plt.ylabel('Standard deviation')
+plt.legend()
 plt.show()
