@@ -60,15 +60,15 @@ of :func:`sklearn.datasets.make_classification`).
 
     idx = np.where(spam_y_test == 0)[0]
     plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
-                 fmt='.', alpha=0.75, label='ham')
+                 fmt='.', alpha=0.75, label='not spam')
 
-    plt.xlabel('Prediction (probability spam)')
+    plt.xlabel('Prediction (spam probability)')
     plt.ylabel('Standard deviation')
     plt.legend()
     plt.show()
 
 **Total running time of the script:**
-(3 minutes 7.099 seconds)
+(3 minutes 12.269 seconds)
 
 
 
