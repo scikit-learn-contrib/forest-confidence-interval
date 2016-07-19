@@ -31,14 +31,14 @@ long_description = """
 sklearn forest ci
 =================
 
-`sklearn-forest-ci` is a Python module for calculating variance and adding
+`forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
 objects. The core functions calculate an in-bag and error bars for
 random forest objects
 
 Please read the repository README_ on Github.
 
-.. _README: https://github.com/uwescience/sklearn-forest-ci/blob/master/README.md
+.. _README: https://github.com/uwescience/forest-confidence-interval/blob/master/README.md
 
 """
 
@@ -47,7 +47,7 @@ MAINTAINER = "Ariel Rokem"
 MAINTAINER_EMAIL = "arokem@uw.edu"
 DESCRIPTION = description
 LONG_DESCRIPTION = long_description
-URL = "http://github.com/uwescience/sklearn-forest-ci"
+URL = "http://github.com/uwescience/forest-confidence-interval"
 DOWNLOAD_URL = ""
 LICENSE = "MIT"
 AUTHOR = "Ariel Rokem, Bryna Hazelton, Kivan Polimis"

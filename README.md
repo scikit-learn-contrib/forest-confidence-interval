@@ -1,10 +1,10 @@
-# `sklearn-forest-ci`: Confidence intervals for Forest algorithms
+# `forest-confidence-interval`: Confidence intervals for Forest algorithms
 
-[![Travis Status](https://travis-ci.org/uwescience/sklearn-forest-ci.svg?branch=master)](https://travis-ci.org/uwescience/sklearn-forest-ci)
-[![Coveralls Status](https://coveralls.io/repos/uwescience/sklearn-forest-ci/badge.svg?branch=master&service=github)](https://coveralls.io/r/uwescience/sklearn-forest-ci)
-[![CircleCI Status](https://circleci.com/gh/uwescience/sklearn-forest-ci.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/uwescience/sklearn-forest-ci/tree/master)
+[![Travis Status](https://travis-ci.org/uwescience/forest-confidence-interval.svg?branch=master)](https://travis-ci.org/uwescience/forest-confidence-interval)
+[![Coveralls Status](https://coveralls.io/repos/uwescience/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/uwescience/forest-confidence-interval)
+[![CircleCI Status](https://circleci.com/gh/uwescience/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/uwescience/forest-confidence-interval/tree/master)
 
-`sklearn-forest-ci` is a Python module for calculating variance and adding
+`forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
 objects. The core functions calculate an in-bag and error bars for
 random forest objects
@@ -35,4 +35,4 @@ $ python setup.py install
 ```
 
 ## Examples
-See [examples gallery](http://uwescience.github.io/sklearn-forest-ci/auto_examples/index.html)
+See [examples gallery](http://uwescience.github.io/forest-confidence-interval/auto_examples/index.html)
