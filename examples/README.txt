@@ -4,7 +4,7 @@ Examples
 =========
 
 The examples use data from standard machine learning libraries to demonstrate
-how `sklforestci` can be used to calculate error bars on
+how `forestci` can be used to calculate error bars on
 :class:`RandomForestRegressor` and :class:`RandomForestClassifier` objects. The
 regression example uses a data-set from the `UC Irvine Machine Learning Repository <https://archive.ics.uci.edu/ml/datasets/Auto+MPG>`_ with features of
 different cars and their MPG. The classification example generates synthetic

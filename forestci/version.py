@@ -23,7 +23,7 @@ CLASSIFIERS = ["Development Status :: 3 - Alpha",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "sklforestci: confidence intervals for scikit-learn "
+description = "forestci: confidence intervals for scikit-learn "
 description += "forest algorithms"
 # Long description will go up on the pypi page
 long_description = """
@@ -42,7 +42,7 @@ Please read the repository README_ on Github.
 
 """
 
-NAME = "sklforestci"
+NAME = "forestci"
 MAINTAINER = "Ariel Rokem"
 MAINTAINER_EMAIL = "arokem@uw.edu"
 DESCRIPTION = description

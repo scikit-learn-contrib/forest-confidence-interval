@@ -27,7 +27,7 @@ pip install numpy scipy scikit-learn
 
 To install the module execute:
 ```
-pip install sklforestci
+pip install forestci
 ```
 or, if you are installing from the source code:
 ```shell

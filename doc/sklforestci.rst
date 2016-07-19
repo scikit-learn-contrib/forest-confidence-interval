@@ -13,5 +13,5 @@ See the `README <https://github.com/uwescience/forest-confidence-interval/blob/m
 for more information.
 
 
-.. automodule:: sklforestci
+.. automodule:: forestci
    :members:

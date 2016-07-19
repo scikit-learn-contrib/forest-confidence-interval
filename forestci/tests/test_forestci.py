@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
-import sklforestci as fci
+import forestci as fci
 
 
 def test_random_forest_error():

@@ -13,7 +13,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import sklearn.cross_validation as xval
 from sklearn.ensemble import RandomForestClassifier
-import sklforestci as fci
+import forestci as fci
 from sklearn.datasets import make_classification
 
 spam_X, spam_y = make_classification(5000)

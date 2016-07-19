@@ -72,7 +72,7 @@ plot_gallery = True
 master_doc = 'index'
 
 # General information about the project.
-project = u'sklforestci'
+project = u'forestci'
 copyright = u'2016, Kivan Polimis, Ariel Rokem, Bryna Hazelton, The University of Washington eScience Institute'
 
 # The version info for the project you're documenting, acts as replacement for
