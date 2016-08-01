@@ -5,5 +5,5 @@ API Reference
 
 .. toctree::
 
-   sklforestci.rst
-   sklforestci.due.rst
+   forestci.rst
+   forestci.due.rst

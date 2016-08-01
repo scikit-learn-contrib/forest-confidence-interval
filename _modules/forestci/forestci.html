@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sklforestci.sklforestci &mdash; sklforestci 0.1.0 documentation</title>
+  <title>forestci.forestci &mdash; forestci 0.1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="sklforestci 0.1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="forestci 0.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -51,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> sklforestci
+            <a href="../../index.html" class="icon icon-home"> forestci
           
 
           
@@ -99,7 +99,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">sklforestci</a>
+        <a href="../../index.html">forestci</a>
       </nav>
 
 
@@ -118,7 +118,7 @@
       
           <li><a href="../index.html">Module code</a> &raquo;</li>
       
-    <li>sklforestci.sklforestci</li>
+    <li>forestci.forestci</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -130,10 +130,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for sklforestci.sklforestci</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble.forest</span> <span class="kn">import</span> <span class="n">_generate_sample_indices</span>
-<span class="kn">from</span> <span class="nn">.due</span> <span class="kn">import</span> <span class="n">_due</span><span class="p">,</span> <span class="n">_BibTeX</span>
+  <h1>Source code for forestci.forestci</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble.forest</span> <span class="k">import</span> <span class="n">_generate_sample_indices</span>
+<span class="kn">from</span> <span class="nn">.due</span> <span class="k">import</span> <span class="n">_due</span><span class="p">,</span> <span class="n">_BibTeX</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;calc_inbag&quot;</span><span class="p">,</span> <span class="s2">&quot;random_forest_error&quot;</span><span class="p">,</span> <span class="s2">&quot;_bias_correction&quot;</span><span class="p">,</span>
            <span class="s2">&quot;_core_computation&quot;</span><span class="p">]</span>
@@ -150,10 +150,10 @@
 <span class="s2">  year        =  2014,}&quot;&quot;&quot;</span><span class="p">),</span>
           <span class="n">description</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Confidence Intervals for Random Forests:&quot;</span><span class="p">,</span>
                        <span class="s2">&quot;The Jackknife and the Infinitesimal Jackknife&quot;</span><span class="p">),</span>
-          <span class="n">path</span><span class="o">=</span><span class="s1">&#39;sklforestci&#39;</span><span class="p">)</span>
+          <span class="n">path</span><span class="o">=</span><span class="s1">&#39;forestci&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="calc_inbag"><a class="viewcode-back" href="../../sklforestci.html#sklforestci.calc_inbag">[docs]</a><span class="k">def</span> <span class="nf">calc_inbag</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">forest</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_inbag"><a class="viewcode-back" href="../../sklforestci.html#forestci.calc_inbag">[docs]</a><span class="k">def</span> <span class="nf">calc_inbag</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">forest</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Derive samples used to create trees in scikit-learn RandomForest objects.</span>
 
@@ -206,7 +206,7 @@
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
 
 
-<div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../sklforestci.html#sklforestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
+<div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../sklforestci.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates error bars from scikit-learn RandomForest estimators.</span>
 

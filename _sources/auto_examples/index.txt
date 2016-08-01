@@ -4,7 +4,7 @@ Examples
 =========
 
 The examples use data from standard machine learning libraries to demonstrate
-how `sklforestci` can be used to calculate error bars on
+how `forestci` can be used to calculate error bars on
 :class:`RandomForestRegressor` and :class:`RandomForestClassifier` objects. The
 regression example uses a data-set from the `UC Irvine Machine Learning Repository <https://archive.ics.uci.edu/ml/datasets/Auto+MPG>`_ with features of
 different cars and their MPG. The classification example generates synthetic
@@ -13,7 +13,7 @@ of two categories (e.g., spam/non-spam) based on a number of features.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates using `sklforestci` to calculate the error bars of the predictions of...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates using `forestci` to calculate the error bars of the predictions of a ...">
 
 .. only:: html
 

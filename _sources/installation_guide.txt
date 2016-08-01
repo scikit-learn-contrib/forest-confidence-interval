@@ -3,20 +3,20 @@
 Installation Guide
 ==================
 
-Before installing the `sklforestci` module, you will need `numpy`, `scipy`
+Before installing the `forestci` module, you will need `numpy`, `scipy`
 and `scikit-learn`
 
 .. code-block:: bash
 
    pip install numpy scipy scikit-learn
 
-Then, to install `sklforestci`:
+Then, to install `forestci`:
 
 .. code-block:: bash
 
-   pip install sklforestci
+   pip install forestci
 
-If you wish to install from the source code (available `here <https://github.com/uwescience/sklearn-forest-ci>`_ ), change your working directory to the top-level directory of the source code, and issue:
+If you wish to install from the source code (available `here <https://github.com/uwescience/forest-confidence-interval>`_ ), change your working directory to the top-level directory of the source code, and issue:
 
 .. code-block:: bash
 

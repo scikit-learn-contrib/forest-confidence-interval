@@ -30,7 +30,7 @@ of :func:`sklearn.datasets.make_classification`).
     from matplotlib import pyplot as plt
     import sklearn.cross_validation as xval
     from sklearn.ensemble import RandomForestClassifier
-    import sklforestci as fci
+    import forestci as fci
     from sklearn.datasets import make_classification
 
     spam_X, spam_y = make_classification(5000)
@@ -68,7 +68,7 @@ of :func:`sklearn.datasets.make_classification`).
     plt.show()
 
 **Total running time of the script:**
-(3 minutes 12.269 seconds)
+(3 minutes 3.483 seconds)
 
 
 

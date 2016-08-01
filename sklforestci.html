@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Random Forest Confidence Intervals &mdash; sklforestci 0.1.0 documentation</title>
+  <title>Random Forest Confidence Intervals &mdash; forestci 0.1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="sklforestci 0.1.0 documentation" href="index.html"/> 
+    <link rel="top" title="forestci 0.1.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -50,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> sklforestci
+            <a href="index.html" class="icon icon-home"> forestci
           
 
           
@@ -98,7 +98,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">sklforestci</a>
+        <a href="index.html">forestci</a>
       </nav>
 
 
@@ -136,11 +136,11 @@ RandomForest regressor or classifier objects. The variance can be used to plot
 error bars for RandomForest objects</p>
 <p>The inbag is a matrix documenting which sample entered which decision tree</p>
 <p>The error bar calculation is based on Wager&#8217;s (2014) infinitesimal jackknife variance</p>
-<p>See the <a class="reference external" href="https://github.com/uwescience/sklearn-forest-ci/blob/master/README.md">README</a>
+<p>See the <a class="reference external" href="https://github.com/uwescience/forest-confidence-interval/blob/master/README.md">README</a>
 for more information.</p>
-<span class="target" id="module-sklforestci"></span><dl class="function">
-<dt id="sklforestci.calc_inbag">
-<code class="descclassname">sklforestci.</code><code class="descname">calc_inbag</code><span class="sig-paren">(</span><em>n_samples</em>, <em>forest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sklforestci/sklforestci.html#calc_inbag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sklforestci.calc_inbag" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-forestci"></span><dl class="function">
+<dt id="forestci.calc_inbag">
+<code class="descclassname">forestci.</code><code class="descname">calc_inbag</code><span class="sig-paren">(</span><em>n_samples</em>, <em>forest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/forestci/forestci.html#calc_inbag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.calc_inbag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derive samples used to create trees in scikit-learn RandomForest objects.</p>
 <p>Recovers the samples in each tree from the random state of that tree using
 <code class="xref py py-func docutils literal"><span class="pre">forest._generate_sample_indices()</span></code>.</p>
@@ -168,8 +168,8 @@ for more information.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="sklforestci.random_forest_error">
-<code class="descclassname">sklforestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>inbag</em>, <em>X_train</em>, <em>X_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sklforestci/sklforestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sklforestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
+<dt id="forestci.random_forest_error">
+<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>inbag</em>, <em>X_train</em>, <em>X_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates error bars from scikit-learn RandomForest estimators.</p>
 <p>RandomForest is a regressor or classifier object
 this variance can be used to plot error bars for RandomForest objects</p>
@@ -199,7 +199,7 @@ this variance can be used to plot error bars for RandomForest objects</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#sklforestci.calc_inbag" title="sklforestci.calc_inbag"><code class="xref py py-func docutils literal"><span class="pre">calc_inbag()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#forestci.calc_inbag" title="forestci.calc_inbag"><code class="xref py py-func docutils literal"><span class="pre">calc_inbag()</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
 <p>The calculation of error is based on the infinitesimal jackknife variance,

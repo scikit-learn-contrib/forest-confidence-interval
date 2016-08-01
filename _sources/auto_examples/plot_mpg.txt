@@ -7,7 +7,7 @@
 Plotting Regresssion Forest Error Bars
 ======================================
 
-This example demonstrates using `sklforestci` to calculate the error bars of
+This example demonstrates using `forestci` to calculate the error bars of
 the predictions of a :class:`sklearn.ensemble.RandomForestRegressor` object.
 
 The data used here are a classical machine learning data-set, describing
@@ -31,7 +31,7 @@ various features of different cars, and their MPG.
     from sklearn.ensemble import RandomForestRegressor
     import sklearn.cross_validation as xval
     from sklearn.datasets.mldata import fetch_mldata
-    import sklforestci as fci
+    import forestci as fci
 
     # retreive mpg data from machine learning library
     mpg_data = fetch_mldata('mpg')
@@ -66,7 +66,7 @@ various features of different cars, and their MPG.
     plt.show()
 
 **Total running time of the script:**
-(0 minutes 6.265 seconds)
+(0 minutes 5.522 seconds)
 
 
 

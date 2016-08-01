@@ -1,17 +1,17 @@
 .. AUTO-GENERATED FILE -- DO NOT EDIT!
 
-:mod:`sklforestci`
-==================
-.. automodule:: sklforestci
+:mod:`forestci`
+===============
+.. automodule:: forestci
 
-.. currentmodule:: sklforestci
+.. currentmodule:: forestci
 .. autosummary::
 
    calc_inbag
    random_forest_error
 
 
-.. currentmodule:: sklforestci
+.. currentmodule:: forestci
 
 calc_inbag
 ~~~~~~~~~~
