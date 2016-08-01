@@ -5,7 +5,7 @@ machine:
     USERNAME: "uwescience"
 
     # The repository where the documentation will be hosted
-    DOC_REPO: "sklearn-forest-ci"
+    DOC_REPO: "forest-confidence-interval"
 
     # The base URL for the Github page where the documentation will be hosted
     DOC_URL: ""

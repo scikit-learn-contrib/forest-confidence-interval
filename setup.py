@@ -17,8 +17,8 @@ except ImportError:
     print('scipy is required during installation')
     sys.exit(1)
 
-# Get version and release info, which is all stored in sklforestci/version.py
-ver_file = os.path.join('sklforestci', 'version.py')
+# Get version and release info, which is all stored in forestci/version.py
+ver_file = os.path.join('forestci', 'version.py')
 with open(ver_file) as f:
     exec(f.read())
 

@@ -17,7 +17,7 @@ _due.cite(_BibTeX("""
   year        =  2014,}"""),
           description=("Confidence Intervals for Random Forests:",
                        "The Jackknife and the Infinitesimal Jackknife"),
-          path='sklforestci')
+          path='forestci')
 
 
 def calc_inbag(n_samples, forest):

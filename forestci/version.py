@@ -23,7 +23,7 @@ CLASSIFIERS = ["Development Status :: 3 - Alpha",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "sklforestci: confidence intervals for scikit-learn "
+description = "forestci: confidence intervals for scikit-learn "
 description += "forest algorithms"
 # Long description will go up on the pypi page
 long_description = """
@@ -31,23 +31,23 @@ long_description = """
 sklearn forest ci
 =================
 
-`sklearn-forest-ci` is a Python module for calculating variance and adding
+`forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
 objects. The core functions calculate an in-bag and error bars for
 random forest objects
 
 Please read the repository README_ on Github.
 
-.. _README: https://github.com/uwescience/sklearn-forest-ci/blob/master/README.md
+.. _README: https://github.com/uwescience/forest-confidence-interval/blob/master/README.md
 
 """
 
-NAME = "sklforestci"
+NAME = "forestci"
 MAINTAINER = "Ariel Rokem"
 MAINTAINER_EMAIL = "arokem@uw.edu"
 DESCRIPTION = description
 LONG_DESCRIPTION = long_description
-URL = "http://github.com/uwescience/sklearn-forest-ci"
+URL = "http://github.com/uwescience/forest-confidence-interval"
 DOWNLOAD_URL = ""
 LICENSE = "MIT"
 AUTHOR = "Ariel Rokem, Bryna Hazelton, Kivan Polimis"

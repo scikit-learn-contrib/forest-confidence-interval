@@ -3,7 +3,7 @@
 Plotting Regresssion Forest Error Bars
 ======================================
 
-This example demonstrates using `sklforestci` to calculate the error bars of
+This example demonstrates using `forestci` to calculate the error bars of
 the predictions of a :class:`sklearn.ensemble.RandomForestRegressor` object.
 
 The data used here are a classical machine learning data-set, describing
@@ -16,7 +16,7 @@ from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 import sklearn.cross_validation as xval
 from sklearn.datasets.mldata import fetch_mldata
-import sklforestci as fci
+import forestci as fci
 
 # retreive mpg data from machine learning library
 mpg_data = fetch_mldata('mpg')
