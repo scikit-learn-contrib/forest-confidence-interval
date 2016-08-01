@@ -119,7 +119,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/sklforestci.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/forestci.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -131,11 +131,11 @@
             
   <div class="section" id="random-forest-confidence-intervals">
 <h1>Random Forest Confidence Intervals<a class="headerlink" href="#random-forest-confidence-intervals" title="Permalink to this headline">¶</a></h1>
-<p>This module creates an in-bag and calculates the variance for a scikit-learn
-RandomForest regressor or classifier objects. The variance can be used to plot
-error bars for RandomForest objects</p>
-<p>The inbag is a matrix documenting which sample entered which decision tree</p>
-<p>The error bar calculation is based on Wager&#8217;s (2014) infinitesimal jackknife variance</p>
+<p>This module creates an in-bag and calculates the variance of a prediction for
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.17.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> or
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.17.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects. This variance in the
+prediction is calculated using the <a class="reference internal" href="reference/forestci.html#wager2014" id="id1">[Wager2014]</a> infinitesimal jackknife variance
+method. The variance can be used to plot error bars for RandomForest objects</p>
 <p>See the <a class="reference external" href="https://github.com/uwescience/forest-confidence-interval/blob/master/README.md">README</a>
 for more information.</p>
 <span class="target" id="module-forestci"></span><dl class="function">
@@ -199,22 +199,30 @@ this variance can be used to plot error bars for RandomForest objects</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#forestci.calc_inbag" title="forestci.calc_inbag"><code class="xref py py-func docutils literal"><span class="pre">calc_inbag()</span></code></a></p>
+<p class="last"><a class="reference internal" href="reference/forestci.html#forestci.calc_inbag" title="forestci.calc_inbag"><code class="xref py py-func docutils literal"><span class="pre">calc_inbag()</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
 <p>The calculation of error is based on the infinitesimal jackknife variance,
-as described in <a class="reference internal" href="#wager2014" id="id1">[Wager2014]</a> and is a Python implementation of the R code
+as described in <a class="reference internal" href="reference/forestci.html#wager2014" id="id2">[Wager2014]</a> and is a Python implementation of the R code
 provided at: <a class="reference external" href="https://github.com/swager/randomForestCI">https://github.com/swager/randomForestCI</a></p>
 <table class="docutils citation" frame="void" id="wager2014" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[Wager2014]</a></td><td>S. Wager, T. Hastie, B. Efron. &#8220;Confidence Intervals for
+<tr><td class="label">[Wager2014]</td><td>S. Wager, T. Hastie, B. Efron. &#8220;Confidence Intervals for
 Random Forests: The Jackknife and the Infinitesimal Jackknife&#8221;, Journal
 of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</td></tr>
 </tbody>
 </table>
 </dd></dl>
 
+<table class="docutils citation" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[Wager2014]</td><td>S. Wager, T. Hastie, B. Efron. &#8220;Confidence Intervals for
+Random Forests: The Jackknife and the Infinitesimal Jackknife&#8221;, Journal
+of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</td></tr>
+</tbody>
+</table>
 </div>
 
 
