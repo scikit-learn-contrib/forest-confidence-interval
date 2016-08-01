@@ -38,7 +38,7 @@ random forest objects
 
 Please read the repository README_ on Github.
 
-.. _README: https://github.com/uwescience/forest-confidence-interval/blob/master/README.md
+.. _README: https://github.com/scikit-learn-contrib/forest-confidence-interval/blob/master/README.md
 
 """
 
@@ -47,7 +47,7 @@ MAINTAINER = "Ariel Rokem"
 MAINTAINER_EMAIL = "arokem@uw.edu"
 DESCRIPTION = description
 LONG_DESCRIPTION = long_description
-URL = "http://github.com/uwescience/forest-confidence-interval"
+URL = "http://github.com/scikit-learn-contrib/forest-confidence-interval"
 DOWNLOAD_URL = ""
 LICENSE = "MIT"
 AUTHOR = "Ariel Rokem, Bryna Hazelton, Kivan Polimis"

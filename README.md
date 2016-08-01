@@ -1,8 +1,8 @@
 # `forest-confidence-interval`: Confidence intervals for Forest algorithms
 
-[![Travis Status](https://travis-ci.org/uwescience/forest-confidence-interval.svg?branch=master)](https://travis-ci.org/uwescience/forest-confidence-interval)
-[![Coveralls Status](https://coveralls.io/repos/uwescience/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/uwescience/forest-confidence-interval)
-[![CircleCI Status](https://circleci.com/gh/uwescience/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/uwescience/forest-confidence-interval/tree/master)
+[![Travis Status](https://travis-ci.org/scikit-learn-contrib/forest-confidence-interval.svg?branch=master)](https://travis-ci.org/scikit-learn-contrib/forest-confidence-interval)
+[![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/forest-confidence-interval)
+[![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval/tree/master)
 
 `forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
