@@ -6,4 +6,3 @@ API Reference
 .. toctree::
 
    forestci.rst
-   forestci.due.rst
