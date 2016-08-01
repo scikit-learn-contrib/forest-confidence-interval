@@ -35,4 +35,4 @@ $ python setup.py install
 ```
 
 ## Examples
-See [examples gallery](http://uwescience.github.io/forest-confidence-interval/auto_examples/index.html)
+See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
