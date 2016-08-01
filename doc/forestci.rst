@@ -7,7 +7,7 @@ This module creates an in-bag and calculates the variance of a prediction for
 prediction is calculated using the [Wager2014]_ infinitesimal jackknife variance
 method. The variance can be used to plot error bars for RandomForest objects
 
-See the `README <https://github.com/uwescience/forest-confidence-interval/blob/master/README.md>`_
+See the `README <https://github.com/scikit-learn-contrib/forest-confidence-interval/blob/master/README.md>`_
 for more information.
 
 
