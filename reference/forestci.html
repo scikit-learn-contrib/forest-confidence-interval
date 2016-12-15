@@ -133,7 +133,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/reference/forestci.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/forestci.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -154,7 +154,7 @@
 <tr class="row-odd"><td><a class="reference internal" href="#forestci.calc_inbag" title="forestci.calc_inbag"><code class="xref py py-obj docutils literal"><span class="pre">calc_inbag</span></code></a>(n_samples,&nbsp;forest)</td>
 <td>Derive samples used to create trees in scikit-learn RandomForest objects.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#forestci.random_forest_error" title="forestci.random_forest_error"><code class="xref py py-obj docutils literal"><span class="pre">random_forest_error</span></code></a>(forest,&nbsp;inbag,&nbsp;X_train,&nbsp;...)</td>
+<tr class="row-even"><td><a class="reference internal" href="#forestci.random_forest_error" title="forestci.random_forest_error"><code class="xref py py-obj docutils literal"><span class="pre">random_forest_error</span></code></a>(forest,&nbsp;X_train,&nbsp;X_test)</td>
 <td>Calculates error bars from scikit-learn RandomForest estimators.</td>
 </tr>
 </tbody>
@@ -195,7 +195,7 @@
 <h2>random_forest_error<a class="headerlink" href="#random-forest-error" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="forestci.random_forest_error">
-<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>inbag</em>, <em>X_train</em>, <em>X_test</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>X_train</em>, <em>X_test</em>, <em>inbag=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates error bars from scikit-learn RandomForest estimators.</p>
 <p>RandomForest is a regressor or classifier object
 this variance can be used to plot error bars for RandomForest objects</p>
@@ -207,13 +207,17 @@ this variance can be used to plot error bars for RandomForest objects</p>
 <blockquote>
 <div><p>Regressor or Classifier object.</p>
 </div></blockquote>
-<p><strong>inbag</strong> : ndarray</p>
-<blockquote>
-<div><p>The inbag matrix that fit the data.</p>
-</div></blockquote>
 <p><strong>X</strong> : ndarray</p>
 <blockquote>
 <div><p>An array with shape (n_sample, n_features).</p>
+</div></blockquote>
+<p><strong>inbag</strong> : ndarray (optional)</p>
+<blockquote>
+<div><p>The inbag matrix that fit the data. If set to <cite>None</cite> (default) it
+will be inferred from the forest. However, this only works for trees
+for which bootstrapping was set to <cite>True</cite>. That is, if sampling was
+done with replacement. Otherwise, users need to provide their own
+inbag matrix.</p>
 </div></blockquote>
 </td>
 </tr>

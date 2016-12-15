@@ -11,6 +11,8 @@ different cars and their MPG. The classification example generates synthetic
 data to simulate a task like that of a spam filter: classifying items into one
 of two categories (e.g., spam/non-spam) based on a number of features.
 
+
+
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates using `forestci` to calculate the error bars of the predictions of a ...">
@@ -56,15 +58,18 @@ of two categories (e.g., spam/non-spam) based on a number of features.
 
 
 
-.. container:: sphx-glr-download
+.. container:: sphx-glr-footer
+
+
+  .. container:: sphx-glr-download
 
     :download:`Download all examples in Python source code: auto_examples_python.zip </auto_examples/auto_examples_python.zip>`
 
 
 
-.. container:: sphx-glr-download
+  .. container:: sphx-glr-download
 
-    :download:`Download all examples in Jupyter notebook files: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
+    :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
 
 .. rst-class:: sphx-glr-signature
 

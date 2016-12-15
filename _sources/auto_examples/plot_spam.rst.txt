@@ -50,8 +50,8 @@ of :func:`sklearn.datasets.make_classification`).
 
     # calculate inbag and unbiased variance
     spam_inbag = fci.calc_inbag(spam_X_train.shape[0], spam_RFC)
-    spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_inbag,
-                                                 spam_X_train, spam_X_test)
+    spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train,
+                                                 spam_X_test)
 
     # Plot forest prediction for emails and standard deviation for estimates
     # Blue points are spam emails; Green points are non-spam emails
@@ -68,19 +68,22 @@ of :func:`sklearn.datasets.make_classification`).
     plt.legend()
     plt.show()
 
-**Total running time of the script:** ( 2 minutes  59.651 seconds)
+**Total running time of the script:** ( 2 minutes  38.414 seconds)
 
 
 
-.. container:: sphx-glr-download
-
-    :download:`Download Python source code: plot_spam.py <plot_spam.py>`
+.. container:: sphx-glr-footer
 
 
+  .. container:: sphx-glr-download
 
-.. container:: sphx-glr-download
+     :download:`Download Python source code: plot_spam.py <plot_spam.py>`
 
-    :download:`Download Jupyter notebook: plot_spam.ipynb <plot_spam.ipynb>`
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_spam.ipynb <plot_spam.ipynb>`
 
 .. rst-class:: sphx-glr-signature
 

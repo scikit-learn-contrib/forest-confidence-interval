@@ -56,8 +56,8 @@ various features of different cars, and their MPG.
 
     # calculate inbag and unbiased variance
     mpg_inbag = fci.calc_inbag(mpg_X_train.shape[0], mpg_forest)
-    mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_inbag,
-                                                mpg_X_train, mpg_X_test)
+    mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train,
+                                                mpg_X_test)
 
     # Plot error bars for predicted MPG using unbiased variance
     plt.errorbar(mpg_y_test, mpg_y_hat, yerr=np.sqrt(mpg_V_IJ_unbiased), fmt='o')
@@ -66,19 +66,22 @@ various features of different cars, and their MPG.
     plt.ylabel('Predicted MPG')
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  8.258 seconds)
+**Total running time of the script:** ( 0 minutes  8.403 seconds)
 
 
 
-.. container:: sphx-glr-download
-
-    :download:`Download Python source code: plot_mpg.py <plot_mpg.py>`
+.. container:: sphx-glr-footer
 
 
+  .. container:: sphx-glr-download
 
-.. container:: sphx-glr-download
+     :download:`Download Python source code: plot_mpg.py <plot_mpg.py>`
 
-    :download:`Download Jupyter notebook: plot_mpg.ipynb <plot_mpg.ipynb>`
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_mpg.ipynb <plot_mpg.ipynb>`
 
 .. rst-class:: sphx-glr-signature
 

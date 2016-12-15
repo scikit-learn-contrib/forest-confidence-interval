@@ -177,6 +177,11 @@
 <span class="sd">    Columns are individual trees. Rows are the number of times a sample was</span>
 <span class="sd">    used in a tree.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">forest</span><span class="o">.</span><span class="n">bootstrap</span><span class="p">:</span>
+        <span class="n">e_s</span> <span class="o">=</span> <span class="s2">&quot;Cannot calculate the inbag from a forest that has &quot;</span>
+        <span class="n">e_s</span> <span class="o">=</span> <span class="s2">&quot; bootstrap=False&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">e_s</span><span class="p">)</span>
+
     <span class="n">n_trees</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">n_estimators</span>
     <span class="n">inbag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">))</span>
     <span class="n">sample_idx</span> <span class="o">=</span> <span class="p">[]</span>
@@ -209,7 +214,7 @@
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
 
 
-<div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../reference/forestci.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
+<div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../reference/forestci.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates error bars from scikit-learn RandomForest estimators.</span>
 
@@ -221,11 +226,15 @@
 <span class="sd">    forest : RandomForest</span>
 <span class="sd">        Regressor or Classifier object.</span>
 
-<span class="sd">    inbag : ndarray</span>
-<span class="sd">        The inbag matrix that fit the data.</span>
-
 <span class="sd">    X : ndarray</span>
 <span class="sd">        An array with shape (n_sample, n_features).</span>
+
+<span class="sd">    inbag : ndarray (optional)</span>
+<span class="sd">        The inbag matrix that fit the data. If set to `None` (default) it</span>
+<span class="sd">        will be inferred from the forest. However, this only works for trees</span>
+<span class="sd">        for which bootstrapping was set to `True`. That is, if sampling was</span>
+<span class="sd">        done with replacement. Otherwise, users need to provide their own</span>
+<span class="sd">        inbag matrix.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -246,12 +255,20 @@
 <span class="sd">       Random Forests: The Jackknife and the Infinitesimal Jackknife&quot;, Journal</span>
 <span class="sd">       of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inbag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inbag</span> <span class="o">=</span> <span class="n">calc_inbag</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">forest</span><span class="p">)</span>
     <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">forest</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
     <span class="n">pred_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">pred_centered</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">-</span> <span class="n">pred_mean</span>
     <span class="n">n_trees</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">n_estimators</span>
     <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">)</span>
     <span class="n">V_IJ_unbiased</span> <span class="o">=</span> <span class="n">_bias_correction</span><span class="p">(</span><span class="n">V_IJ</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">)</span>
+
+    <span class="c1"># Correct for cases where resampling is done without replacement:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">inbag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">variance_inflation</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">inbag</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">V_IJ_unbiased</span> <span class="o">*=</span> <span class="n">variance_inflation</span>
+
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span></div>
 </pre></div>
 

@@ -122,7 +122,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/forestci.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/forestci.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -135,8 +135,8 @@
   <div class="section" id="random-forest-confidence-intervals">
 <h1>Random Forest Confidence Intervals<a class="headerlink" href="#random-forest-confidence-intervals" title="Permalink to this headline">¶</a></h1>
 <p>This module creates an in-bag and calculates the variance of a prediction for
-<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.18)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> or
-<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.18)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects. This variance in the
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.18.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> or
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.18.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects. This variance in the
 prediction is calculated using the <a class="reference internal" href="reference/forestci.html#wager2014" id="id1">[Wager2014]</a> infinitesimal jackknife variance
 method. The variance can be used to plot error bars for RandomForest objects</p>
 <p>See the <a class="reference external" href="https://github.com/scikit-learn-contrib/forest-confidence-interval/blob/master/README.md">README</a>
@@ -172,7 +172,7 @@ for more information.</p>
 
 <dl class="function">
 <dt id="forestci.random_forest_error">
-<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>inbag</em>, <em>X_train</em>, <em>X_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>X_train</em>, <em>X_test</em>, <em>inbag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates error bars from scikit-learn RandomForest estimators.</p>
 <p>RandomForest is a regressor or classifier object
 this variance can be used to plot error bars for RandomForest objects</p>
@@ -184,13 +184,17 @@ this variance can be used to plot error bars for RandomForest objects</p>
 <blockquote>
 <div><p>Regressor or Classifier object.</p>
 </div></blockquote>
-<p><strong>inbag</strong> : ndarray</p>
-<blockquote>
-<div><p>The inbag matrix that fit the data.</p>
-</div></blockquote>
 <p><strong>X</strong> : ndarray</p>
 <blockquote>
 <div><p>An array with shape (n_sample, n_features).</p>
+</div></blockquote>
+<p><strong>inbag</strong> : ndarray (optional)</p>
+<blockquote>
+<div><p>The inbag matrix that fit the data. If set to <cite>None</cite> (default) it
+will be inferred from the forest. However, this only works for trees
+for which bootstrapping was set to <cite>True</cite>. That is, if sampling was
+done with replacement. Otherwise, users need to provide their own
+inbag matrix.</p>
 </div></blockquote>
 </td>
 </tr>

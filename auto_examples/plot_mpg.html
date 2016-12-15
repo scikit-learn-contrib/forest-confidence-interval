@@ -131,7 +131,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/auto_examples/plot_mpg.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/auto_examples/plot_mpg.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -144,7 +144,7 @@
   <div class="section" id="plotting-regresssion-forest-error-bars">
 <span id="sphx-glr-auto-examples-plot-mpg-py"></span><h1>Plotting Regresssion Forest Error Bars<a class="headerlink" href="#plotting-regresssion-forest-error-bars" title="Permalink to this headline">¶</a></h1>
 <p>This example demonstrates using <cite>forestci</cite> to calculate the error bars of
-the predictions of a <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.18)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> object.</p>
+the predictions of a <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.18.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> object.</p>
 <p>The data used here are a classical machine learning data-set, describing
 various features of different cars, and their MPG.</p>
 <img alt="../_images/sphx_glr_plot_mpg_001.png" class="align-center" src="../_images/sphx_glr_plot_mpg_001.png" />
@@ -178,8 +178,8 @@ various features of different cars, and their MPG.</p>
 
 <span class="c1"># calculate inbag and unbiased variance</span>
 <span class="n">mpg_inbag</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">calc_inbag</span><span class="p">(</span><span class="n">mpg_X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mpg_forest</span><span class="p">)</span>
-<span class="n">mpg_V_IJ_unbiased</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">random_forest_error</span><span class="p">(</span><span class="n">mpg_forest</span><span class="p">,</span> <span class="n">mpg_inbag</span><span class="p">,</span>
-                                            <span class="n">mpg_X_train</span><span class="p">,</span> <span class="n">mpg_X_test</span><span class="p">)</span>
+<span class="n">mpg_V_IJ_unbiased</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">random_forest_error</span><span class="p">(</span><span class="n">mpg_forest</span><span class="p">,</span> <span class="n">mpg_X_train</span><span class="p">,</span>
+                                            <span class="n">mpg_X_test</span><span class="p">)</span>
 
 <span class="c1"># Plot error bars for predicted MPG using unbiased variance</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">mpg_y_test</span><span class="p">,</span> <span class="n">mpg_y_hat</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mpg_V_IJ_unbiased</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
@@ -189,11 +189,13 @@ various features of different cars, and their MPG.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  8.258 seconds)</p>
-<div class="sphx-glr-download container">
+<p><strong>Total running time of the script:</strong> ( 0 minutes  8.403 seconds)</p>
+<div class="sphx-glr-footer docutils container">
+<div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_mpg.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_mpg.py</span></code></a></div>
-<div class="sphx-glr-download container">
+<div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_mpg.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mpg.ipynb</span></code></a></div>
+</div>
 <p class="sphx-glr-signature"><a class="reference external" href="http://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
 </div>
 
