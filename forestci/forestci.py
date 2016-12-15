@@ -127,4 +127,10 @@ def random_forest_error(forest, X_train, X_test, inbag=None):
     n_trees = forest.n_estimators
     V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
+
+    # Correct for cases where resampling is done without replacement:
+    if np.max(inbag) == 1:
+        variance_inflation = 1 / (1 - np.mean(inbag)) ** 2
+        V_IJ_unbiased *= variance_inflation
+
     return V_IJ_unbiased
