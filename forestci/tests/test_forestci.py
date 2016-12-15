@@ -25,7 +25,7 @@ def test_random_forest_error():
     forest = RandomForestRegressor(n_estimators=n_trees)
     forest.fit(X_train, y_train)
     inbag = fci.calc_inbag(X_train.shape[0], forest)
-    V_IJ_unbiased = fci.random_forest_error(forest, inbag, X_train, X_test)
+    V_IJ_unbiased = fci.random_forest_error(forest, X_train, X_test)
     npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
 
 

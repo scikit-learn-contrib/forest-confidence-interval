@@ -73,7 +73,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def random_forest_error(forest, inbag, X_train, X_test):
+def random_forest_error(forest, X_train, X_test):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
 
@@ -84,10 +84,7 @@ def random_forest_error(forest, inbag, X_train, X_test):
     ----------
     forest : RandomForest
         Regressor or Classifier object.
-
-    inbag : ndarray
-        The inbag matrix that fit the data.
-
+        
     X : ndarray
         An array with shape (n_sample, n_features).
 
@@ -110,6 +107,7 @@ def random_forest_error(forest, inbag, X_train, X_test):
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
+    inbag = calc_inbag(X_train.shape[0], forest)
     pred = np.array([tree.predict(X_test) for tree in forest]).T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
