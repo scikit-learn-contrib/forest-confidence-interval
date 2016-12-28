@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.stats import norm
 from sklearn.ensemble.forest import _generate_sample_indices
 from .due import _due, _BibTeX
 
@@ -41,11 +42,6 @@ def calc_inbag(n_samples, forest):
     Columns are individual trees. Rows are the number of times a sample was
     used in a tree.
     """
-    if not forest.bootstrap:
-        e_s = "Cannot calculate the inbag from a forest that has "
-        e_s = " bootstrap=False"
-        raise ValueError(e_s)
-
     n_trees = forest.n_estimators
     inbag = np.zeros((n_samples, n_trees))
     sample_idx = []
@@ -78,7 +74,55 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def random_forest_error(forest, X_train, X_test, inbag=None):
+def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
+    """
+    Fit an empirical Bayes prior in the hierarchical model
+        mu ~ G, X ~ N(mu, sigma^2)
+
+    Parameters
+    ----------
+    X: ndarray
+        A 1D array of observations
+    sigma: float
+        noise estimate on X
+    p: int
+        tuning parameter -- number of parameters used to fit G
+    nbin: int
+        tuning parameter -- number of bins used for discrete approximation
+    unif_fraction: float
+        tuning parameter -- fraction of G modeled as "slab"
+
+    Returns
+    -------
+    An array of the posterior density estimate g
+
+    Notes
+    -----
+    .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes
+        estimation." Stat. Sci., 29(2): 285–301, 2014.
+    """
+    min_x = min(min(X) - 2 * np.std(X), 0)
+    max_x = max(max(X) + 2 * np.std(X))
+    binw = (max_x - min_x) / (nbin - 1)
+    xvals = np.arange(min_x, max_x + 1, binw)
+
+    zero_idx = max(np.where(xvals <= 0)[0])
+    noise_kernel = norm().pdf(xvals / sigma) * binw / sigma
+
+    if zero_idx > 0:
+        noise_rotate = noise_kernel[list(np.arange(zero_idx, len(xvals))) +
+                                    list(np.arange(0, zero_idx))]
+    else:
+        noise_rotate = noise_kernel
+
+    XX = np.zeros((p, len(xvals)), dtype=np.float)
+    for ind, exp in enumerate(range(p)):
+        mask = np.ones_like(xvals)
+        mask[np.where(xvals <= 0)[0]] = 0
+        XX[ind, :] = np.pow(xvals, exp) * mask
+
+
+def random_forest_error(forest, inbag, X_train, X_test):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
 
@@ -90,15 +134,11 @@ def random_forest_error(forest, X_train, X_test, inbag=None):
     forest : RandomForest
         Regressor or Classifier object.
 
+    inbag : ndarray
+        The inbag matrix that fit the data.
+
     X : ndarray
         An array with shape (n_sample, n_features).
-
-    inbag : ndarray (optional)
-        The inbag matrix that fit the data. If set to `None` (default) it
-        will be inferred from the forest. However, this only works for trees
-        for which bootstrapping was set to `True`. That is, if sampling was
-        done with replacement. Otherwise, users need to provide their own
-        inbag matrix.
 
     Returns
     -------
@@ -119,18 +159,10 @@ def random_forest_error(forest, X_train, X_test, inbag=None):
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
-    if inbag is None:
-        inbag = calc_inbag(X_train.shape[0], forest)
     pred = np.array([tree.predict(X_test) for tree in forest]).T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
     n_trees = forest.n_estimators
     V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
-
-    # Correct for cases where resampling is done without replacement:
-    if np.max(inbag) == 1:
-        variance_inflation = 1 / (1 - np.mean(inbag)) ** 2
-        V_IJ_unbiased *= variance_inflation
-
     return V_IJ_unbiased
