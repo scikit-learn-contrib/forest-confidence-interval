@@ -118,22 +118,15 @@ def calibrateEB = (vars, sigma2):
     """
 
     if(sigma2 <= 0 | min(vars) == max(vars)) {
-        return(pmax(vars, 0))
+        return(np.maximum(vars, 0))
         }
-    sigma = sqrt(sigma2)
+    sigma = np.sqrt(sigma2)
     eb_prior = gfit(vars, sigma)
 
     if (length(vars >= 200)){
     # If there are many test points, use interpolation to speed up computations
-        calib_x = quantile(vars, q=seq(0, 1, by=0.02))
+        calib_x = quantile(vars, np.arange(0, 1.02, .02))
         calib_y = sapply(calib_x, function(xx) gbayes(xx, eb_prior, sigma))
-
-        XX = np.zeros((p, len(xvals)), dtype=np.float)
-        for ind, exp in enumerate(range(p)):
-            mask = np.ones_like(xvals)
-            mask[np.where(xvals <= 0)[0]] = 0
-            XX[ind, :] = np.pow(xvals, exp) * mask
-
         calib_all = approx(x=calib_x, y=calib_y, xout=vars)$y
     }
     else{
