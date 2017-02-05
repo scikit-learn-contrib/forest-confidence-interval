@@ -36,3 +36,9 @@ $ python setup.py install
 
 ## Examples
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
+
+## Testing
+
+## Community guidelines
+
+To contribute to the software, report issues or problems with the software, or seek support
