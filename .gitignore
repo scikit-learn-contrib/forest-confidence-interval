@@ -67,3 +67,4 @@ target/
 
 # Paper files
 paper/references/*
+paper/*.txt
