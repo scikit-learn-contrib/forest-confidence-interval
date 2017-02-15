@@ -31,7 +31,7 @@ pip install forestci
 ```
 or, if you are installing from the source code:
 ```shell
-$ python setup.py install
+python setup.py install
 ```
 
 ## Examples
