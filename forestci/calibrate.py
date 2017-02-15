@@ -1,3 +1,7 @@
+import functools
+import scipy.interpolate
+
+
 def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
     """
     Fit an empirical Bayes prior in the hierarchical model
@@ -117,20 +121,20 @@ def calibrateEB = (vars, sigma2):
           estimation." Stat. Sci., 29(2): 285–301, 2014.
     """
 
-    if(sigma2 <= 0 | min(vars) == max(vars)) {
+    if (sigma2 <= 0 | min(vars) == max(vars)):
         return(np.maximum(vars, 0))
-        }
-    sigma = np.sqrt(sigma2)
-    eb_prior = gfit(vars, sigma)
+        sigma = np.sqrt(sigma2)
+        eb_prior = gfit(vars, sigma)
 
-    if (length(vars >= 200)){
-    # If there are many test points, use interpolation to speed up computations
+    if (length(vars >= 200)):
+        # If there are many  points use interpolation to speed up computations
         calib_x = quantile(vars, np.arange(0, 1.02, .02))
-        calib_y = sapply(calib_x, function(xx) gbayes(xx, eb_prior, sigma))
-        calib_all = approx(x=calib_x, y=calib_y, xout=vars)$y
-    }
-    else{
-        calib_all = sapply(vars, function(xx) gbayes(xx, eb_prior, sigma))
-    }
+        calib_y = list(map(gbayes(xx, eb_prior, sigma), calib_x))
+        calib_y = map(functools.partial(gbayes, g_est=eb_prior, sigma=sigma),
+                      calib_x)
+        calib_all = scipy.interpolate.interp1d(calib_x, calib_y)(vars)
+    else:
+        calib_all = map(functools.partial(gbayes, g_est=eb_prior, sigma=sigma),
+                        vars)
 
     return(calib_all)
