@@ -65,5 +65,13 @@ docs/_build/
 # PyBuilder
 target/
 
+# R files
+.Rhistory
+.Rapp.history
+.RData
+
+# Mac files
+*.DS_Store
+
 # Paper files
 paper/references/*
