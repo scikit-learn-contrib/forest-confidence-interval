@@ -2,6 +2,23 @@ import functools
 import scipy.interpolate
 
 
+
+def neg_loglik(eta, XX):
+        g_eta_raw = np.exp(np.dot(XX, eta)) * float(xvals >= 0)
+        if (
+         (sum(g_eta_raw) == math.inf) |
+         (sum(g_eta_raw) <= 100 * np.finfo(np.double).tiny)):
+            return (1000 * (length(X) + sum(eta ^ 2)))
+
+        g_eta_main = g_eta_raw / sum(g_eta_raw)
+        g_eta = (1 - unif_fraction) * g_eta_main +
+        unif_fraction * float(xvals >= 0) / sum(xvals >= 0)
+        f_eta = np.convolve(g_eta, noise_rotate)
+
+        return np.sum(numpy.interp(xvals,
+                      -np.log(maximum(f_eta, 0.0000001)), X))
+
+
 def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
     """
     Fit an empirical Bayes prior in the hierarchical model
@@ -49,31 +66,16 @@ def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
         mask[np.where(xvals <= 0)[0]] = 0
         XX[ind, :] = np.pow(xvals, exp) * mask
 
-    # http://stackoverflow.com/questions/4831680/function-inside-function
+    eta_hat = nlm(neg_loglik, rep(-1, p))$estimate
+    g_eta_raw = exp(np.dot(XX, eta_hat)) * float(xvals >= 0)
+    g_eta_main = g_eta_raw / sum(g_eta_raw)
+    g_eta = (1 - unif_fraction) * g_eta_main +
+    unif_fraction * float(xvals >= 0) / sum(xvals >= 0)
+
+    return xvals, g_eta
 
 
-def neg_loglik(eta):
-        g_eta_raw = np.exp(np.dot(XX, eta)) * float(xvals >= 0)
-        if ((sum(g_eta_raw) == math.inf) | (sum(g_eta_raw) <= 100 * np.finfo(np.double).tiny)):
-            return (1000 * (length(X) + sum(eta ^ 2)))
-
-        g_eta_main = g_eta_raw / sum(g_eta_raw)
-        g_eta = (1 - unif_fraction) * g_eta_main +
-        unif_fraction * float(xvals >= 0) / sum(xvals >= 0)
-        f_eta = np.convolve(g_eta, noise_rotate)
-
-        sum(approx(xvals, -log(pmax(f.eta, 0.0000001)), X)$y)
-        sum(numpy.interp(xvals, -np.log(maximum(f_eta, 0.0000001)), X)["y"])
-        eta_hat = nlm(neg_loglik, rep(-1, p))$estimate
-        g_eta_raw = exp(XX %*% eta_hat) * float(xvals >= 0)
-        g_eta_main = g_eta_raw / sum(g_eta_raw)
-        g_eta = (1 - unif_fraction) * g_eta_main +
-        unif_fraction * float(xvals >= 0) / sum(xvals >= 0)
-
-        return(data.frame(x=xvals, g=g_eta))
-
-
-def gbayes = (x0, g_est, sigma):
+def gbayes(x0, g_est, sigma):
     """
     Bayes posterior estimation with Gaussian noise
 
