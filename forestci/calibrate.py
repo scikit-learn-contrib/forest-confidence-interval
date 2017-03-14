@@ -1,6 +1,6 @@
 import functools
 import scipy.interpolate
-
+import itertools
 
 
 def neg_loglik(eta, XX):
@@ -66,7 +66,7 @@ def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
         mask[np.where(xvals <= 0)[0]] = 0
         XX[ind, :] = np.pow(xvals, exp) * mask
 
-    eta_hat = nlm(neg_loglik, rep(-1, p))$estimate
+    eta_hat = minimize(neg_loglik, itertools.repeat(-1, p))
     g_eta_raw = exp(np.dot(XX, eta_hat)) * float(xvals >= 0)
     g_eta_main = g_eta_raw / sum(g_eta_raw)
     g_eta = (1 - unif_fraction) * g_eta_main +

@@ -8,7 +8,8 @@ __all__ = ["calc_inbag", "random_forest_error", "_bias_correction",
 
 _due.cite(_BibTeX("""
 @ARTICLE{Wager2014-wn,
-  title       = "Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife",
+  title       = "Confidence Intervals for Random Forests: The Jackknife and the
+                 Infinitesimal Jackknife",
   author      = "Wager, Stefan and Hastie, Trevor and Efron, Bradley",
   journal     = "J. Mach. Learn. Res.",
   volume      =  15,
@@ -74,54 +75,6 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
-    """
-    Fit an empirical Bayes prior in the hierarchical model
-        mu ~ G, X ~ N(mu, sigma^2)
-
-    Parameters
-    ----------
-    X: ndarray
-        A 1D array of observations
-    sigma: float
-        noise estimate on X
-    p: int
-        tuning parameter -- number of parameters used to fit G
-    nbin: int
-        tuning parameter -- number of bins used for discrete approximation
-    unif_fraction: float
-        tuning parameter -- fraction of G modeled as "slab"
-
-    Returns
-    -------
-    An array of the posterior density estimate g
-
-    Notes
-    -----
-    .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes
-        estimation." Stat. Sci., 29(2): 285–301, 2014.
-    """
-    min_x = min(min(X) - 2 * np.std(X), 0)
-    max_x = max(max(X) + 2 * np.std(X))
-    binw = (max_x - min_x) / (nbin - 1)
-    xvals = np.arange(min_x, max_x + 1, binw)
-
-    zero_idx = max(np.where(xvals <= 0)[0])
-    noise_kernel = norm().pdf(xvals / sigma) * binw / sigma
-
-    if zero_idx > 0:
-        noise_rotate = noise_kernel[list(np.arange(zero_idx, len(xvals))) +
-                                    list(np.arange(0, zero_idx))]
-    else:
-        noise_rotate = noise_kernel
-
-    XX = np.zeros((p, len(xvals)), dtype=np.float)
-    for ind, exp in enumerate(range(p)):
-        mask = np.ones_like(xvals)
-        mask[np.where(xvals <= 0)[0]] = 0
-        XX[ind, :] = np.pow(xvals, exp) * mask
-
-
 def random_forest_error(forest, inbag, X_train, X_test):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
@@ -159,6 +112,12 @@ def random_forest_error(forest, inbag, X_train, X_test):
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
+    # check if sampling without replacement
+    no_replacement = (max(inbag) == 1)
+    if no_replacement in True:
+        variance_inflation = np.square(1 - np.mean(inbag))
+        vars = variance_inflation * vars
+
     pred = np.array([tree.predict(X_test) for tree in forest]).T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
@@ -166,3 +125,21 @@ def random_forest_error(forest, inbag, X_train, X_test):
     V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
     return V_IJ_unbiased
+
+
+if calibrate is True:
+    # Compute variance estimates using half the trees
+    calibration_ratio = 2
+    n_sample = np.ceil(B / calibration.ratio)
+    results_ss = infJack(pred, inbag, calibrate=FALSE,
+                         used_trees=sample(used_trees, n_sample))
+
+    # Use this second set of variance estimates
+    # to estimate scale of Monte Carlo noise
+    sigma2_ss = mean((results_ss$var_hat - results$var_hat) ^ 2)
+    delta = n_sample / B
+    sigma2 = (delta ^ 2 + (1 - delta) ^ 2) / (2 * (1 - delta) ^ 2) * sigma2_ss
+
+    # Use Monte Carlo noise scale estimate for empirical Bayes calibration
+    vars_calibrated = calibrate(vars, sigma2)
+    results$var_hat = vars_calibrated
