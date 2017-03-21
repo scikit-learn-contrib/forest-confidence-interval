@@ -127,16 +127,16 @@ def random_forest_error(forest, inbag, X_train, X_test):
     return V_IJ_unbiased
 
 
-if calibrate is True:
-    # Compute variance estimates using half the trees
-    calibration_ratio = 2
-    n_sample = np.ceil(B / calibration.ratio)
-    results_ss = infJack(pred, inbag, calibrate=FALSE,
-                         used_trees=sample(used_trees, n_sample))
+    if calibrate is True:
+        # Compute variance estimates using half the trees
+        calibration_ratio = 2
+        n_sample = np.ceil(B / calibration.ratio)
+        results_ss = infJack(pred, inbag, calibrate=FALSE,
+                             used_trees=sample(used_trees, n_sample))
 
     # Use this second set of variance estimates
     # to estimate scale of Monte Carlo noise
-    sigma2_ss = mean((results_ss$var_hat - results$var_hat) ^ 2)
+    sigma2_ss = mean((results_ss[0] - results[0]) ^ 2)
     delta = n_sample / B
     sigma2 = (delta ^ 2 + (1 - delta) ^ 2) / (2 * (1 - delta) ^ 2) * sigma2_ss
 

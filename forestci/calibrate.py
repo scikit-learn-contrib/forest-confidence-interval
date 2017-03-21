@@ -98,9 +98,9 @@ def gbayes(x0, g_est, sigma):
           estimation." Stat. Sci., 29(2): 285–301, 2014.
     """
 
-    Kx = norm().pdf((g_est$x - x0) / sigma)
+    Kx = norm().pdf((g_est - x0) / sigma)
     post = post / sum(post)
-    sum(post * g._st$x)
+    sum(post * g_est)
 
 
 def calibrateEB = (vars, sigma2):
