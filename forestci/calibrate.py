@@ -11,8 +11,8 @@ def neg_loglik(eta, XX):
             return (1000 * (length(X) + sum(eta ^ 2)))
 
         g_eta_main = g_eta_raw / sum(g_eta_raw)
-        g_eta = (1 - unif_fraction) * g_eta_main +
-        unif_fraction * float(xvals >= 0) / sum(xvals >= 0)
+        g_eta = ((1 - unif_fraction) * g_eta_main +
+                 unif_fraction * float(xvals >= 0) / sum(xvals >= 0))
         f_eta = np.convolve(g_eta, noise_rotate)
 
         return np.sum(numpy.interp(xvals,
@@ -69,8 +69,8 @@ def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
     eta_hat = minimize(neg_loglik, itertools.repeat(-1, p))
     g_eta_raw = exp(np.dot(XX, eta_hat)) * float(xvals >= 0)
     g_eta_main = g_eta_raw / sum(g_eta_raw)
-    g_eta = (1 - unif_fraction) * g_eta_main +
-    unif_fraction * float(xvals >= 0) / sum(xvals >= 0)
+    g_eta = ((1 - unif_fraction) * g_eta_main +
+             unif_fraction * float(xvals >= 0) / sum(xvals >= 0))
 
     return xvals, g_eta
 
@@ -103,7 +103,7 @@ def gbayes(x0, g_est, sigma):
     sum(post * g_est)
 
 
-def calibrateEB = (vars, sigma2):
+def calibrateEB(vars, sigma2):
     """
     Empirical Bayes calibration of noisy variance estimates
 

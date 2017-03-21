@@ -1,5 +1,8 @@
 import numpy as np
 from scipy.stats import norm
+import forestci.calibrate
+import copy
+import warnings
 from sklearn.ensemble.forest import _generate_sample_indices
 from .due import _due, _BibTeX
 
@@ -75,7 +78,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def random_forest_error(forest, inbag, X_train, X_test):
+def random_forest_error(forest, inbag, X_train, X_test, calibrate=True):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
 
@@ -113,33 +116,38 @@ def random_forest_error(forest, inbag, X_train, X_test):
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
     # check if sampling without replacement
-    no_replacement = (max(inbag) == 1)
-    if no_replacement in True:
-        variance_inflation = np.square(1 - np.mean(inbag))
-        vars = variance_inflation * vars
-
     pred = np.array([tree.predict(X_test) for tree in forest]).T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
     n_trees = forest.n_estimators
     V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
-    return V_IJ_unbiased
 
-
-    if calibrate is True:
-        # Compute variance estimates using half the trees
-        calibration_ratio = 2
-        n_sample = np.ceil(B / calibration.ratio)
-        results_ss = infJack(pred, inbag, calibrate=FALSE,
-                             used_trees=sample(used_trees, n_sample))
+    if not calibrate:
+        return V_IJ_unbiased
+    else:
+        if len(V_IJ_unbiased) <= 20:
+            warnings.warn("less than 20 variance estimates")
+        return V_IJ_unbiased
+    # Compute variance estimates using half the trees
+    calibration_ratio = 2
+    n_sample = np.ceil(n_trees / calibration_ratio)
+    new_forest = copy.deepcopy(forest)
+    new_forest.estimators_ = np.random.permutation(new_forest.estimators_)[:int(n_sample)]
+    new_forest.n_estimators = int(n_sample)
+    results_ss = random_forest_error(new_forest, inbag, X_train, X_test)
 
     # Use this second set of variance estimates
     # to estimate scale of Monte Carlo noise
-    sigma2_ss = mean((results_ss[0] - results[0]) ^ 2)
-    delta = n_sample / B
-    sigma2 = (delta ^ 2 + (1 - delta) ^ 2) / (2 * (1 - delta) ^ 2) * sigma2_ss
+    sigma2_ss = np.mean((results_ss - V_IJ_unbiased)**2)
+    delta = n_sample / n_trees
+    sigma2 = (delta**2 + (1 - delta)**2) / (2 * (1 - delta)**2) * sigma2_ss
 
     # Use Monte Carlo noise scale estimate for empirical Bayes calibration
-    vars_calibrated = calibrate(vars, sigma2)
-    results$var_hat = vars_calibrated
+    V_IJ_calibrated = calibrate(V_IJ_unbiased, sigma2)
+    return V_IJ_calibrated
+
+    # check if sampling with replacement
+    if np.max(inbag) == 1:
+        variance_inflation = 1 / (1 - np.mean(inbag)) ** 2
+        V_IJ_unbiased = variance_inflation * V_IJ_unbiased
