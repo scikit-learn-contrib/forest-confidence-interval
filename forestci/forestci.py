@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.stats import norm
-import forestci.calibrate
+from forestci.calibrate import calibrateEB
 import copy
 import warnings
 from sklearn.ensemble.forest import _generate_sample_indices
@@ -46,6 +46,11 @@ def calc_inbag(n_samples, forest):
     Columns are individual trees. Rows are the number of times a sample was
     used in a tree.
     """
+    if not forest.bootstrap:
+        e_s = "Cannot calculate the inbag from a forest that has "
+        e_s = " bootstrap=False"
+        raise ValueError(e_s)
+
     n_trees = forest.n_estimators
     inbag = np.zeros((n_samples, n_trees))
     sample_idx = []
@@ -78,7 +83,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def random_forest_error(forest, inbag, X_train, X_test, calibrate=True):
+def random_forest_error(forest, X_train, X_test, inbag=None, calibrate=False):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
 
@@ -90,11 +95,15 @@ def random_forest_error(forest, inbag, X_train, X_test, calibrate=True):
     forest : RandomForest
         Regressor or Classifier object.
 
-    inbag : ndarray
-        The inbag matrix that fit the data.
-
     X : ndarray
         An array with shape (n_sample, n_features).
+
+    inbag : ndarray (optional)
+        The inbag matrix that fit the data. If set to `None` (default) it
+        will be inferred from the forest. However, this only works for trees
+        for which bootstrapping was set to `True`. That is, if sampling was
+        done with replacement. Otherwise, users need to provide their own
+        inbag matrix.
 
     Returns
     -------
@@ -115,7 +124,8 @@ def random_forest_error(forest, inbag, X_train, X_test, calibrate=True):
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
-    # check if sampling without replacement
+    if inbag is None:
+        inbag = calc_inbag(X_train.shape[0], forest)
     pred = np.array([tree.predict(X_test) for tree in forest]).T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
@@ -144,7 +154,7 @@ def random_forest_error(forest, inbag, X_train, X_test, calibrate=True):
     sigma2 = (delta**2 + (1 - delta)**2) / (2 * (1 - delta)**2) * sigma2_ss
 
     # Use Monte Carlo noise scale estimate for empirical Bayes calibration
-    V_IJ_calibrated = calibrate(V_IJ_unbiased, sigma2)
+    V_IJ_calibrated = calibrateEB(V_IJ_unbiased, sigma2)
     return V_IJ_calibrated
 
     # check if sampling with replacement
