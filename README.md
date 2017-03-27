@@ -20,16 +20,22 @@ scikit-learn - http://scikit-learn.org/
 Stefan Wager's `randomForestCI` - https://github.com/swager/randomForestCI
 
 ## Installation and Usage
-Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.
+Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.  
 Dependencies associated with the previous modules may need root privileges to install 
 ```
 pip install numpy scipy scikit-learn
 ```
+can also install with:
 
-To install the module execute:
+```
+ pip install -r requirements.txt
+ ```
+
+To install `forest-confidence-interval` execute:
 ```
 pip install forestci
 ```
+
 or, if you are installing from the source code:
 ```shell
 python setup.py install	
@@ -39,7 +45,7 @@ python setup.py install
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 ## Testing
-Requires installation of nose package. Tests are located in the `forestci\tests` folder and can be run with the `nosetests` command in the main directory
+Requires installation of `nose` package. Tests are located in the `forestci\tests` folder and can be run with the `nosetests` command in the main directory
 
 ## Community guidelines
 
