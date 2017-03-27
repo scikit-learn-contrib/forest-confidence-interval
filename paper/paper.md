@@ -25,7 +25,7 @@ Random forests are a method for predicting numerous ensemble learning tasks. The
 
 # Examples gallery
 
-This gallery uses two standard machine learning examples to graphically show the package's calculation of standard errors. The example data was imported as a data frame and separated into X (predictors) and y matrices (predictions). Then, `scikit-learn` functions split the example data  into training and  test data for creating random forest objects. After creating the random forest objects, the package's `random_forest_error` function used the random forest object, inbag, train, and test data to create variance estimates. 
+This gallery uses two standard machine learning examples to graphically show the package's calculation of standard errors. The example data was imported as a data frame and separated into X (predictors) and y matrices (predictions). Then, `scikit-learn` functions split the example data  into training and  test data for creating random forest objects. After creating the random forest objects, the package's `random_forest_error` function used the random forest object, in-bag, train, and test data to create variance estimates. 
 
 
 ## Regression example
