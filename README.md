@@ -21,6 +21,7 @@ Stefan Wager's `randomForestCI` - https://github.com/swager/randomForestCI
 
 ## Installation and Usage
 Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.
+Dependencies associated with the previous modules may need root privileges to install 
 ```
 pip install numpy scipy scikit-learn
 ```
@@ -38,6 +39,7 @@ python setup.py install
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 ## Testing
+Tests are located in the `tests` folder and can be run with the `nosetests` command in the main directory
 
 ## Community guidelines
 
