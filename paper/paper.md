@@ -37,6 +37,10 @@ This gallery uses two standard machine learning examples to graphically show the
 -![plot-mpg-variance](plot_mpg.png)
 
 ## Classification example
+### No variance estimated
+-![plot-spam-no-variance](plot_spam_no_variance.png)
+
+### Plot with variance
 -![plot-spam](plot_spam.png)
 
 
