@@ -2,6 +2,7 @@ import numpy as np
 import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
 import forestci as fci
+from forestci.calibrate import calibrateEB
 
 
 def test_random_forest_error():
@@ -28,6 +29,10 @@ def test_random_forest_error():
     V_IJ_unbiased = fci.random_forest_error(forest, X_train, X_test)
     npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
 
+    new_forest = fci.random_forest_error(forest, X_train,
+                                         X_test, calibrate=True)
+    # V_IJ_calibrated = calibrateEB(V_IJ_unbiased, sigma2)
+
     # We cannot calculate inbag from a non-bootstrapped forest. This is because
     # Scikit-learn trees do not store their own sample weights. If you did This
     # some other way, you can still use your own inbag
@@ -36,7 +41,6 @@ def test_random_forest_error():
 
     npt.assert_raises(ValueError, fci.calc_inbag, X_train.shape[0],
                       non_bootstrap_forest)
-
 
 
 def test_core_computation():
