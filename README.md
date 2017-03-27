@@ -25,7 +25,7 @@ Dependencies associated with the previous modules may need root privileges to in
 ```
 pip install numpy scipy scikit-learn
 ```
-can also install with:
+can also install dependencies with:
 
 ```
  pip install -r requirements.txt
@@ -45,7 +45,7 @@ python setup.py install
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 ## Testing
-Requires installation of `nose` package. Tests are located in the `forestci\tests` folder and can be run with the `nosetests` command in the main directory
+Requires installation of `nose` package. Tests are located in the `forestci/tests` folder and can be run with the `nosetests` command in the main directory
 
 ## Community guidelines
 
