@@ -39,7 +39,7 @@ python setup.py install
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 ## Testing
-Tests are located in the `tests` folder and can be run with the `nosetests` command in the main directory
+Tests are located in the `forestci\tests` folder and can be run with the `nosetests` command in the main directory
 
 ## Community guidelines
 
