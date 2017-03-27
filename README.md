@@ -12,7 +12,7 @@ random forest objects
 Compatible with Python2.7 and Python3.5
 
 This module is based on R code from Stefan Wager (see important links below)
-and is licensed under the MIT open source license (see [LICENSE](LICENSE))
+and is licensed under the BSD-3-Clause open source license (see [LICENSE](LICENSE))
 
 ## Important Links
 scikit-learn - http://scikit-learn.org/
@@ -49,6 +49,6 @@ Requires installation of `nose` package. Tests are located in the `forestci/test
 
 ## Community guidelines
 
-Contributions to address any of the issues in the issue log are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
+Contributions to address any of the issues in the [issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues) are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
 
 Bug reports are also appreciated, please add them to the issue log after verifying that the issue does not already exist. Comments on existing issues are also welcome.
