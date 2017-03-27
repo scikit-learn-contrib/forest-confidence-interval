@@ -32,18 +32,17 @@ pip install forestci
 ```
 or, if you are installing from the source code:
 ```shell
-python setup.py install
+python setup.py install	
 ```
 
 ## Examples
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 ## Testing
-Tests are located in the `forestci\tests` folder and can be run with the `nosetests` command in the main directory
+Requires installation of nose package. Tests are located in the `forestci\tests` folder and can be run with the `nosetests` command in the main directory
 
 ## Community guidelines
 
 Contributions to address any of the issues in the issue log are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
 
 Bug reports are also appreciated, please add them to the issue log after verifying that the issue does not already exist. Comments on existing issues are also welcome.
-
