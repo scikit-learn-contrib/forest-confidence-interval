@@ -128,7 +128,7 @@ $(document).ready(function () {
 </div>
 <div id="examples-gallery" class="section level1">
 <h1>Examples gallery</h1>
-<p>This gallery uses two standard machine learning examples to graphically show the package’s calculation of standard errors. The example data was imported as a data frame and separated into X (predictors) and y matrices (predictions). Then, <code>scikit-learn</code> functions split the example data into training and test data for creating random forest objects. After creating the random forest objects, the package’s <code>random_forest_error</code> function used the random forest object, in-bag, train, and test data to create variance estimates.</p>
+<p>The regression example uses a data-set from the <a href="https://archive.ics.uci.edu/ml/datasets/Auto+MPG">UC Irvine Machine Learning Repository</a> with features of different cars and their MPG. The classification example generates synthetic data to simulate a task like that of a spam filter: classifying items into one of two categories (e.g., spam/non-spam) based on a number of features. The example data was imported as a data frame and separated into X (predictors) and y matrices (predictions). Then, <code>scikit-learn</code> functions split the example data into training and test data and generate a random forest object (regression or classifier). Our package’s <code>random_forest_error</code> and <code>calc_inbag</code> functions use the random forest object (including training and test data) to create variance estimates that can be plotted (e.g. as confidence intervals or standard deviations).</p>
 <div id="regression-example" class="section level2">
 <h2>Regression example</h2>
 <div id="no-variance-estimated" class="section level3">
