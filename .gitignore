@@ -71,3 +71,6 @@ target/
 # Paper files
 paper/references/*
 paper/*.txt
+
+# Jupiter notebooks
+.ipynb_checkpoints
