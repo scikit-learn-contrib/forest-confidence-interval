@@ -1,5 +1,9 @@
 import numpy as np
+import copy
+import calib
 from sklearn.ensemble.forest import _generate_sample_indices
+
+'''
 from .due import _due, _BibTeX
 
 __all__ = ["calc_inbag", "random_forest_error", "_bias_correction",
@@ -19,7 +23,7 @@ _due.cite(_BibTeX("""
                        "The Jackknife and the Infinitesimal Jackknife"),
           path='forestci')
 
-
+'''
 def calc_inbag(n_samples, forest):
     """
     Derive samples used to create trees in scikit-learn RandomForest objects.
@@ -78,7 +82,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def random_forest_error(forest, X_train, X_test, inbag=None):
+def random_forest_error(forest, X_train, X_test, inbag=None, calibrate = True):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
 
@@ -121,6 +125,7 @@ def random_forest_error(forest, X_train, X_test, inbag=None):
     """
     if inbag is None:
         inbag = calc_inbag(X_train.shape[0], forest)
+
     pred = np.array([tree.predict(X_test) for tree in forest]).T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
@@ -133,4 +138,29 @@ def random_forest_error(forest, X_train, X_test, inbag=None):
         variance_inflation = 1 / (1 - np.mean(inbag)) ** 2
         V_IJ_unbiased *= variance_inflation
 
-    return V_IJ_unbiased
+    if not calibrate:
+        return V_IJ_unbiased
+
+    if len(V_IJ_unbiased) <= 20:
+        calibrate = False
+        print("No calibration with n <= 20")
+        return V_IJ_unbiased
+
+    if calibrate:
+        calibration_ratio = 2
+        n_sample = np.ceil(n_trees / calibration_ratio)
+        new_forest = copy.deepcopy(forest)
+        new_forest.estimators_ = np.random.permutation(new_forest.estimators_)[:int(n_sample)]
+        new_forest.n_estimators = int(n_sample)
+
+        results_ss = random_forest_error(new_forest, X_train, X_test, calibrate=False)
+        # Use this second set of variance estimates
+        # to estimate scale of Monte Carlo noise
+        sigma2_ss = np.mean((results_ss - V_IJ_unbiased)**2)
+        delta = n_sample / n_trees
+        sigma2 = (delta**2 + (1 - delta)**2) / (2 * (1 - delta)**2) * sigma2_ss
+
+        # Use Monte Carlo noise scale estimate for empirical Bayes calibration
+        V_IJ_calibrated = calib.calibrateEB(V_IJ_unbiased, sigma2)
+
+        return V_IJ_calibrated
