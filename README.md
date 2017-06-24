@@ -4,12 +4,17 @@
 [![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/forest-confidence-interval)
 [![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval/tree/master)
 
-`forest-confidence-interval` is a Python module for calculating variance and adding
-confidence intervals to scikit-learn random forest regression or classification
-objects. The core functions calculate an in-bag and error bars for
-random forest objects
+Forest algorithms are powerful
+[ensemble methods](http://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) for classification and regression. However, predictions from these
+algorithms do contain some amount of error.
 
-Compatible with Python2.7 and Python3.5
+`forest-confidence-interval` is a Python module that adds a calculation of
+variance and computes confidence intervals to the basic functionality
+implemented in scikit-learn random forest regression or classification objects.
+The core functions here calculate an in-bag and error bars for random forest
+objects
+
+`forest-confidence-interval` is compatible with both Python2.7 and Python3.5
 
 This module is based on R code from Stefan Wager (see important links below)
 and is licensed under the MIT open source license (see [LICENSE](LICENSE))
