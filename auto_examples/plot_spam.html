@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -47,6 +49,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -87,7 +90,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation_guide.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_mpg.html">Plotting Regresssion Forest Error Bars</a></li>
@@ -107,8 +113,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">forestci</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">forestci</a>
+        
       </nav>
 
 
@@ -117,25 +125,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="index.html">Examples</a> &raquo;</li>
-      
-    <li>Plotting Classification Forest Error Bars</li>
+        
+      <li>Plotting Classification Forest Error Bars</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/auto_examples/plot_spam.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -144,14 +169,14 @@
   <div class="section" id="plotting-classification-forest-error-bars">
 <span id="sphx-glr-auto-examples-plot-spam-py"></span><h1>Plotting Classification Forest Error Bars<a class="headerlink" href="#plotting-classification-forest-error-bars" title="Permalink to this headline">¶</a></h1>
 <p>This example demonstrates the calculation of confidence intervals for
-<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.18.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects.</p>
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.18.2)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects.</p>
 <p>The data used here are synthetically generated to simulate a data-set in which
 email messages are labeled as spam based on 20 different features (the default
-of <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_classification.html#sklearn.datasets.make_classification" title="(in scikit-learn v0.18.1)"><code class="xref py py-func docutils literal"><span class="pre">sklearn.datasets.make_classification()</span></code></a>).</p>
+of <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_classification.html#sklearn.datasets.make_classification" title="(in scikit-learn v0.18.2)"><code class="xref py py-func docutils literal"><span class="pre">sklearn.datasets.make_classification()</span></code></a>).</p>
 <img alt="../_images/sphx_glr_plot_spam_001.png" class="align-center" src="../_images/sphx_glr_plot_spam_001.png" />
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">import</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">as</span> <span class="nn">xval</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 <span class="kn">import</span> <span class="nn">forestci</span> <span class="kn">as</span> <span class="nn">fci</span>
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
@@ -159,7 +184,7 @@ of <a class="reference external" href="http://scikit-learn.org/stable/modules/ge
 <span class="n">spam_X</span><span class="p">,</span> <span class="n">spam_y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
 
 <span class="c1"># split the datainto training and test set</span>
-<span class="n">spam_X_train</span><span class="p">,</span> <span class="n">spam_X_test</span><span class="p">,</span> <span class="n">spam_y_train</span><span class="p">,</span> <span class="n">spam_y_test</span> <span class="o">=</span> <span class="n">xval</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span>
+<span class="n">spam_X_train</span><span class="p">,</span> <span class="n">spam_X_test</span><span class="p">,</span> <span class="n">spam_y_train</span><span class="p">,</span> <span class="n">spam_y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
                                                        <span class="n">spam_X</span><span class="p">,</span> <span class="n">spam_y</span><span class="p">,</span>
                                                        <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
@@ -191,27 +216,30 @@ of <a class="reference external" href="http://scikit-learn.org/stable/modules/ge
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 2 minutes  38.414 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  8.838 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_spam.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_spam.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_spam.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_spam.ipynb</span></code></a></div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="http://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
 </div>
 
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../reference/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../reference/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="plot_mpg.html" class="btn btn-neutral" title="Plotting Regresssion Forest Error Bars" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="plot_mpg.html" class="btn btn-neutral" title="Plotting Regresssion Forest Error Bars" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -245,7 +273,8 @@ of <a class="reference external" href="http://scikit-learn.org/stable/modules/ge
             VERSION:'0.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>

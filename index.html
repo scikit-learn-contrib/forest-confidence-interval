@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -45,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -85,7 +88,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">API Reference</a></li>
@@ -101,8 +107,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">forestci</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">forestci</a>
+        
       </nav>
 
 
@@ -111,23 +119,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
-      
-    <li>Confidence Intervals for Scikit Learn Random Forests</li>
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Confidence Intervals for Scikit Learn Random Forests</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -138,16 +163,16 @@
 <p>Random forest algorithms are useful for both classification and regression
 problems. This package adds to scikit-learn the ability to calculate confidence
 intervals of the predictions generated from scikit-learn
-<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.18.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> and <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.18.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects.</p>
-<p>This is an implementation of an algorithm developed by Wager et al. <a class="reference internal" href="reference/forestci.html#wager2014" id="id1">[Wager2014]</a>
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.18.2)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></a> and <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v0.18.2)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code></a> objects.</p>
+<p>This is an implementation of an algorithm developed by Wager et al. <a class="reference internal" href="#wager2014" id="id1">[Wager2014]</a>
 and previously implemented in R (<a class="reference external" href="https://github.com/swager/randomForestCI">here</a>).</p>
 <p>To examine and download the source code, visit our <a class="reference external" href="https://github.com/scikit-learn-contrib/forest-confidence-interval#readme">github repo</a>.</p>
 <table class="docutils citation" frame="void" id="wager2014" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id1">[Wager2014]</a></td><td><ol class="first upperalpha simple" start="19">
-<li>Wager, T. Hastie, B. Efron. &#8220;Confidence Intervals for
-Random Forests: The Jackknife and the Infinitesimal Jackknife&#8221;, Journal
+<li>Wager, T. Hastie, B. Efron. “Confidence Intervals for
+Random Forests: The Jackknife and the Infinitesimal Jackknife”, Journal
 of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</li>
 </ol>
 <div class="toctree-wrapper last compound">
@@ -176,12 +201,15 @@ of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</li>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation_guide.html" class="btn btn-neutral float-right" title="Installation Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installation_guide.html" class="btn btn-neutral float-right" title="Installation Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -216,7 +244,8 @@ of Machine Learning Research vol. 15, pp. 1625-1651, 2014.</li>
             VERSION:'0.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

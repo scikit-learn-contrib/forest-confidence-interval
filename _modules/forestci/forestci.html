@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -45,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -85,7 +88,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation_guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">API Reference</a></li>
@@ -101,8 +107,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">forestci</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">forestci</a>
+        
       </nav>
 
 
@@ -115,19 +123,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      
-    <li>forestci.forestci</li>
+        
+      <li>forestci.forestci</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -193,14 +218,34 @@
     <span class="k">return</span> <span class="n">inbag</span></div>
 
 
-<span class="k">def</span> <span class="nf">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">):</span>
-    <span class="n">cov_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-
-    <span class="k">for</span> <span class="n">t_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_trees</span><span class="p">):</span>
-        <span class="n">inbag_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">inbag</span><span class="p">[:,</span> <span class="n">t_idx</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">pred_c_r</span> <span class="o">=</span> <span class="n">pred_centered</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">cov_hat</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag_r</span><span class="p">,</span> <span class="n">pred_c_r</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_trees</span>
-    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cov_hat</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span> 
+                      <span class="n">memory_constrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                      <span class="n">test_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">memory_constrained</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">pred_centered</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">memory_limit</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;If memory_constrained=True,&#39;</span> <span class="o">+</span> \
+                         <span class="s1">&#39;must provide memory_limit.&#39;</span><span class="p">)</span>
+    
+    <span class="c1">## Assumes double precision float</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">memory_limit</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">/</span><span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+    <span class="k">if</span> <span class="n">chunk_size</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">min_limit</span> <span class="o">=</span> <span class="mf">8.0</span><span class="o">*</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;memory_limit provided is too small.&#39;</span> <span class="o">+</span> \
+                         <span class="s1">&#39;For these dimensions, memory_limit must &#39;</span> <span class="o">+</span> \
+                         <span class="s1">&#39;be greater than or equal to </span><span class="si">%.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">min_limit</span><span class="p">)</span>
+    
+    <span class="n">chunk_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">chunk_size</span><span class="p">,</span><span class="n">chunk_size</span><span class="p">)</span>
+    <span class="n">inds</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="n">chunk_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">chunk_edges</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> 
+              <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunk_edges</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">test_mode</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of chunks: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">),))</span>
+    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                          <span class="n">pred_centered</span><span class="p">[</span><span class="n">chunk</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                           <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">V_IJ</span>
 
 
@@ -214,7 +259,8 @@
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
 
 
-<div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../reference/forestci.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../reference/forestci.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">memory_constrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates error bars from scikit-learn RandomForest estimators.</span>
 
@@ -226,8 +272,11 @@
 <span class="sd">    forest : RandomForest</span>
 <span class="sd">        Regressor or Classifier object.</span>
 
-<span class="sd">    X : ndarray</span>
-<span class="sd">        An array with shape (n_sample, n_features).</span>
+<span class="sd">    X_train : ndarray</span>
+<span class="sd">        An array with shape (n_train_sample, n_features).</span>
+
+<span class="sd">    X_test : ndarray</span>
+<span class="sd">        An array with shape (n_test_sample, n_features).</span>
 
 <span class="sd">    inbag : ndarray (optional)</span>
 <span class="sd">        The inbag matrix that fit the data. If set to `None` (default) it</span>
@@ -235,6 +284,16 @@
 <span class="sd">        for which bootstrapping was set to `True`. That is, if sampling was</span>
 <span class="sd">        done with replacement. Otherwise, users need to provide their own</span>
 <span class="sd">        inbag matrix.</span>
+
+<span class="sd">    memory_constrained: boolean (optional)</span>
+<span class="sd">        Whether or not there is a restriction on memory. If False, it is </span>
+<span class="sd">        assumed that a ndarry of shape (n_train_sample,n_test_sample) fits</span>
+<span class="sd">        in main memory. Setting to True can actually provide a speed up if</span>
+<span class="sd">        memory_limit is tuned to the optimal range.</span>
+
+<span class="sd">    memory_limit: int (optional)</span>
+<span class="sd">        An upper bound for how much memory the itermediate matrices will take</span>
+<span class="sd">        up in Megabytes. This must be provided if memory_constrained=True.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -261,7 +320,8 @@
     <span class="n">pred_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">pred_centered</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">-</span> <span class="n">pred_mean</span>
     <span class="n">n_trees</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">n_estimators</span>
-    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">)</span>
+    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span> 
+                             <span class="n">memory_constrained</span><span class="p">,</span> <span class="n">memory_limit</span><span class="p">)</span>
     <span class="n">V_IJ_unbiased</span> <span class="o">=</span> <span class="n">_bias_correction</span><span class="p">(</span><span class="n">V_IJ</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">)</span>
 
     <span class="c1"># Correct for cases where resampling is done without replacement:</span>
@@ -272,6 +332,9 @@
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -306,7 +369,8 @@
             VERSION:'0.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
