@@ -36,3 +36,19 @@ $ python setup.py install
 
 ## Examples
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
+
+## Contributing
+
+Contributions are very welcome, but we ask that contributors abide by the
+[contributor covenant)[http://contributor-covenant.org/version/1/4/].
+
+To report issues with the software, please post to the
+[issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues)
+Bug reports are also appreciated, please add them to the issue log after
+verifying that the issue does not already exist.
+Comments on existing issues are also welcome.
+
+Please submit improvements as pull requests against the repo after verifying
+that the existing tests pass and any new code is well covered by unit tests.
+Please write code that complies with the Python style guide,
+[PEP8](https://www.python.org/dev/peps/pep-0008/)
