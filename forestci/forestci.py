@@ -57,23 +57,34 @@ def calc_inbag(n_samples, forest):
     return inbag
 
 
-def _core_computation(X_train, X_test, inbag, pred_centered, n_trees, memory_constrained=False, memory_limit=None):
+def _core_computation(X_train, X_test, inbag, pred_centered, n_trees, 
+                      memory_constrained=False, memory_limit=None, 
+                      test_mode=False):
     if not memory_constrained:
         return np.sum((np.dot(inbag-1,pred_centered.T)/n_trees)**2,0)
     
     if not memory_limit:
-        raise ValueError('If memory_constrained=True, must provide memory_limit.')
+        raise ValueError('If memory_constrained=True,' + \
+                         'must provide memory_limit.')
     
+    ## Assumes double precision float
     chunk_size = int((memory_limit * 1e6) /(8.0 * X_train.shape[0]))
     
     if chunk_size==0:
         min_limit = 8.0*X_train.shape[0]/(1e6)
-        raise ValueError('memory_limit provided is too small. For these dimensions, memory_limit must be greater than or equal to %.3e' % min_limit)
+        raise ValueError('memory_limit provided is too small.' + \
+                         'For these dimensions, memory_limit must ' + \
+                         'be greater than or equal to %.3e' % min_limit)
     
     chunk_edges = np.arange(0,X_test.shape[0]+chunk_size,chunk_size)
     inds = range(X_test.shape[0])
-    chunks = [inds[chunk_edges[i]:chunk_edges[i+1]] for i in range(len(chunk_edges)-1)]
-    V_IJ = np.concatenate([np.sum((np.dot(inbag-1,pred_centered[chunk].T)/n_trees)**2,0) for chunk in chunks])
+    chunks = [inds[chunk_edges[i]:chunk_edges[i+1]] 
+              for i in range(len(chunk_edges)-1)]
+    if test_mode:
+        print('Number of chunks: %d' % (len(chunks),))
+    V_IJ = np.concatenate([np.sum((np.dot(inbag-1,
+                                          pred_centered[chunk].T)/n_trees)**2,0)
+                           for chunk in chunks])
     return V_IJ
 
 
@@ -87,7 +98,8 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def random_forest_error(forest, X_train, X_test, inbag=None, memory_constrained=False, memory_limit=None):
+def random_forest_error(forest, X_train, X_test, inbag=None,
+                        memory_constrained=False, memory_limit=None):
     """
     Calculates error bars from scikit-learn RandomForest estimators.
 
@@ -147,7 +159,8 @@ def random_forest_error(forest, X_train, X_test, inbag=None, memory_constrained=
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
     n_trees = forest.n_estimators
-    V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees, memory_constrained, memory_limit)
+    V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees, 
+                             memory_constrained, memory_limit)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
 
     # Correct for cases where resampling is done without replacement:
