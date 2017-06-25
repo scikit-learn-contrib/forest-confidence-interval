@@ -1,9 +1,7 @@
 import numpy as np
 import copy
-import calib
+import calibration
 from sklearn.ensemble.forest import _generate_sample_indices
-
-'''
 from .due import _due, _BibTeX
 
 __all__ = ["calc_inbag", "random_forest_error", "_bias_correction",
@@ -23,7 +21,7 @@ _due.cite(_BibTeX("""
                        "The Jackknife and the Infinitesimal Jackknife"),
           path='forestci')
 
-'''
+
 def calc_inbag(n_samples, forest):
     """
     Derive samples used to create trees in scikit-learn RandomForest objects.
@@ -104,6 +102,11 @@ def random_forest_error(forest, X_train, X_test, inbag=None, calibrate = True):
         done with replacement. Otherwise, users need to provide their own
         inbag matrix.
 
+    calibrate: boolean (default True)
+        Whether to apply calibration to mitigate Monte Carlo noise
+        if calibrate = FALSE, some variance estimates may be negative
+        due to Monte Carlo effects if the number of trees in rf is too small
+
     Returns
     -------
     An array with the unbiased sampling variance (V_IJ_unbiased)
@@ -161,6 +164,6 @@ def random_forest_error(forest, X_train, X_test, inbag=None, calibrate = True):
         sigma2 = (delta**2 + (1 - delta)**2) / (2 * (1 - delta)**2) * sigma2_ss
 
         # Use Monte Carlo noise scale estimate for empirical Bayes calibration
-        V_IJ_calibrated = calib.calibrateEB(V_IJ_unbiased, sigma2)
+        V_IJ_calibrated = calibration.calibrateEB(V_IJ_unbiased, sigma2)
 
         return V_IJ_calibrated
