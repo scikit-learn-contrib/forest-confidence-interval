@@ -7,7 +7,8 @@
 `forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
 objects. The core functions calculate an in-bag and error bars for
-random forest objects
+random forest objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors. 
+
 
 Compatible with Python2.7 and Python3.5
 
@@ -20,19 +21,35 @@ scikit-learn - http://scikit-learn.org/
 Stefan Wager's `randomForestCI` - https://github.com/swager/randomForestCI
 
 ## Installation and Usage
-Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.
+Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.  
+Dependencies associated with the previous modules may need root privileges to install 
 ```
 pip install numpy scipy scikit-learn
 ```
+can also install dependencies with:
 
-To install the module execute:
+```
+ pip install -r requirements.txt
+ ```
+
+To install `forest-confidence-interval` execute:
 ```
 pip install forestci
 ```
+
 or, if you are installing from the source code:
 ```shell
-$ python setup.py install
+python setup.py install	
 ```
 
 ## Examples
 See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
+
+## Testing
+Requires installation of `nose` package. Tests are located in the `forestci/tests` folder and can be run with the `nosetests` command in the main directory
+
+## Community guidelines
+
+Contributions to address any of the issues in the [issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues) are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
+
+Bug reports are also appreciated, please add them to the issue log after verifying that the issue does not already exist. Comments on existing issues are also welcome.
