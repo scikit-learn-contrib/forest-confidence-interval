@@ -1,7 +1,7 @@
 from .forestci import (calc_inbag, random_forest_error,
                        _core_computation, _bias_correction)  # noqa
 
-from .calibration import *  # noqa
+from .calibration import calibrateEB  # noqa
 
 from .version import __version__  # noqa
 
