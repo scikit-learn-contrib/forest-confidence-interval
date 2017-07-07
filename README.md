@@ -7,7 +7,8 @@
 `forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
 objects. The core functions calculate an in-bag and error bars for
-random forest objects
+random forest objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors. 
+
 
 Compatible with Python2.7 and Python3.5
 
