@@ -24,13 +24,8 @@ popd
 
 # Configure the conda environment and put it in the path using the
 # provided versions
-<<<<<<< HEAD
 conda create -n testenv --yes python=$PYTHON_VERSION pip nose \
       numpy scipy cython
-=======
-conda create -n testenv --yes python=$PYTHON_VERSION pip pytest pytest-cov \
-      numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION cython=$CYTHON_VERSION
->>>>>>> Install pytest coverage.
 
 source activate testenv
 
