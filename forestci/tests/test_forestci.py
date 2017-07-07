@@ -47,17 +47,26 @@ def test_core_computation():
     X_train_ex = np.array([[3, 3],
                            [6, 4],
                            [6, 6]])
-    X_test_ex = np.array([[5, 2],
-                          [5, 5]])
-    pred_centered_ex = np.array([[-20, -20, 10, 30], [-20, 30, -20, 10]])
+    X_test_ex = np.vstack([np.array([[5, 2],
+                                     [5, 5]]) for _ in range(1000)])
+    pred_centered_ex = np.vstack([np.array([[-20, -20, 10, 30],
+                                            [-20, 30, -20, 10]])
+                                  for _ in range(1000)])
     n_trees = 4
 
     our_vij = fci._core_computation(X_train_ex, X_test_ex, inbag_ex,
                                     pred_centered_ex, n_trees)
 
-    r_vij = np.array([112.5, 387.5])
+    r_vij = np.concatenate([np.array([112.5, 387.5]) for _ in range(1000)])
 
     npt.assert_almost_equal(our_vij, r_vij)
+
+    our_vij = fci._core_computation(X_train_ex, X_test_ex, inbag_ex,
+                                    pred_centered_ex, n_trees,
+                                    memory_constrained=True, memory_limit=.01, 
+                                    test_mode=True)
+
+    npt.assert_almost_equal(our_vij, r_vij)    
 
 
 def test_bias_correction():
