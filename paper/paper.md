@@ -15,7 +15,7 @@ authors:
 - name: Bryna Hazelton
   orcid: 0000-0001-7532-645X
   affiliation: eScience Institute, University of Washington
-date: 27 March 2017
+date: 7 July 2017
 bibliography: paper.bib
 ---
 
@@ -41,6 +41,16 @@ The regression example uses a data-set from the [UC Irvine Machine Learning Repo
 
 ### Plot with variance
 -![plot-spam](plot_spam.png)
+
+
+## Community guidelines
+
+Contributions to address any of the issues in the [issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues) are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
+
+Bug reports are also appreciated, please add them to the issue log after verifying that the issue does not already exist. Comments on existing issues are also welcome.
+
+Please e-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.polimis@gmail.com), or [Bryna Hazelton](brynah@phys.washington.edu ) if you have any questions, suggestions or feedback.
+
 
 
 # References
