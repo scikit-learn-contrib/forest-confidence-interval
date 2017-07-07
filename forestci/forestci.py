@@ -50,6 +50,7 @@ def calc_inbag(n_samples, forest):
     Columns are individual trees. Rows are the number of times a sample was
     used in a tree.
     """
+
     if not forest.bootstrap:
         e_s = "Cannot calculate the inbag from a forest that has "
         e_s = " bootstrap=False"
