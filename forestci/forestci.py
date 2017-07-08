@@ -7,7 +7,7 @@ RandomForestClassifier predictions.
 
 import numpy as np
 import copy
-from forestci.calibration import calibrateEB
+from .calibration import calibrateEB
 from sklearn.ensemble.forest import _generate_sample_indices
 from .due import _due, _BibTeX
 
