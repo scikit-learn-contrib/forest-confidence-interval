@@ -4,8 +4,6 @@ Calibration based on empirical Bayes estimation [Efron2014]_.
 This calibration procedure can be useful when the number of trees in the
 random forest is small.
 
- .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes estimation." Stat. Sci. 29(2): 285–301, 2014.
-
 """
 import functools
 import itertools
@@ -59,13 +57,7 @@ def gfit(X, sigma, p=5, nbin=200, unif_fraction=0.1):
 
     Returns
     -------
-    An array of the posterior density estimate g
-
-    Notes
-    -----
-     .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes
-                    estimation." Stat. Sci., 29(2): 285–301, 2014.
-
+    An array of the posterior density estimate g.
     """
     min_x = min(min(X) - 2 * np.std(X, ddof=1), 0)
     max_x = max(max(X) + 2 * np.std(X, ddof=1),
@@ -131,12 +123,8 @@ def gbayes(x0, g_est, sigma):
     Returns
     -------
     An array of the posterior estimate E[mu | x0]
-
-    Notes
-    -----
-     .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes
-                    estimation." Stat. Sci., 29(2): 285–301, 2014.
     """
+
     Kx = norm().pdf((g_est[0] - x0) / sigma)
     post = Kx * g_est[1]
     post /= sum(post)
