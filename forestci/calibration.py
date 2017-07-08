@@ -36,7 +36,7 @@ _due.cite(_BibTeX("""
           path='forestci')
 
 
-def gfit(X, sigma, p=5, nbin=100000, unif_fraction=0.1):
+def gfit(X, sigma, p=5, nbin=200, unif_fraction=0.1):
     """
     Fit empirical Bayes prior in the hierarchical model [Efron2014]_.
 
@@ -51,10 +51,10 @@ def gfit(X, sigma, p=5, nbin=100000, unif_fraction=0.1):
     sigma: float
         Noise estimate on X.
     p: int
-        Number of parameters used to fit G. Default: 5.
+        Number of parameters used to fit G. Default: 5
     nbin: int
         Number of bins used for discrete approximation.
-        Default: 100000
+        Default: 200
     unif_fraction: float
         Fraction of G modeled as "slab". Default: 0.1
 
