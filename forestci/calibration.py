@@ -7,7 +7,6 @@ random forest is small.
 """
 import functools
 import itertools
-import math
 import numpy as np
 from scipy.optimize import minimize
 from scipy.signal import fftconvolve
@@ -85,8 +84,8 @@ def gfit(X, sigma, p=5, nbin=200, unif_fraction=0.1):
         mask = np.ones_like(xvals)
         mask[np.where(xvals <= 0)[0]] = 0
         g_eta_raw = np.exp(np.dot(XX, eta)) * mask
-        if ((sum(g_eta_raw) == math.inf) |
-            (sum(g_eta_raw) <=
+        if ((np.sum(g_eta_raw) == np.inf) |
+            (np.sum(g_eta_raw) <=
                 100 * np.finfo(np.double).tiny)):
                 return (1000 * (len(X) + sum(eta ** 2)))
 
