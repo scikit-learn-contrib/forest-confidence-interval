@@ -4,8 +4,7 @@ Calibration based on empirical Bayes estimation [Efron2014]_.
 This calibration procedure can be useful when the number of trees in the
 random forest is small.
 
- .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes
-                estimation." Stat. Sci., 29(2): 285–301, 2014.
+ .. [Efron2014] B Efron. "Two modeling strategies for empirical Bayes estimation." Stat. Sci. 29(2): 285–301, 2014.
 
 """
 import functools
