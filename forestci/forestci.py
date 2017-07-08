@@ -280,8 +280,8 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
     if V_IJ_unbiased.shape[0] <= 20:
         print("No calibration with n_samples <= 20")
         return V_IJ_unbiased
-
     if calibrate:
+
         calibration_ratio = 2
         n_sample = np.ceil(n_trees / calibration_ratio)
         new_forest = copy.deepcopy(forest)

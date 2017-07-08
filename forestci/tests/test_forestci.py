@@ -100,7 +100,7 @@ def test_bias_correction():
 
 def test_with_calibration():
     # Test both with and without interpolation:
-    for n in [25, 205]:
+    for n in [25 * 5, 205 * 5]:
         X = np.random.rand(n).reshape(n // 5, 5)
         y = np.random.rand(n // 5)
 
