@@ -13,7 +13,7 @@ of :func:`sklearn.datasets.make_classification`).
 
 import numpy as np
 from matplotlib import pyplot as plt
-import sklearn.cross_validation as xval
+from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import forestci as fci
 from sklearn.datasets import make_classification
@@ -21,7 +21,7 @@ from sklearn.datasets import make_classification
 spam_X, spam_y = make_classification(5000)
 
 # split the datainto training and test set
-spam_X_train, spam_X_test, spam_y_train, spam_y_test = xval.train_test_split(
+spam_X_train, spam_X_test, spam_y_train, spam_y_test = train_test_split(
                                                        spam_X, spam_y,
                                                        test_size=0.2)
 
