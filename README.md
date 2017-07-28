@@ -7,10 +7,10 @@
 `forest-confidence-interval` is a Python module for calculating variance and adding
 confidence intervals to scikit-learn random forest regression or classification
 objects. The core functions calculate an in-bag and error bars for
-random forest objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors. 
+random forest objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors.
 
 
-Compatible with Python2.7 and Python3.5
+Compatible with Python2.7 and Python3.6
 
 This module is based on R code from Stefan Wager (see important links below)
 and is licensed under the MIT open source license (see [LICENSE](LICENSE))
@@ -22,7 +22,7 @@ Stefan Wager's `randomForestCI` - https://github.com/swager/randomForestCI
 
 ## Installation and Usage
 Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.  
-Dependencies associated with the previous modules may need root privileges to install 
+Dependencies associated with the previous modules may need root privileges to install
 ```
 pip install numpy scipy scikit-learn
 ```
@@ -39,7 +39,13 @@ pip install forestci
 
 or, if you are installing from the source code:
 ```shell
-python setup.py install	
+python setup.py install
+```
+
+If would like to install the development version of the software use:
+
+```shell
+pip install git+git://github.com/scikit-learn-contrib/forest-confidence-interval.git
 ```
 
 ## Examples
@@ -62,5 +68,5 @@ Please write code that complies with the Python style guide,
 [PEP8](https://www.python.org/dev/peps/pep-0008/)
 
 ## Testing
-Requires installation of `nose` package. Tests are located in the `forestci/tests` folder 
+Requires installation of `nose` package. Tests are located in the `forestci/tests` folder
 and can be run with the `nosetests` command in the main directory
