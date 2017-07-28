@@ -68,5 +68,5 @@ Please write code that complies with the Python style guide,
 [PEP8](https://www.python.org/dev/peps/pep-0008/)
 
 ## Testing
-Requires installation of `nose` package. Tests are located in the `forestci/tests` folder 
+Requires installation of `nose` package. Tests are located in the `forestci/tests` folder
 and can be run with the `nosetests` command in the main directory
