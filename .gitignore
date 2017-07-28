@@ -65,5 +65,12 @@ docs/_build/
 # PyBuilder
 target/
 
+# Mac files
+.DS_Store
+
 # Paper files
 paper/references/*
+paper/*.txt
+
+# Jupiter notebooks
+.ipynb_checkpoints
