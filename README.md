@@ -49,7 +49,7 @@ The variability in predictions is important for measuring standard errors and es
 
 ## Examples
 The examples (gallery below) demonstrates the package functionality with random forest classifiers and regression models.
-The regression example uses a popular UCI Machine Learning data set on cars while the classifier example demonstrates how to add measurements of uncertainty to predictions of spam emails. 
+The regression example uses a popular UCI Machine Learning data set on cars while the classifier example demonstrates how to add measurements of uncertainty to predictions of spam emails.
 [Examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 
@@ -58,8 +58,17 @@ Requires installation of `nose` package. Tests are located in the `forestci/test
 
 ## Community guidelines
 
-Contributions to address any of the issues in the [issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues) are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
+Contributions are very welcome, but we ask that contributors abide by the [contributor covenant](http://contributor-covenant.org/version/1/4/).
 
-Bug reports are also appreciated, please add them to the issue log after verifying that the issue does not already exist. Comments on existing issues are also welcome.
+To report issues with the software, please post to the
+[issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues)
+Bug reports are also appreciated, please add them to the issue log after
+verifying that the issue does not already exist.
+Comments on existing issues are also welcome.
 
-Please e-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.polimis@gmail.com), or [Bryna Hazelton](brynah@phys.washington.edu ) if you have any questions, suggestions or feedback.
+Please submit improvements as pull requests against the repo after verifying
+that the existing tests pass and any new code is well covered by unit tests.
+Please write code that complies with the Python style guide,
+[PEP8](https://www.python.org/dev/peps/pep-0008/)
+
+Please e-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.polimis@gmail.com), or [Bryna Hazelton](mailto:brynah@phys.washington.edu ) if you have any questions, suggestions or feedback.

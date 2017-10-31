@@ -3,7 +3,7 @@ title: 'Confidence Intervals for Random Forests in Python'
 tags:
   - Python
   - scikit-learn
-  - random forest 
+  - random forest
   - confidence intervals
 authors:
 - name: Kivan Polimis
@@ -20,8 +20,7 @@ bibliography: paper.bib
 ---
 
 # Summary
-Random forests are a method for predicting numerous ensemble learning tasks. The variability in predictions is important for measuring standard errors and estimating standard errors. `forest-confidence-interval` is a Python module for calculating variance and adding confidence intervals to `scikit-learn` random forest regression or classification objects. The core functions calculate an in-bag and error bars for random forest objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors. This module is an implementation of an algorithm developed by @wager_confidence_2014 and previously implemented in R [@wager_randomforestci_2016]. 
-
+Random forests are a method for predicting numerous ensemble learning tasks. The variability in predictions is important for measuring and estimating standard errors and providing additional information about a metric's accuracy. `forest-confidence-interval` is a Python module for calculating variance and adding confidence intervals to `scikit-learn` random forest regression or classification objects. The core functions calculate an in-bag and error bars for random forest objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors. This module is an implementation of an algorithm developed by @wager_confidence_2014 and previously implemented in R [@wager_randomforestci_2016].
 
 # Examples gallery
 The regression example uses a data-set from the [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Auto+MPG) with features of different cars and their MPG [@lichman_uci_2013]. The classification example generates synthetic data to simulate a task like that of a spam filter: classifying items into one of two categories (e.g., spam/non-spam) based on a number of features. This module will work for matrices or `pandas` data frames. Then, `scikit-learn` functions split the example data into training and test data and generate a random forest object (regression or classifier). Our package's `random_forest_error` and `calc_inbag` functions use the random forest object (including training and test data) to create variance estimates that can be plotted (e.g. as confidence intervals or standard deviations). The inbag matrix that fit the data is set to `None` by default, and the inbag will be inferred from the forest. However, this only works for trees for which bootstrapping was set to `True`. That is, if sampling was done with replacement. Otherwise, users need to provide their own inbag matrix.
@@ -45,11 +44,19 @@ The regression example uses a data-set from the [UC Irvine Machine Learning Repo
 
 ## Community guidelines
 
-Contributions to address any of the issues in the [issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues) are very welcome. Please submit improvements as pull requests against the repo after verifying that the existing tests pass and any new code is well covered by unit tests.
+Contributions are very welcome, but we ask that contributors abide by the [contributor covenant](http://contributor-covenant.org/version/1/4/).
 
-Bug reports are also appreciated, please add them to the issue log after verifying that the issue does not already exist. Comments on existing issues are also welcome.
+To report issues with the software, please post to the
+[issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues)
+Bug reports are also appreciated, please add them to the issue log after
+verifying that the issue does not already exist.
+Comments on existing issues are also welcome.
 
-Please e-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.polimis@gmail.com), or [Bryna Hazelton](brynah@phys.washington.edu ) if you have any questions, suggestions or feedback.
+Please submit improvements as pull requests against the repo after verifying
+that the existing tests pass and any new code is well covered by unit tests.
+Please write code that complies with the Python style guide,
+[PEP8](https://www.python.org/dev/peps/pep-0008/)
 
+Please e-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.polimis@gmail.com), or [Bryna Hazelton](mailto:brynah@phys.washington.edu ) if you have any questions, suggestions or feedback.
 
 # References
