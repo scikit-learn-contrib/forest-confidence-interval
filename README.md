@@ -53,9 +53,14 @@ If would like to install the development version of the software use:
 ```shell
 pip install git+git://github.com/scikit-learn-contrib/forest-confidence-interval.git
 ```
+## Why use `forest-confidence-interval`?
+The variability in predictions is important for measuring standard errors and estimating standard errors. `forest-confidence-interval` is a Python module for calculating variance and adding confidence intervals to the popular python library `scikit-learn`. The software is compatible with both `scikit-learn` random forest regression or classification objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors.
 
 ## Examples
-See [examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
+
+The examples (gallery below) demonstrates the package functionality with random forest classifiers and regression models.
+The regression example uses a popular UCI Machine Learning data set on cars while the classifier example demonstrates how to add measurements of uncertainty to predictions of spam emails.
+[Examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
 ## Contributing
 
@@ -73,6 +78,7 @@ that the existing tests pass and any new code is well covered by unit tests.
 Please write code that complies with the Python style guide,
 [PEP8](https://www.python.org/dev/peps/pep-0008/)
 
+E-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.polimis@gmail.com), or [Bryna Hazelton](mailto:brynah@phys.washington.edu ) if you have any questions, suggestions or feedbac
 ## Testing
 Requires installation of `nose` package. Tests are located in the `forestci/tests` folder
 and can be run with the `nosetests` command in the main directory
