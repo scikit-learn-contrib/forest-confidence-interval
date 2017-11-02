@@ -163,8 +163,8 @@
 <span class="kn">from</span> <span class="nn">sklearn.ensemble.forest</span> <span class="k">import</span> <span class="n">_generate_sample_indices</span>
 <span class="kn">from</span> <span class="nn">.due</span> <span class="k">import</span> <span class="n">_due</span><span class="p">,</span> <span class="n">_BibTeX</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;calc_inbag&quot;</span><span class="p">,</span> <span class="s2">&quot;random_forest_error&quot;</span><span class="p">,</span> <span class="s2">&quot;_bias_correction&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;_core_computation&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;calc_inbag&quot;</span><span class="p">,</span> <span class="s2">&quot;random_forest_error&quot;</span><span class="p">,</span> <span class="s2">&quot;_bias_correction&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;_core_computation&quot;</span><span class="p">)</span>
 
 <span class="n">_due</span><span class="o">.</span><span class="n">cite</span><span class="p">(</span><span class="n">_BibTeX</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">@ARTICLE{Wager2014-wn,</span>
@@ -218,38 +218,94 @@
     <span class="k">return</span> <span class="n">inbag</span></div>
 
 
-<span class="k">def</span> <span class="nf">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span> 
-                      <span class="n">memory_constrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+<span class="k">def</span> <span class="nf">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span>
+                      <span class="n">memory_constrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">test_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function, that performs the core computation</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X_train : ndarray</span>
+<span class="sd">        An array with shape (n_train_sample, n_features).</span>
+
+<span class="sd">    X_test : ndarray</span>
+<span class="sd">        An array with shape (n_test_sample, n_features).</span>
+
+<span class="sd">    inbag : ndarray</span>
+<span class="sd">        The inbag matrix that fit the data. If set to `None` (default) it</span>
+<span class="sd">        will be inferred from the forest. However, this only works for trees</span>
+<span class="sd">        for which bootstrapping was set to `True`. That is, if sampling was</span>
+<span class="sd">        done with replacement. Otherwise, users need to provide their own</span>
+<span class="sd">        inbag matrix.</span>
+
+<span class="sd">    pred_centered : ndarray</span>
+<span class="sd">        Centered predictions that are an intermediate result in the</span>
+<span class="sd">        computation.</span>
+
+<span class="sd">    memory_constrained: boolean (optional)</span>
+<span class="sd">        Whether or not there is a restriction on memory. If False, it is</span>
+<span class="sd">        assumed that a ndarry of shape (n_train_sample,n_test_sample) fits</span>
+<span class="sd">        in main memory. Setting to True can actually provide a speed up if</span>
+<span class="sd">        memory_limit is tuned to the optimal range.</span>
+
+<span class="sd">    memory_limit: int (optional)</span>
+<span class="sd">        An upper bound for how much memory the itermediate matrices will take</span>
+<span class="sd">        up in Megabytes. This must be provided if memory_constrained=True.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">memory_constrained</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">pred_centered</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-    
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pred_centered</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_trees</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">memory_limit</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;If memory_constrained=True,&#39;</span> <span class="o">+</span> \
-                         <span class="s1">&#39;must provide memory_limit.&#39;</span><span class="p">)</span>
-    
-    <span class="c1">## Assumes double precision float</span>
-    <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">memory_limit</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">/</span><span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-    
-    <span class="k">if</span> <span class="n">chunk_size</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-        <span class="n">min_limit</span> <span class="o">=</span> <span class="mf">8.0</span><span class="o">*</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;memory_limit provided is too small.&#39;</span> <span class="o">+</span> \
-                         <span class="s1">&#39;For these dimensions, memory_limit must &#39;</span> <span class="o">+</span> \
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;If memory_constrained=True, must provide&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;memory_limit.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Assumes double precision float</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">memory_limit</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="k">if</span> <span class="n">chunk_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">min_limit</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="o">*</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e6</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;memory_limit provided is too small.&#39;</span> <span class="o">+</span>
+                         <span class="s1">&#39;For these dimensions, memory_limit must &#39;</span> <span class="o">+</span>
                          <span class="s1">&#39;be greater than or equal to </span><span class="si">%.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">min_limit</span><span class="p">)</span>
-    
-    <span class="n">chunk_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">chunk_size</span><span class="p">,</span><span class="n">chunk_size</span><span class="p">)</span>
+
+    <span class="n">chunk_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)</span>
     <span class="n">inds</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="n">chunk_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">chunk_edges</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> 
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="n">chunk_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">chunk_edges</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
               <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunk_edges</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">test_mode</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of chunks: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">),))</span>
     <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-                                          <span class="n">pred_centered</span><span class="p">[</span><span class="n">chunk</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                                   <span class="n">pred_centered</span><span class="p">[</span><span class="n">chunk</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">V_IJ</span>
 
 
 <span class="k">def</span> <span class="nf">_bias_correction</span><span class="p">(</span><span class="n">V_IJ</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper functions that implements bias correction</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    V_IJ : ndarray</span>
+<span class="sd">        Intermediate result in the computation.</span>
+
+<span class="sd">    inbag : ndarray</span>
+<span class="sd">        The inbag matrix that fit the data. If set to `None` (default) it</span>
+<span class="sd">        will be inferred from the forest. However, this only works for trees</span>
+<span class="sd">        for which bootstrapping was set to `True`. That is, if sampling was</span>
+<span class="sd">        done with replacement. Otherwise, users need to provide their own</span>
+<span class="sd">        inbag matrix.</span>
+
+<span class="sd">    pred_centered : ndarray</span>
+<span class="sd">        Centered predictions that are an intermediate result in the</span>
+<span class="sd">        computation.</span>
+
+<span class="sd">    n_trees : int</span>
+<span class="sd">        The number of trees in the forest object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_train_samples</span> <span class="o">=</span> <span class="n">inbag</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">n_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">inbag</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_trees</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="o">-</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">inbag</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_trees</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">view</span><span class="p">())</span>
@@ -273,10 +329,12 @@
 <span class="sd">        Regressor or Classifier object.</span>
 
 <span class="sd">    X_train : ndarray</span>
-<span class="sd">        An array with shape (n_train_sample, n_features).</span>
+<span class="sd">        An array with shape (n_train_sample, n_features). The design matrix for</span>
+<span class="sd">        training data.</span>
 
 <span class="sd">    X_test : ndarray</span>
-<span class="sd">        An array with shape (n_test_sample, n_features).</span>
+<span class="sd">        An array with shape (n_test_sample, n_features). The design matrix</span>
+<span class="sd">        for testing data</span>
 
 <span class="sd">    inbag : ndarray (optional)</span>
 <span class="sd">        The inbag matrix that fit the data. If set to `None` (default) it</span>
@@ -286,7 +344,7 @@
 <span class="sd">        inbag matrix.</span>
 
 <span class="sd">    memory_constrained: boolean (optional)</span>
-<span class="sd">        Whether or not there is a restriction on memory. If False, it is </span>
+<span class="sd">        Whether or not there is a restriction on memory. If False, it is</span>
 <span class="sd">        assumed that a ndarry of shape (n_train_sample,n_test_sample) fits</span>
 <span class="sd">        in main memory. Setting to True can actually provide a speed up if</span>
 <span class="sd">        memory_limit is tuned to the optimal range.</span>
@@ -320,7 +378,7 @@
     <span class="n">pred_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">pred_centered</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">-</span> <span class="n">pred_mean</span>
     <span class="n">n_trees</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">n_estimators</span>
-    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span> 
+    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">_core_computation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span>
                              <span class="n">memory_constrained</span><span class="p">,</span> <span class="n">memory_limit</span><span class="p">)</span>
     <span class="n">V_IJ_unbiased</span> <span class="o">=</span> <span class="n">_bias_correction</span><span class="p">(</span><span class="n">V_IJ</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">)</span>
 

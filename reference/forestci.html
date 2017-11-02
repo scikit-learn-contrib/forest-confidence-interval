@@ -234,11 +234,13 @@ this variance can be used to plot error bars for RandomForest objects</p>
 </div></blockquote>
 <p><strong>X_train</strong> : ndarray</p>
 <blockquote>
-<div><p>An array with shape (n_train_sample, n_features).</p>
+<div><p>An array with shape (n_train_sample, n_features). The design matrix for
+training data.</p>
 </div></blockquote>
 <p><strong>X_test</strong> : ndarray</p>
 <blockquote>
-<div><p>An array with shape (n_test_sample, n_features).</p>
+<div><p>An array with shape (n_test_sample, n_features). The design matrix
+for testing data</p>
 </div></blockquote>
 <p><strong>inbag</strong> : ndarray (optional)</p>
 <blockquote>
@@ -250,7 +252,7 @@ inbag matrix.</p>
 </div></blockquote>
 <p><strong>memory_constrained: boolean (optional)</strong></p>
 <blockquote>
-<div><p>Whether or not there is a restriction on memory. If False, it is 
+<div><p>Whether or not there is a restriction on memory. If False, it is
 assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
 in main memory. Setting to True can actually provide a speed up if
 memory_limit is tuned to the optimal range.</p>
