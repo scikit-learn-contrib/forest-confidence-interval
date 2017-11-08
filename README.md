@@ -25,8 +25,8 @@ scikit-learn - http://scikit-learn.org/
 Stefan Wager's `randomForestCI` - https://github.com/swager/randomForestCI
 
 ## Installation and Usage
-Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.
-Dependencies associated with the previous modules may need root privileges to install
+Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.  
+Dependencies associated with the previous modules may need root privileges to install  
 Consult the [API Reference](http://contrib.scikit-learn.org/forest-confidence-interval/reference/index.html) for documentation on core functionality
 
 ```
@@ -54,7 +54,7 @@ If would like to install the development version of the software use:
 pip install git+git://github.com/scikit-learn-contrib/forest-confidence-interval.git
 ```
 ## Why use `forest-confidence-interval`?
-The variability in predictions is important for measuring standard errors and estimating standard errors. `forest-confidence-interval` is a Python module for calculating variance and adding confidence intervals to the popular python library `scikit-learn`. The software is compatible with both `scikit-learn` random forest regression or classification objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors.
+The variability in predictions is important for measuring and estimating standard errors. `forest-confidence-interval` is a Python module for calculating variance and adding confidence intervals to the popular python library `scikit-learn`. The software is compatible with both `scikit-learn` random forest regression or classification objects. Our software is designed for individuals using `scikit-learn` random forest objects that want to add estimates of uncertainty to random forest predictors.
 
 ## Examples
 
