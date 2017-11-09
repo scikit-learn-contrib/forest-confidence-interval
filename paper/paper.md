@@ -8,13 +8,16 @@ tags:
 authors:
 - name: Kivan Polimis
   orcid: 0000-0002-3498-0479
-  affiliation: eScience Institute, University of Washington
+  affiliation: 1
 - name: Ariel Rokem
   orcid: 0000-0003-0679-1985
-  affiliation: eScience Institute, University of Washington
+  affiliation: 1
 - name: Bryna Hazelton
   orcid: 0000-0001-7532-645X
-  affiliation: eScience Institute, University of Washington
+  affiliation: 1
+affiliations:
+ - name: eScience Institute, University of Washington
+   index: 1
 date: 7 July 2017
 bibliography: paper.bib
 ---
