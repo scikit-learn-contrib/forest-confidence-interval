@@ -32,6 +32,17 @@ spam_RFC = RandomForestClassifier(max_features=5, n_estimators=n_trees,
 spam_RFC.fit(spam_X_train, spam_y_train)
 spam_y_hat = spam_RFC.predict_proba(spam_X_test)
 
+idx_spam = np.where(spam_y_test == 1)[0]
+idx_ham = np.where(spam_y_test == 0)[0]
+
+# Histogram predictions without error bars:
+fig, ax = plt.subplots(1)
+ax.hist(spam_y_hat[idx_spam, 1], histtype='step', label='spam')
+ax.hist(spam_y_hat[idx_ham, 1], histtype='step', label='not spam')
+ax.set_xlabel('Prediction (spam probability)')
+ax.set_ylabel('Number of observations')
+plt.legend()
+
 # calculate inbag and unbiased variance
 spam_inbag = fci.calc_inbag(spam_X_train.shape[0], spam_RFC)
 spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train,
@@ -39,15 +50,16 @@ spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train,
 
 # Plot forest prediction for emails and standard deviation for estimates
 # Blue points are spam emails; Green points are non-spam emails
-idx = np.where(spam_y_test == 1)[0]
-plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
-             fmt='.', alpha=0.75, label='spam')
+fig, ax = plt.subplots(1)
+ax.scatter(spam_y_hat[idx_spam, 1],
+           np.sqrt(spam_V_IJ_unbiased[idx_spam]),
+           label='spam')
 
-idx = np.where(spam_y_test == 0)[0]
-plt.errorbar(spam_y_hat[idx, 1], np.sqrt(spam_V_IJ_unbiased[idx]),
-             fmt='.', alpha=0.75, label='not spam')
+ax.scatter(spam_y_hat[idx_ham, 1],
+           np.sqrt(spam_V_IJ_unbiased[idx_ham]),
+           label='not spam')
 
-plt.xlabel('Prediction (spam probability)')
-plt.ylabel('Standard deviation')
+ax.set_xlabel('Prediction (spam probability)')
+ax.set_ylabel('Standard deviation')
 plt.legend()
 plt.show()
