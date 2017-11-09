@@ -173,7 +173,12 @@
 <p>The data used here are synthetically generated to simulate a data-set in which
 email messages are labeled as spam based on 20 different features (the default
 of <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_classification.html#sklearn.datasets.make_classification" title="(in scikit-learn v0.19.1)"><code class="xref py py-func docutils literal"><span class="pre">sklearn.datasets.make_classification()</span></code></a>).</p>
-<img alt="../_images/sphx_glr_plot_spam_001.png" class="align-center" src="../_images/sphx_glr_plot_spam_001.png" />
+<ul class="sphx-glr-horizontal">
+<li><a class="first reference internal image-reference" href="../_images/sphx_glr_plot_spam_001.png"><img alt="../_images/sphx_glr_plot_spam_001.png" src="../_images/sphx_glr_plot_spam_001.png" style="width: 300.8px; height: 225.6px;" /></a>
+</li>
+<li><a class="first reference internal image-reference" href="../_images/sphx_glr_plot_spam_002.png"><img alt="../_images/sphx_glr_plot_spam_002.png" src="../_images/sphx_glr_plot_spam_002.png" style="width: 300.8px; height: 225.6px;" /></a>
+</li>
+</ul>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -195,6 +200,17 @@ of <a class="reference external" href="http://scikit-learn.org/stable/modules/ge
 <span class="n">spam_RFC</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">spam_X_train</span><span class="p">,</span> <span class="n">spam_y_train</span><span class="p">)</span>
 <span class="n">spam_y_hat</span> <span class="o">=</span> <span class="n">spam_RFC</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">spam_X_test</span><span class="p">)</span>
 
+<span class="n">idx_spam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">spam_y_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">idx_ham</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">spam_y_test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Histogram predictions without error bars:</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">spam_y_hat</span><span class="p">[</span><span class="n">idx_spam</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;spam&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">spam_y_hat</span><span class="p">[</span><span class="n">idx_ham</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;not spam&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Prediction (spam probability)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Number of observations&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
 <span class="c1"># calculate inbag and unbiased variance</span>
 <span class="n">spam_inbag</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">calc_inbag</span><span class="p">(</span><span class="n">spam_X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">spam_RFC</span><span class="p">)</span>
 <span class="n">spam_V_IJ_unbiased</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">random_forest_error</span><span class="p">(</span><span class="n">spam_RFC</span><span class="p">,</span> <span class="n">spam_X_train</span><span class="p">,</span>
@@ -202,21 +218,22 @@ of <a class="reference external" href="http://scikit-learn.org/stable/modules/ge
 
 <span class="c1"># Plot forest prediction for emails and standard deviation for estimates</span>
 <span class="c1"># Blue points are spam emails; Green points are non-spam emails</span>
-<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">spam_y_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">spam_y_hat</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">spam_V_IJ_unbiased</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span>
-             <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;spam&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">spam_y_hat</span><span class="p">[</span><span class="n">idx_spam</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+           <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">spam_V_IJ_unbiased</span><span class="p">[</span><span class="n">idx_spam</span><span class="p">]),</span>
+           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;spam&#39;</span><span class="p">)</span>
 
-<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">spam_y_test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">spam_y_hat</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">spam_V_IJ_unbiased</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span>
-             <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;not spam&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">spam_y_hat</span><span class="p">[</span><span class="n">idx_ham</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+           <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">spam_V_IJ_unbiased</span><span class="p">[</span><span class="n">idx_ham</span><span class="p">]),</span>
+           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;not spam&#39;</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Prediction (spam probability)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standard deviation&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Prediction (spam probability)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Standard deviation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  6.946 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  7.640 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_spam.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_spam.py</span></code></a></div>

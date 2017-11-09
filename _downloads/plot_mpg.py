@@ -14,7 +14,7 @@ various features of different cars, and their MPG.
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-import sklearn.cross_validation as xval
+import sklearn.model_selection as xval
 from sklearn.datasets.mldata import fetch_mldata
 import forestci as fci
 
@@ -38,14 +38,21 @@ mpg_forest = RandomForestRegressor(n_estimators=n_trees, random_state=42)
 mpg_forest.fit(mpg_X_train, mpg_y_train)
 mpg_y_hat = mpg_forest.predict(mpg_X_test)
 
-# calculate inbag and unbiased variance
+# Plot predicted MPG without error bars
+plt.scatter(mpg_y_test, mpg_y_hat)
+plt.plot([5, 45], [5, 45], 'k--')
+plt.xlabel('Reported MPG')
+plt.ylabel('Predicted MPG')
+plt.show()
+
+# Calculate inbag and unbiased variance
 mpg_inbag = fci.calc_inbag(mpg_X_train.shape[0], mpg_forest)
 mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train,
                                             mpg_X_test)
 
 # Plot error bars for predicted MPG using unbiased variance
 plt.errorbar(mpg_y_test, mpg_y_hat, yerr=np.sqrt(mpg_V_IJ_unbiased), fmt='o')
-plt.plot([5, 45], [5, 45], '--')
+plt.plot([5, 45], [5, 45], 'k--')
 plt.xlabel('Reported MPG')
 plt.ylabel('Predicted MPG')
 plt.show()
