@@ -45,7 +45,7 @@ plt.legend()
 
 # calculate inbag and unbiased variance
 spam_inbag = fci.calc_inbag(spam_X_train.shape[0], spam_RFC)
-spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train,
+spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_inbag, spam_X_train,
                                              spam_X_test)
 
 # Plot forest prediction for emails and standard deviation for estimates

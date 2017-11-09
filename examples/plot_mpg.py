@@ -47,7 +47,7 @@ plt.show()
 
 # Calculate inbag and unbiased variance
 mpg_inbag = fci.calc_inbag(mpg_X_train.shape[0], mpg_forest)
-mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train,
+mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_inbag, mpg_X_train,
                                             mpg_X_test)
 
 # Plot error bars for predicted MPG using unbiased variance
