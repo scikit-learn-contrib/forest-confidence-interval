@@ -70,7 +70,6 @@ def calc_inbag(n_samples, forest):
 def _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
                       memory_constrained=False, memory_limit=None,
                       test_mode=False):
-<<<<<<< HEAD
     """
     Helper function, that performs the core computation
 
@@ -117,21 +116,6 @@ def _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
 
     if chunk_size == 0:
         min_limit = 8.0 * X_train.shape[0] / 1e6
-=======
-    """Helper function: the core computation."""
-    if not memory_constrained:
-        return np.sum((np.dot(inbag-1, pred_centered.T)/n_trees)**2, 0)
-
-    if memory_limit is None:
-        raise ValueError('If memory_constrained=True,' +
-                         'must provide memory_limit.')
-
-    # Assumes double precision float:
-    chunk_size = int((memory_limit * 1e6) / (8.0 * X_train.shape[0]))
-
-    if chunk_size == 0:
-        min_limit = 8.0 * X_train.shape[0] / (1e6)
->>>>>>> Calibration with empirical Bayes.
         raise ValueError('memory_limit provided is too small.' +
                          'For these dimensions, memory_limit must ' +
                          'be greater than or equal to %.3e' % min_limit)
@@ -142,20 +126,13 @@ def _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
               for i in range(len(chunk_edges)-1)]
     if test_mode:
         print('Number of chunks: %d' % (len(chunks),))
-<<<<<<< HEAD
-    V_IJ = np.concatenate([np.sum((np.dot(inbag-1,
-                                   pred_centered[chunk].T)/n_trees) ** 2, 0)
-                           for chunk in chunks])
-=======
     V_IJ = np.concatenate([
                 np.sum((np.dot(inbag-1, pred_centered[chunk].T)/n_trees)**2, 0)
                 for chunk in chunks])
->>>>>>> Calibration with empirical Bayes.
     return V_IJ
 
 
 def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
-<<<<<<< HEAD
     """
     Helper functions that implements bias correction
 
@@ -178,9 +155,6 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     n_trees : int
         The number of trees in the forest object.
     """
-=======
-    """Helper function: correct bias."""
->>>>>>> Calibration with empirical Bayes.
     n_train_samples = inbag.shape[0]
     n_var = np.mean(np.square(inbag[0:n_trees]).mean(axis=1).T.view() -
                     np.square(inbag[0:n_trees].mean(axis=1)).T.view())
@@ -219,9 +193,6 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
         done with replacement. Otherwise, users need to provide their own
         inbag matrix.
 
-<<<<<<< HEAD
-    memory_constrained: boolean (optional)
-=======
     calibrate: boolean, optional
         Whether to apply calibration to mitigate Monte Carlo noise.
         Some variance estimates may be negative due to Monte Carlo effects if
@@ -229,7 +200,6 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
         Default: True
 
     memory_constrained: boolean, optional
->>>>>>> Calibration with empirical Bayes.
         Whether or not there is a restriction on memory. If False, it is
         assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
         in main memory. Setting to True can actually provide a speed up if
