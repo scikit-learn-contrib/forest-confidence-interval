@@ -6,3 +6,4 @@ API Reference
 .. toctree::
 
    forestci.rst
+   forestci.calibration.rst

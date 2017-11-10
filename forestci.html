@@ -197,8 +197,8 @@ for more information.</p>
 
 <dl class="function">
 <dt id="forestci.random_forest_error">
-<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>X_train</em>, <em>X_test</em>, <em>inbag=None</em>, <em>memory_constrained=False</em>, <em>memory_limit=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates error bars from scikit-learn RandomForest estimators.</p>
+<code class="descclassname">forestci.</code><code class="descname">random_forest_error</code><span class="sig-paren">(</span><em>forest</em>, <em>X_train</em>, <em>X_test</em>, <em>inbag=None</em>, <em>calibrate=True</em>, <em>memory_constrained=False</em>, <em>memory_limit=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/forestci/forestci.html#random_forest_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#forestci.random_forest_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate error bars from scikit-learn RandomForest estimators.</p>
 <p>RandomForest is a regressor or classifier object
 this variance can be used to plot error bars for RandomForest objects</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -219,7 +219,7 @@ training data.</p>
 <div><p>An array with shape (n_test_sample, n_features). The design matrix
 for testing data</p>
 </div></blockquote>
-<p><strong>inbag</strong> : ndarray (optional)</p>
+<p><strong>inbag</strong> : ndarray, optional</p>
 <blockquote>
 <div><p>The inbag matrix that fit the data. If set to <cite>None</cite> (default) it
 will be inferred from the forest. However, this only works for trees
@@ -227,14 +227,21 @@ for which bootstrapping was set to <cite>True</cite>. That is, if sampling was
 done with replacement. Otherwise, users need to provide their own
 inbag matrix.</p>
 </div></blockquote>
-<p><strong>memory_constrained: boolean (optional)</strong></p>
+<p><strong>calibrate: boolean, optional</strong></p>
+<blockquote>
+<div><p>Whether to apply calibration to mitigate Monte Carlo noise.
+Some variance estimates may be negative due to Monte Carlo effects if
+the number of trees in the forest is too small. To use calibration,
+Default: True</p>
+</div></blockquote>
+<p><strong>memory_constrained: boolean, optional</strong></p>
 <blockquote>
 <div><p>Whether or not there is a restriction on memory. If False, it is
 assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
 in main memory. Setting to True can actually provide a speed up if
 memory_limit is tuned to the optimal range.</p>
 </div></blockquote>
-<p><strong>memory_limit: int (optional)</strong></p>
+<p><strong>memory_limit: int, optional.</strong></p>
 <blockquote>
 <div><p>An upper bound for how much memory the itermediate matrices will take
 up in Megabytes. This must be provided if memory_constrained=True.</p>

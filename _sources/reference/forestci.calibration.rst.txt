@@ -1,0 +1,43 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`calibration`
+==================
+.. automodule:: forestci.calibration
+
+.. currentmodule:: forestci.calibration
+.. autosummary::
+
+   calibrateEB
+   fftconvolve
+   gbayes
+   gfit
+   minimize
+
+
+.. currentmodule:: forestci.calibration
+
+calibrateEB
+~~~~~~~~~~~
+
+.. autofunction:: calibrateEB
+
+fftconvolve
+~~~~~~~~~~~
+
+.. autofunction:: fftconvolve
+
+gbayes
+~~~~~~
+
+.. autofunction:: gbayes
+
+gfit
+~~~~
+
+.. autofunction:: gfit
+
+minimize
+~~~~~~~~
+
+.. autofunction:: minimize
+

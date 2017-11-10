@@ -159,7 +159,16 @@
            <div itemprop="articleBody">
             
   <h1>Source code for forestci.forestci</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Forest confidence intervals.</span>
+
+<span class="sd">Calculate confidence intervals for scikit-learn RandomForestRegressor and</span>
+<span class="sd">RandomForestClassifier predictions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">.calibration</span> <span class="k">import</span> <span class="n">calibrateEB</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble.forest</span> <span class="k">import</span> <span class="n">_generate_sample_indices</span>
 <span class="kn">from</span> <span class="nn">.due</span> <span class="k">import</span> <span class="n">_due</span><span class="p">,</span> <span class="n">_BibTeX</span>
 
@@ -202,6 +211,7 @@
 <span class="sd">    Columns are individual trees. Rows are the number of times a sample was</span>
 <span class="sd">    used in a tree.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">forest</span><span class="o">.</span><span class="n">bootstrap</span><span class="p">:</span>
         <span class="n">e_s</span> <span class="o">=</span> <span class="s2">&quot;Cannot calculate the inbag from a forest that has &quot;</span>
         <span class="n">e_s</span> <span class="o">=</span> <span class="s2">&quot; bootstrap=False&quot;</span>
@@ -277,9 +287,9 @@
               <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunk_edges</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">test_mode</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of chunks: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">),))</span>
-    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-                                   <span class="n">pred_centered</span><span class="p">[</span><span class="n">chunk</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-                           <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">])</span>
+    <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inbag</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">[</span><span class="n">chunk</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">n_trees</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">V_IJ</span>
 
 
@@ -316,9 +326,10 @@
 
 
 <div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../reference/forestci.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">memory_constrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                        <span class="n">calibrate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">memory_constrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculates error bars from scikit-learn RandomForest estimators.</span>
+<span class="sd">    Calculate error bars from scikit-learn RandomForest estimators.</span>
 
 <span class="sd">    RandomForest is a regressor or classifier object</span>
 <span class="sd">    this variance can be used to plot error bars for RandomForest objects</span>
@@ -336,20 +347,26 @@
 <span class="sd">        An array with shape (n_test_sample, n_features). The design matrix</span>
 <span class="sd">        for testing data</span>
 
-<span class="sd">    inbag : ndarray (optional)</span>
+<span class="sd">    inbag : ndarray, optional</span>
 <span class="sd">        The inbag matrix that fit the data. If set to `None` (default) it</span>
 <span class="sd">        will be inferred from the forest. However, this only works for trees</span>
 <span class="sd">        for which bootstrapping was set to `True`. That is, if sampling was</span>
 <span class="sd">        done with replacement. Otherwise, users need to provide their own</span>
 <span class="sd">        inbag matrix.</span>
 
-<span class="sd">    memory_constrained: boolean (optional)</span>
+<span class="sd">    calibrate: boolean, optional</span>
+<span class="sd">        Whether to apply calibration to mitigate Monte Carlo noise.</span>
+<span class="sd">        Some variance estimates may be negative due to Monte Carlo effects if</span>
+<span class="sd">        the number of trees in the forest is too small. To use calibration,</span>
+<span class="sd">        Default: True</span>
+
+<span class="sd">    memory_constrained: boolean, optional</span>
 <span class="sd">        Whether or not there is a restriction on memory. If False, it is</span>
 <span class="sd">        assumed that a ndarry of shape (n_train_sample,n_test_sample) fits</span>
 <span class="sd">        in main memory. Setting to True can actually provide a speed up if</span>
 <span class="sd">        memory_limit is tuned to the optimal range.</span>
 
-<span class="sd">    memory_limit: int (optional)</span>
+<span class="sd">    memory_limit: int, optional.</span>
 <span class="sd">        An upper bound for how much memory the itermediate matrices will take</span>
 <span class="sd">        up in Megabytes. This must be provided if memory_constrained=True.</span>
 
@@ -374,6 +391,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">inbag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">inbag</span> <span class="o">=</span> <span class="n">calc_inbag</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">forest</span><span class="p">)</span>
+
     <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">forest</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
     <span class="n">pred_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">pred_centered</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">-</span> <span class="n">pred_mean</span>
@@ -387,7 +405,33 @@
         <span class="n">variance_inflation</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">inbag</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
         <span class="n">V_IJ_unbiased</span> <span class="o">*=</span> <span class="n">variance_inflation</span>
 
-    <span class="k">return</span> <span class="n">V_IJ_unbiased</span></div>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">calibrate</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
+
+    <span class="k">if</span> <span class="n">V_IJ_unbiased</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No calibration with n_samples &lt;= 20&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
+    <span class="k">if</span> <span class="n">calibrate</span><span class="p">:</span>
+
+        <span class="n">calibration_ratio</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">n_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_trees</span> <span class="o">/</span> <span class="n">calibration_ratio</span><span class="p">)</span>
+        <span class="n">new_forest</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span>
+        <span class="n">new_forest</span><span class="o">.</span><span class="n">estimators_</span> <span class="o">=</span>\
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">new_forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">)[:</span><span class="nb">int</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)]</span>
+        <span class="n">new_forest</span><span class="o">.</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span>
+
+        <span class="n">results_ss</span> <span class="o">=</span> <span class="n">random_forest_error</span><span class="p">(</span><span class="n">new_forest</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span>
+                                         <span class="n">calibrate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Use this second set of variance estimates</span>
+        <span class="c1"># to estimate scale of Monte Carlo noise</span>
+        <span class="n">sigma2_ss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">results_ss</span> <span class="o">-</span> <span class="n">V_IJ_unbiased</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">n_sample</span> <span class="o">/</span> <span class="n">n_trees</span>
+        <span class="n">sigma2</span> <span class="o">=</span> <span class="p">(</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">delta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">delta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma2_ss</span>
+
+        <span class="c1"># Use Monte Carlo noise scale estimate for empirical Bayes calibration</span>
+        <span class="n">V_IJ_calibrated</span> <span class="o">=</span> <span class="n">calibrateEB</span><span class="p">(</span><span class="n">V_IJ_unbiased</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">V_IJ_calibrated</span></div>
 </pre></div>
 
            </div>
