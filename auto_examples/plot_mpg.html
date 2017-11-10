@@ -208,8 +208,7 @@ various features of different cars, and their MPG.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted MPG&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="c1"># Calculate inbag and unbiased variance</span>
-<span class="n">mpg_inbag</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">calc_inbag</span><span class="p">(</span><span class="n">mpg_X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mpg_forest</span><span class="p">)</span>
+<span class="c1"># Calculate the variance:</span>
 <span class="n">mpg_V_IJ_unbiased</span> <span class="o">=</span> <span class="n">fci</span><span class="o">.</span><span class="n">random_forest_error</span><span class="p">(</span><span class="n">mpg_forest</span><span class="p">,</span> <span class="n">mpg_X_train</span><span class="p">,</span>
                                             <span class="n">mpg_X_test</span><span class="p">)</span>
 
@@ -221,7 +220,7 @@ various features of different cars, and their MPG.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  7.394 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  7.064 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_mpg.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_mpg.py</span></code></a></div>

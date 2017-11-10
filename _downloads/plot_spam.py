@@ -43,8 +43,7 @@ ax.set_xlabel('Prediction (spam probability)')
 ax.set_ylabel('Number of observations')
 plt.legend()
 
-# calculate inbag and unbiased variance
-spam_inbag = fci.calc_inbag(spam_X_train.shape[0], spam_RFC)
+# Calculate the variance
 spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train,
                                              spam_X_test)
 

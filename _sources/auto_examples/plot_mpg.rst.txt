@@ -61,8 +61,7 @@ various features of different cars, and their MPG.
     plt.ylabel('Predicted MPG')
     plt.show()
 
-    # Calculate inbag and unbiased variance
-    mpg_inbag = fci.calc_inbag(mpg_X_train.shape[0], mpg_forest)
+    # Calculate the variance:
     mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train,
                                                 mpg_X_test)
 
@@ -73,7 +72,7 @@ various features of different cars, and their MPG.
     plt.ylabel('Predicted MPG')
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  7.394 seconds)
+**Total running time of the script:** ( 0 minutes  7.064 seconds)
 
 
 
