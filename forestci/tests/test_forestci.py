@@ -71,7 +71,7 @@ def test_core_computation():
                                         memory_limit=.01,
                                         test_mode=True)
 
-    npt.assert_almost_equal(our_vij, r_vij)
+        npt.assert_almost_equal(our_vij, r_vij)
 
 
 def test_bias_correction():
