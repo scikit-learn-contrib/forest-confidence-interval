@@ -2,8 +2,8 @@
 _version_major = 0
 _version_minor = 3
 _version_micro = ''  # use '' for first of series, number for 1 and above
-_version_extra = 'dev'
-# _version_extra = ''  # Uncomment this for full releases
+# _version_extra = 'dev'
+_version_extra = ''  # Uncomment this for full releases
 
 # Construct full version string from these.
 _ver = [_version_major, _version_minor]
@@ -31,14 +31,16 @@ long_description = """
 sklearn forest ci
 =================
 
-`forest-confidence-interval` is a Python module for calculating variance and adding
-confidence intervals to scikit-learn random forest regression or classification
-objects. The core functions calculate an in-bag and error bars for
-random forest objects
+`forest-confidence-interval` is a Python module for calculating variance and
+adding confidence intervals to scikit-learn random forest regression or
+classification objects. The core functions calculate an in-bag and error bars
+for random forest objects
 
-Please read the repository README_ on Github.
+Please read the repository README_ on Github or our documentation_
 
 .. _README: https://github.com/scikit-learn-contrib/forest-confidence-interval/blob/master/README.md
+
+.. _documentation: http://contrib.scikit-learn.org/forest-confidence-interval/
 
 """
 
