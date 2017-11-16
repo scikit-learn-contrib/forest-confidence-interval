@@ -260,7 +260,9 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
         new_forest.n_estimators = int(n_sample)
 
         results_ss = random_forest_error(new_forest, X_train, X_test,
-                                         calibrate=False)
+                                         calibrate=False,
+                                         memory_constrained=memory_constrained,
+                                         memory_limit=memory_limit)
         # Use this second set of variance estimates
         # to estimate scale of Monte Carlo noise
         sigma2_ss = np.mean((results_ss - V_IJ_unbiased)**2)
