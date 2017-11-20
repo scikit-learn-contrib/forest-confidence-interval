@@ -4,6 +4,8 @@
 [![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/forest-confidence-interval)
 [![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval/tree/master)
 
+[![status](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35/status.svg)](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35)
+
 Forest algorithms are powerful
 [ensemble methods](http://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) for classification and regression. However, predictions from these algorithms do contain some amount of error. Prediction variability can illustrate how influential
 the training set is for producing the observed random forest predictions.
@@ -84,3 +86,17 @@ E-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.poli
 ## Testing
 Requires installation of `nose` package. Tests are located in the `forestci/tests` folder
 and can be run with the `nosetests` command in the main directory.
+
+## Citation
+Click on the status badge for the Journal of Open Source Software article on this project.  
+
+```
+@article{polimisconfidence,
+  title={Confidence Intervals for Random Forests in Python},
+  author={Polimis, Kivan and Rokem, Ariel and Hazelton, Bryna},
+  journal={Journal of Open Source Software},
+  volume={2},
+  number={1},
+  year={2017}
+}
+```
