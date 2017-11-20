@@ -87,7 +87,8 @@ Requires installation of `nose` package. Tests are located in the `forestci/test
 and can be run with the `nosetests` command in the main directory.
 
 ## Citation
-Click on the JOSS status badge for the Journal of Open Source Software article on this project.  
+Click on the JOSS status badge for the Journal of Open Source Software article on this project.
+The BibTeX citation for the JOSS article is below:  
 
 ```
 @article{polimisconfidence,
