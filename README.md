@@ -3,7 +3,6 @@
 [![Travis Status](https://travis-ci.org/scikit-learn-contrib/forest-confidence-interval.svg?branch=master)](https://travis-ci.org/scikit-learn-contrib/forest-confidence-interval)
 [![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/forest-confidence-interval)
 [![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval/tree/master)
-
 [![status](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35/status.svg)](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35)
 
 Forest algorithms are powerful
@@ -88,7 +87,7 @@ Requires installation of `nose` package. Tests are located in the `forestci/test
 and can be run with the `nosetests` command in the main directory.
 
 ## Citation
-Click on the status badge for the Journal of Open Source Software article on this project.  
+Click on the JOSS status badge for the Journal of Open Source Software article on this project.  
 
 ```
 @article{polimisconfidence,
