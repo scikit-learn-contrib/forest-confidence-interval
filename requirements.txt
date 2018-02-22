@@ -1,3 +1,5 @@
 numpy>= 1.8.2
 nose>=1.1.2
 scikit-learn>=0.17
+cython
+scipy
