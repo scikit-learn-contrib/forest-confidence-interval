@@ -2,6 +2,15 @@ import numpy as np
 import numpy.testing as npt
 from sklearn.ensemble import RandomForestRegressor
 import forestci as fci
+import forestci.cyfci
+
+
+def test_compare_cycore_computation():
+    a = np.arange(1,7,dtype=np.float64).reshape(2,3)
+    b = np.arange(1,13,dtype=np.float64).reshape(4,3)
+    c = fci._cycore_computation(a, b)
+    actual = fci._core_computation(np.zeros((2,10)), np.zeros((4,10)), a, b, 3)
+    npt.assert_equal(actual, c)
 
 
 def test_random_forest_error():
@@ -57,21 +66,40 @@ def test_core_computation():
                                   for _ in range(1000)])
     n_trees = 4
 
-    our_vij = fci._core_computation(X_train_ex, X_test_ex, inbag_ex,
-                                    pred_centered_ex, n_trees)
+    pred_centered_ex = pred_centered_ex.astype(np.float64)
+    inbag_ex = inbag_ex.astype(np.float64)
+    our_vij = forestci._core_computation(
+        X_train_ex, X_test_ex, inbag_ex, pred_centered_ex, n_trees
+    )
 
     r_vij = np.concatenate([np.array([112.5, 387.5]) for _ in range(1000)])
 
     npt.assert_almost_equal(our_vij, r_vij)
 
-    for mc, ml in zip([True, False], [.01, None]):
-        our_vij = fci._core_computation(X_train_ex, X_test_ex, inbag_ex,
-                                        pred_centered_ex, n_trees,
-                                        memory_constrained=True,
-                                        memory_limit=.01,
-                                        test_mode=True)
 
-        npt.assert_almost_equal(our_vij, r_vij)
+def test_low_memory_core_computation():
+    inbag_ex = np.array([[1., 2., 0., 1.],
+                         [1., 0., 2., 0.],
+                         [1., 1., 1., 2.]])
+
+    X_train_ex = np.array([[3, 3],
+                           [6, 4],
+                           [6, 6]])
+    X_test_ex = np.vstack([np.array([[5, 2],
+                                     [5, 5]]) for _ in range(1000)])
+    pred_centered_ex = np.vstack([np.array([[-20, -20, 10, 30],
+                                            [-20, 30, -20, 10]])
+                                  for _ in range(1000)])
+    n_trees = 4
+
+    pred_centered_ex = pred_centered_ex.astype(np.float64)
+    inbag_ex = inbag_ex.astype(np.float64)
+    our_vij = forestci._core_computation(
+        X_train_ex, X_test_ex, inbag_ex, pred_centered_ex, n_trees, low_memory=True)
+
+    r_vij = np.concatenate([np.array([112.5, 387.5]) for _ in range(1000)])
+
+    npt.assert_almost_equal(our_vij, r_vij)
 
 
 def test_bias_correction():
