@@ -1,6 +1,6 @@
 """
 ======================================
-Plotting Regresssion Forest Error Bars
+Plotting Regression Forest Error Bars
 ======================================
 
 This example demonstrates using `forestci` to calculate the error bars of
@@ -18,21 +18,21 @@ import sklearn.model_selection as xval
 from sklearn.datasets.mldata import fetch_mldata
 import forestci as fci
 
-# retreive mpg data from machine learning library
+# Retrieve mpg data from machine learning library
 mpg_data = fetch_mldata('mpg')
 
-# separate mpg data into predictors and outcome variable
+# Separate mpg data into predictors and outcome variable
 mpg_X = mpg_data["data"]
 mpg_y = mpg_data["target"]
 
-# split mpg data into training and test set
+# Split mpg data into training and test set
 mpg_X_train, mpg_X_test, mpg_y_train, mpg_y_test = xval.train_test_split(
                                                    mpg_X, mpg_y,
                                                    test_size=0.25,
                                                    random_state=42
                                                    )
 
-# create RandomForestRegressor
+# Create RandomForestRegressor
 n_trees = 2000
 mpg_forest = RandomForestRegressor(n_estimators=n_trees, random_state=42)
 mpg_forest.fit(mpg_X_train, mpg_y_train)
@@ -45,7 +45,7 @@ plt.xlabel('Reported MPG')
 plt.ylabel('Predicted MPG')
 plt.show()
 
-# Calculate the variance:
+# Calculate the variance
 mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train,
                                             mpg_X_test)
 
