@@ -26,8 +26,8 @@ and is licensed under the MIT open source license (see [LICENSE](LICENSE))
 Stefan Wager's `randomForestCI` - https://github.com/swager/randomForestCI (deprecated in favor of `grf`: https://github.com/swager/grf)
 
 ## Installation and Usage
-Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.  
-Dependencies associated with the previous modules may need root privileges to install  
+Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.
+Dependencies associated with the previous modules may need root privileges to install
 Consult the [API Reference](http://contrib.scikit-learn.org/forest-confidence-interval/reference/index.html) for documentation on core functionality
 
 ```
@@ -67,7 +67,7 @@ The regression example uses a popular UCI Machine Learning data set on cars whil
 ## Contributing
 
 Contributions are very welcome, but we ask that contributors abide by the
-[contributor covenant]([http://contributor-covenant.org/version/1/4/).
+[contributor covenant](http://contributor-covenant.org/version/1/4/).
 
 To report issues with the software, please post to the
 [issue log](https://github.com/scikit-learn-contrib/forest-confidence-interval/issues)
@@ -88,7 +88,7 @@ and can be run with the `nosetests` command in the main directory.
 
 ## Citation
 Click on the JOSS status badge for the Journal of Open Source Software article on this project.
-The BibTeX citation for the JOSS article is below:  
+The BibTeX citation for the JOSS article is below:
 
 ```
 @article{polimisconfidence,
