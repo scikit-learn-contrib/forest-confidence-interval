@@ -10,7 +10,7 @@ def test_compare_cycore_computation():
     b = np.arange(1,13,dtype=np.float64).reshape(4,3)
     c = fci._cycore_computation(a, b)
     actual = fci._core_computation(np.zeros((2,10)), np.zeros((4,10)), a, b, 3)
-    npt.assert_equal(actual, c)
+    npt.assert_almost_equal(actual, c)
 
 
 def test_random_forest_error():
