@@ -8,6 +8,7 @@ RandomForestClassifier predictions.
 import numpy as np
 import copy
 from .calibration import calibrateEB
+from .cyfci import _cycore_computation
 from sklearn.ensemble.forest import _generate_sample_indices
 from .due import _due, _BibTeX
 
@@ -68,7 +69,7 @@ def calc_inbag(n_samples, forest):
 
 
 def _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
-                      memory_constrained=False, memory_limit=None,
+                      low_memory=False, memory_limit=None,
                       test_mode=False):
     """
     Helper function, that performs the core computation
@@ -92,24 +93,34 @@ def _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
         Centered predictions that are an intermediate result in the
         computation.
 
-    memory_constrained: boolean (optional)
-        Whether or not there is a restriction on memory. If False, it is
-        assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
-        in main memory. Setting to True can actually provide a speed up if
-        memory_limit is tuned to the optimal range.
+    low_memory: boolean, optional
+        Whether or not to use a low memory (but slower) calculation. If `False`,
+        intermediate matrices with size (n_train_size, n_test_size) are stored
+        in memory (preferable if matrices fit in memory). If matrices are too
+        large either:
+          1. Set `low_memory=True`, which avoids storing intermediate matrices
+             but is slower.
+          2. Set `memory_limit`, which chunks the intermediate matrices in memory.
+             This may be faster than setting `low_memory` depending on the
+             number of memory chunks.
 
     memory_limit: int (optional)
         An upper bound for how much memory the itermediate matrices will take
         up in Megabytes. This must be provided if memory_constrained=True.
-
-
+        Ignored if `low_memory=True`.
     """
-    if not memory_constrained:
+
+    # Use low memory computation
+    if low_memory:
+        return _cycore_computation(inbag, pred_centered)
+
+    # Use full in-memory computation
+    elif memory_limit is None:
         return np.sum((np.dot(inbag - 1, pred_centered.T) / n_trees) ** 2, 0)
 
-    if not memory_limit:
-        raise ValueError('If memory_constrained=True, must provide',
-                         'memory_limit.')
+    # user has specified a memory limit. Use in-memory chunked computation
+    else:
+        pass
 
     # Assumes double precision float
     chunk_size = int((memory_limit * 1e6) / (8.0 * X_train.shape[0]))
@@ -127,8 +138,8 @@ def _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
     if test_mode:
         print('Number of chunks: %d' % (len(chunks),))
     V_IJ = np.concatenate([
-                np.sum((np.dot(inbag-1, pred_centered[chunk].T)/n_trees)**2, 0)
-                for chunk in chunks])
+        np.sum((np.dot(inbag-1, pred_centered[chunk].T)/n_trees)**2, 0)
+        for chunk in chunks])
     return V_IJ
 
 
@@ -165,7 +176,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
 
 
 def random_forest_error(forest, X_train, X_test, inbag=None,
-                        calibrate=True, memory_constrained=False,
+                        calibrate=True, low_memory=False,
                         memory_limit=None):
     """
     Calculate error bars from scikit-learn RandomForest estimators.
@@ -199,15 +210,21 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
         the number of trees in the forest is too small. To use calibration,
         Default: True
 
-    memory_constrained: boolean, optional
-        Whether or not there is a restriction on memory. If False, it is
-        assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
-        in main memory. Setting to True can actually provide a speed up if
-        memory_limit is tuned to the optimal range.
+    low_memory: boolean, optional
+        Whether or not to use a low memory (but slower) calculation. If `False`,
+        intermediate matrices with size (n_train_size, n_test_size) are stored
+        in memory (preferable if matrices fit in memory). If matrices are too
+        large either:
+          1. Set `low_memory=True`, which avoids storing intermediate matrices
+             but is slower.
+          2. Set `memory_limit`, which chunks the intermediate matrices in memory.
+             This may be faster than setting `low_memory` depending on the
+             number of memory chunks.
 
     memory_limit: int, optional.
         An upper bound for how much memory the itermediate matrices will take
         up in Megabytes. This must be provided if memory_constrained=True.
+        Ignored if `low_memory=True`.
 
     Returns
     -------
@@ -231,12 +248,14 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
     if inbag is None:
         inbag = calc_inbag(X_train.shape[0], forest)
 
-    pred = np.array([tree.predict(X_test) for tree in forest]).T
+    # Fortran order after transpose will be C-order
+    pred = np.array([tree.predict(X_test) for tree in forest], order='F').T
     pred_mean = np.mean(pred, 0)
     pred_centered = pred - pred_mean
     n_trees = forest.n_estimators
-    V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
-                             memory_constrained, memory_limit)
+    V_IJ = _core_computation(
+        X_train, X_test, inbag, pred_centered, n_trees,
+        low_memory=low_memory, memory_limit=memory_limit)
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
 
     # Correct for cases where resampling is done without replacement:
@@ -261,7 +280,7 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
 
         results_ss = random_forest_error(new_forest, X_train, X_test,
                                          calibrate=False,
-                                         memory_constrained=memory_constrained,
+                                         low_memory=low_memory,
                                          memory_limit=memory_limit)
         # Use this second set of variance estimates
         # to estimate scale of Monte Carlo noise
