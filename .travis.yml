@@ -14,6 +14,7 @@ env:
     - MODULE=forestci
   matrix:
     - DISTRIB="conda" PYTHON_VERSION="3.6" COVERAGE="true"
+    - DISTRIB="conda" PYTHON_VERSION="3.7" COVERAGE="true"
 
 install: source ci_scripts/install.sh
 script: bash ci_scripts/test.sh
