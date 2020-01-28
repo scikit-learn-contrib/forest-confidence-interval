@@ -8,7 +8,7 @@ RandomForestClassifier predictions.
 import numpy as np
 import copy
 from .calibration import calibrateEB
-from sklearn.ensemble.forest import _generate_sample_indices
+from sklearn.ensemble.forest import _generate_sample_indices, _get_n_samples_bootstrap
 from .due import _due, _BibTeX
 
 __all__ = ("calc_inbag", "random_forest_error", "_bias_correction",
@@ -59,10 +59,14 @@ def calc_inbag(n_samples, forest):
     n_trees = forest.n_estimators
     inbag = np.zeros((n_samples, n_trees))
     sample_idx = []
+    n_samples_bootstrap = _get_n_samples_bootstrap(
+        n_samples, forest.max_samples
+    )
+
     for t_idx in range(n_trees):
         sample_idx.append(
             _generate_sample_indices(forest.estimators_[t_idx].random_state,
-                                     n_samples))
+                                     n_samples, n_samples_bootstrap))
         inbag[:, t_idx] = np.bincount(sample_idx[-1], minlength=n_samples)
     return inbag
 
