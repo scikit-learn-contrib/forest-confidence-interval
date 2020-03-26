@@ -117,3 +117,43 @@ def test_with_calibration():
         forest.fit(X_train, y_train)
         V_IJ_unbiased = fci.random_forest_error(forest, X_train, X_test)
         npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
+
+
+def test_centered_prediction_forest():
+    X = np.array([[5, 2],
+                  [5, 5],
+                  [3, 3],
+                  [6, 4],
+                  [6, 6]])
+
+    y = np.array([70, 100, 60, 100, 120])
+
+    train_idx = [2, 3, 4]
+    test_idx = [0, 1]
+
+    y_test = y[test_idx]
+    y_train = y[train_idx]
+    X_test = X[test_idx]
+    X_train = X[train_idx]
+
+    n_trees = 8
+    forest = RandomForestRegressor(n_estimators=n_trees)
+    forest = forest.fit(X_train, y_train)
+
+    # test different amount of test samples
+    for i in range(len(X_test)):
+        test_samples = X_test[:i+1]
+        pred_centered = fci.forestci._centered_prediction_forest(forest, test_samples)
+
+        # the vectorized solution has to match the single sample predictions
+        for n_sample, sample in enumerate(test_samples):
+            # the following assignment assures correctness of single test sample calculations
+            # no additional tests for correct averaging required since for single test samples
+            # dimension 0 (i.e. the number of test sets) disappears
+            pred_centered_sample = fci.forestci._centered_prediction_forest(
+                forest, sample)
+            assert len(pred_centered_sample[0]) == n_trees
+            npt.assert_almost_equal(
+                pred_centered_sample[0],
+                pred_centered[n_sample]
+                )

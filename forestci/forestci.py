@@ -168,6 +168,42 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
+def _centered_prediction_forest(forest, X_test):
+    """
+    Center the tree predictions by the mean prediction (forest)
+
+    The centering is done for all provided test samples.
+    This function allows unit testing for internal correctness.
+
+    Parameters
+    ----------
+    forest : RandomForest
+        Regressor or Classifier object.
+
+    X_test : ndarray
+        An array with shape (n_test_sample, n_features). The design matrix
+        for testing data
+
+    Returns
+    -------
+    pred_centered : ndarray
+        An array with shape (n_test_sample, n_estimators).
+        The predictions of each single tree centered by the
+        mean prediction (i.e. the prediction of the forest)
+
+    """
+    # reformatting required for single sample arrays
+    # caution: assumption that number of features always > 1
+    if len(X_test.shape) == 1:
+        # reshape according to the reshaping annotation in scikit-learn
+        X_test = X_test.reshape(1, -1)
+
+    pred = np.array([tree.predict(X_test) for tree in forest]).T
+    pred_mean = np.mean(pred, 1).reshape(X_test.shape[0], 1)
+
+    return pred - pred_mean
+
+
 def random_forest_error(forest, X_train, X_test, inbag=None,
                         calibrate=True, memory_constrained=False,
                         memory_limit=None):
@@ -235,9 +271,7 @@ def random_forest_error(forest, X_train, X_test, inbag=None,
     if inbag is None:
         inbag = calc_inbag(X_train.shape[0], forest)
 
-    pred = np.array([tree.predict(X_test) for tree in forest]).T
-    pred_mean = np.mean(pred, 1).reshape(X_test.shape[0], 1)
-    pred_centered = pred - pred_mean
+    pred_centered = _centered_prediction_forest(forest, X_test)
     n_trees = forest.n_estimators
     V_IJ = _core_computation(X_train, X_test, inbag, pred_centered, n_trees,
                              memory_constrained, memory_limit)
