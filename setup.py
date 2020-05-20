@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys, os
+import warnings
 from setuptools import setup, find_packages
 
 with open('requirements.txt') as f:
@@ -8,14 +9,12 @@ with open('requirements.txt') as f:
 try:
     import numpy
 except ImportError:
-    print('numpy is required during installation')
-    sys.exit(1)
+    warnings.warn('numpy is required during installation', ImportWarning)
 
 try:
     import scipy
 except ImportError:
-    print('scipy is required during installation')
-    sys.exit(1)
+    warnings.warn('scipy is required during installation', ImportWarning)
 
 # Get version and release info, which is all stored in forestci/version.py
 ver_file = os.path.join('forestci', 'version.py')
