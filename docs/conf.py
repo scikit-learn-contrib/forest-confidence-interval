@@ -21,6 +21,7 @@
 
 project = 'forestci'
 copyright = '2016--, Kivan Polimis, Ariel Rokem, Bryna Hazelton, The University of Washington'
+author = "Kivan Polimis, Ariel Rokem, and Bryna Hazelton"
 
 # The short X.Y version
 version = ''
@@ -136,7 +137,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'forestci.tex', 'forestci Documentation',
-     '', 'manual'),
+     'Ariel Rokem', 'manual'),
 ]
 
 
