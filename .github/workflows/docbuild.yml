@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: docs
-        path: docs/build/html
+        path: docs/_build/html
     - name: Publish docs to Github Pages
       if: startsWith(github.event.ref, 'refs/tags')
       uses: JamesIves/github-pages-deploy-action@releases/v3
