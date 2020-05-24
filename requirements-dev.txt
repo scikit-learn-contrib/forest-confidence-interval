@@ -1,0 +1,8 @@
+sphinx
+pytest==5.2.2
+pytest-cov==2.8.1
+flake8
+sphinx_gallery
+sphinx_rtd_theme
+numpydoc
+sphinx-autoapi
