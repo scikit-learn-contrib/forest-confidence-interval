@@ -1,0 +1,14 @@
+
+:orphan:
+
+.. _sphx_glr_auto_examples_sg_execution_times:
+
+Computation times
+=================
+**00:15.956** total execution time for **auto_examples** files:
+
++---------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_auto_examples_plot_spam.py` (``plot_spam.py``) | 00:08.342 | 0.0 MB |
++---------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_auto_examples_plot_mpg.py` (``plot_mpg.py``)   | 00:07.614 | 0.0 MB |
++---------------------------------------------------------------+-----------+--------+

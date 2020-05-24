@@ -1,0 +1,236 @@
+:mod:`forestci.forestci`
+========================
+
+.. py:module:: forestci.forestci
+
+.. autoapi-nested-parse::
+
+   Forest confidence intervals.
+
+   Calculate confidence intervals for scikit-learn RandomForestRegressor and
+   RandomForestClassifier predictions.
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Module Contents
+---------------
+
+
+.. function:: calc_inbag(n_samples, forest)
+
+   Derive samples used to create trees in scikit-learn RandomForest objects.
+
+   Recovers the samples in each tree from the random state of that tree using
+   :func:`forest._generate_sample_indices`.
+
+   :Parameters:
+
+       **n_samples** : int
+           The number of samples used to fit the scikit-learn RandomForest object.
+
+       **forest** : RandomForest
+           Regressor or Classifier object that is already fit by scikit-learn.
+
+   :Returns:
+
+       Array that records how many times a data point was placed in a tree.
+           ..
+
+       Columns are individual trees. Rows are the number of times a sample was
+           ..
+
+       used in a tree.
+           ..
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. function:: _core_computation(X_train, X_test, inbag, pred_centered, n_trees, memory_constrained=False, memory_limit=None, test_mode=False)
+
+   Helper function, that performs the core computation
+
+
+   :Parameters:
+
+       **X_train** : ndarray
+           An array with shape (n_train_sample, n_features).
+
+       **X_test** : ndarray
+           An array with shape (n_test_sample, n_features).
+
+       **inbag** : ndarray
+           The inbag matrix that fit the data. If set to `None` (default) it
+           will be inferred from the forest. However, this only works for trees
+           for which bootstrapping was set to `True`. That is, if sampling was
+           done with replacement. Otherwise, users need to provide their own
+           inbag matrix.
+
+       **pred_centered** : ndarray
+           Centered predictions that are an intermediate result in the
+           computation.
+
+       **memory_constrained: boolean (optional)**
+           Whether or not there is a restriction on memory. If False, it is
+           assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
+           in main memory. Setting to True can actually provide a speed up if
+           memory_limit is tuned to the optimal range.
+
+       **memory_limit: int (optional)**
+           An upper bound for how much memory the itermediate matrices will take
+           up in Megabytes. This must be provided if memory_constrained=True.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. function:: _bias_correction(V_IJ, inbag, pred_centered, n_trees)
+
+   Helper functions that implements bias correction
+
+
+   :Parameters:
+
+       **V_IJ** : ndarray
+           Intermediate result in the computation.
+
+       **inbag** : ndarray
+           The inbag matrix that fit the data. If set to `None` (default) it
+           will be inferred from the forest. However, this only works for trees
+           for which bootstrapping was set to `True`. That is, if sampling was
+           done with replacement. Otherwise, users need to provide their own
+           inbag matrix.
+
+       **pred_centered** : ndarray
+           Centered predictions that are an intermediate result in the
+           computation.
+
+       **n_trees** : int
+           The number of trees in the forest object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. function:: random_forest_error(forest, X_train, X_test, inbag=None, calibrate=True, memory_constrained=False, memory_limit=None)
+
+   Calculate error bars from scikit-learn RandomForest estimators.
+
+   RandomForest is a regressor or classifier object
+   this variance can be used to plot error bars for RandomForest objects
+
+   :Parameters:
+
+       **forest** : RandomForest
+           Regressor or Classifier object.
+
+       **X_train** : ndarray
+           An array with shape (n_train_sample, n_features). The design matrix for
+           training data.
+
+       **X_test** : ndarray
+           An array with shape (n_test_sample, n_features). The design matrix
+           for testing data
+
+       **inbag** : ndarray, optional
+           The inbag matrix that fit the data. If set to `None` (default) it
+           will be inferred from the forest. However, this only works for trees
+           for which bootstrapping was set to `True`. That is, if sampling was
+           done with replacement. Otherwise, users need to provide their own
+           inbag matrix.
+
+       **calibrate: boolean, optional**
+           Whether to apply calibration to mitigate Monte Carlo noise.
+           Some variance estimates may be negative due to Monte Carlo effects if
+           the number of trees in the forest is too small. To use calibration,
+           Default: True
+
+       **memory_constrained: boolean, optional**
+           Whether or not there is a restriction on memory. If False, it is
+           assumed that a ndarry of shape (n_train_sample,n_test_sample) fits
+           in main memory. Setting to True can actually provide a speed up if
+           memory_limit is tuned to the optimal range.
+
+       **memory_limit: int, optional.**
+           An upper bound for how much memory the itermediate matrices will take
+           up in Megabytes. This must be provided if memory_constrained=True.
+
+   :Returns:
+
+       An array with the unbiased sampling variance (V_IJ_unbiased)
+           ..
+
+       for a RandomForest object.
+           ..
+
+
+
+
+
+
+
+   .. seealso::
+
+       
+       :func:`calc_inbag`
+           ..
+       
+   .. rubric:: Notes
+
+   The calculation of error is based on the infinitesimal jackknife variance,
+   as described in [Ra85e16819288-Wager2014]_ and is a Python implementation of the R code
+   provided at: https://github.com/swager/randomForestCI
+
+   .. [Ra85e16819288-Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
+      Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
+      of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+

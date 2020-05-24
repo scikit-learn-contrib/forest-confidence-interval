@@ -1,0 +1,139 @@
+:mod:`forestci.calibration`
+===========================
+
+.. py:module:: forestci.calibration
+
+.. autoapi-nested-parse::
+
+   Calibration based on empirical Bayes estimation [Efron2014]_.
+
+   This calibration procedure can be useful when the number of trees in the
+   random forest is small.
+
+   ..
+       !! processed by numpydoc !!
+
+
+
+Module Contents
+---------------
+
+
+.. function:: gfit(X, sigma, p=5, nbin=200, unif_fraction=0.1)
+
+   Fit empirical Bayes prior in the hierarchical model [Efron2014]_.
+
+   .. math::
+
+       mu ~ G, X ~ N(mu, sigma^2)
+
+   :Parameters:
+
+       **X: ndarray**
+           A 1D array of observations.
+
+       **sigma: float**
+           Noise estimate on X.
+
+       **p: int**
+           Number of parameters used to fit G. Default: 5
+
+       **nbin: int**
+           Number of bins used for discrete approximation.
+           Default: 200
+
+       **unif_fraction: float**
+           Fraction of G modeled as "slab". Default: 0.1
+
+   :Returns:
+
+       An array of the posterior density estimate g.
+           ..
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. function:: gbayes(x0, g_est, sigma)
+
+   Estimate Bayes posterior with Gaussian noise [Efron2014]_.
+
+
+   :Parameters:
+
+       **x0: ndarray**
+           an observation
+
+       **g_est: float**
+           a prior density, as returned by gfit
+
+       **sigma: int**
+           noise estimate
+
+   :Returns:
+
+       An array of the posterior estimate E[mu | x0]
+           ..
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. function:: calibrateEB(variances, sigma2)
+
+   Calibrate noisy variance estimates with empirical Bayes.
+
+
+   :Parameters:
+
+       **vars: ndarray**
+           List of variance estimates.
+
+       **sigma2: int**
+           Estimate of the Monte Carlo noise in vars.
+
+   :Returns:
+
+       An array of the calibrated variance estimates
+           ..
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
