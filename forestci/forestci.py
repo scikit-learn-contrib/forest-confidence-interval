@@ -7,7 +7,6 @@ RandomForestClassifier predictions.
 
 import numpy as np
 import copy
-import pandas as pd
 
 from sklearn.ensemble._forest import BaseForest
 from sklearn.ensemble._forest import _generate_sample_indices, _get_n_samples_bootstrap
@@ -65,10 +64,10 @@ def calc_inbag(n_samples, forest):
         e_s = "Cannot calculate the inbag from a forest that has bootstrap=False"
         raise ValueError(e_s)
 
+    n_trees = forest.n_estimators
+    inbag = np.zeros((n_samples, n_trees))
+    sample_idx = []
     if isinstance(forest, BaseForest):
-        n_trees = forest.n_estimators
-        inbag = np.zeros((n_samples, n_trees))
-        sample_idx = []
         n_samples_bootstrap = _get_n_samples_bootstrap(n_samples, forest.max_samples)
 
         for t_idx in range(n_trees):
@@ -80,18 +79,12 @@ def calc_inbag(n_samples, forest):
                 )
             )
             inbag[:, t_idx] = np.bincount(sample_idx[-1], minlength=n_samples)
-        return inbag
     elif isinstance(forest, BaseBagging):
-        samples_and_counts = [
-            np.unique(sample, return_counts=True)
-            for sample in forest.estimators_samples_
-        ]
+        for t_idx, estimator_sample in enumerate(forest.estimators_samples_):
+            sample_idx.append(estimator_sample)
+            inbag[:, t_idx] = np.bincount(sample_idx[-1], minlength=n_samples)
 
-        dataframes = [
-            pd.DataFrame(index=index, data=data) for index, data in samples_and_counts
-        ]
-
-        return pd.concat(dataframes, axis="columns").fillna(0).astype(np.int).values
+    return inbag
 
 
 def _core_computation(
