@@ -20,7 +20,7 @@ from sklearn.datasets import fetch_openml
 import forestci as fci
 
 # retreive mpg data from machine learning library
-mpg_data = fetch_openml("autompg")
+mpg_data = fetch_openml(data_id=196)
 
 # separate mpg data into predictors and outcome variable
 mpg_X = mpg_data["data"]
