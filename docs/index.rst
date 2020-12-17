@@ -22,7 +22,7 @@ To examine and download the source code, visit our `github repo <https://github.
        installation_guide
        api
        auto_examples/index
-
+       contributing
 
 .. figure:: _static/eScience_Logo_HR.png
    :align: center
