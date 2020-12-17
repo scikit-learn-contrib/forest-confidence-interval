@@ -1,4 +1,10 @@
-API Documentation
-=================
+####################
+``forestci`` API
+####################
 
-* :doc:`forestci`
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   forestci.random_forest_error
