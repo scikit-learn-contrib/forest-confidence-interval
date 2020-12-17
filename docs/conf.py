@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Fracridge sphinx configuration file, based on the sklearn
+# forestci sphinx configuration file, based on the sklearn
 # project-template documentation build configuration file, created by
 # sphinx-quickstart on Mon Jan 18 14:44:12 2016.
 #
@@ -91,7 +91,7 @@ author = "Kivan Polimis, Ariel Rokem, and Bryna Hazelton"
 # built documents.
 #
 # The short X.Y version.
-from fracridge import __version__
+from forestci import __version__
 version = __version__
 # The full version, including alpha/beta/rc tags.
 release = __version__
@@ -239,7 +239,7 @@ sphinx_gallery_conf = {
     'doc_module': 'forestci',
     'backreferences_dir': os.path.join('generated'),
     'reference_url': {
-        'fracridge': None}
+        'forestci': None}
 }
 
 def setup(app):
