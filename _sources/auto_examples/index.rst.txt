@@ -42,6 +42,27 @@ of two categories (e.g., spam/non-spam) based on a number of features.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates using forestci to calculate the error bars of the predictions of a sk...">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_plot_mpg_svr_thumb.png
+     :alt: Plotting Bagging Regression Error Bars
+
+     :ref:`sphx_glr_auto_examples_plot_mpg_svr.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_mpg_svr
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates the calculation of confidence intervals for sklearn.ensemble.RandomFo...">
 
 .. only:: html
@@ -74,13 +95,13 @@ of two categories (e.g., spam/non-spam) based on a number of features.
 
   .. container:: sphx-glr-download sphx-glr-download-python
 
-    :download:`Download all examples in Python source code: auto_examples_python.zip <//home/runner/work/forest-confidence-interval/forest-confidence-interval/docs/auto_examples/auto_examples_python.zip>`
+    :download:`Download all examples in Python source code: auto_examples_python.zip </auto_examples/auto_examples_python.zip>`
 
 
 
   .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-    :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip <//home/runner/work/forest-confidence-interval/forest-confidence-interval/docs/auto_examples/auto_examples_jupyter.zip>`
+    :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
 
 
 .. only:: html

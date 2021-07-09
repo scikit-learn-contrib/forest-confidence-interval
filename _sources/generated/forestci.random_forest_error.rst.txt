@@ -1,0 +1,12 @@
+﻿:mod:`forestci`.random_forest_error
+================================================
+
+.. currentmodule:: forestci
+
+.. autofunction:: random_forest_error
+
+.. include:: forestci.random_forest_error.examples
+
+.. raw:: html
+
+    <div style='clear:both'></div>
