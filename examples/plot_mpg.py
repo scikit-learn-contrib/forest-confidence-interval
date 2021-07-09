@@ -26,10 +26,9 @@ mpg_X = mpg_data["data"]
 mpg_y = mpg_data["target"]
 
 # remove rows where the data is nan
-not_null_sel = np.invert(
-    np.sum(np.isnan(mpg_data["data"]), axis=1).astype(bool))
-mpg_X = mpg_X[not_null_sel]
-mpg_y = mpg_y[not_null_sel]
+not_null_sel = np.where(mpg_X.isna().sum(axis=1).values == 0)
+mpg_X = mpg_X.values[not_null_sel]
+mpg_y = mpg_y.values[not_null_sel]
 
 # split mpg data into training and test set
 mpg_X_train, mpg_X_test, mpg_y_train, mpg_y_test = xval.train_test_split(
