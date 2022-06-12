@@ -5,12 +5,12 @@
 
 Computation times
 =================
-**00:20.033** total execution time for **auto_examples** files:
+**00:23.743** total execution time for **auto_examples** files:
 
 +---------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_plot_spam.py` (``plot_spam.py``)       | 00:08.030 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_plot_mpg.py` (``plot_mpg.py``)         | 00:09.053 | 0.0 MB |
 +---------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_plot_mpg.py` (``plot_mpg.py``)         | 00:06.178 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_plot_spam.py` (``plot_spam.py``)       | 00:07.843 | 0.0 MB |
 +---------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_plot_mpg_svr.py` (``plot_mpg_svr.py``) | 00:05.825 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_plot_mpg_svr.py` (``plot_mpg_svr.py``) | 00:06.847 | 0.0 MB |
 +---------------------------------------------------------------------+-----------+--------+

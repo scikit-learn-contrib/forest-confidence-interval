@@ -1,80 +1,40 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>forestci.forestci &mdash; forestci 0.5.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/project-template.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/project-template.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-rendered-html.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>forestci.forestci &mdash; forestci 0.6 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/project-template.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/copybutton.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> forestci
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                0.5.1
+                0.6
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -82,18 +42,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation_guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">forestci</span></code> API</a></li>
@@ -101,69 +50,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <code class="docutils literal notranslate"><span class="pre">forestci</span></code> development</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">forestci</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-        
       <li>forestci.forestci</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for forestci.forestci</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Forest confidence intervals.</span>
@@ -367,6 +277,42 @@
     <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
 
 
+<span class="k">def</span> <span class="nf">_centered_prediction_forest</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Center the tree predictions by the mean prediction (forest)</span>
+
+<span class="sd">    The centering is done for all provided test samples.</span>
+<span class="sd">    This function allows unit testing for internal correctness.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    forest : RandomForest</span>
+<span class="sd">        Regressor or Classifier object.</span>
+
+<span class="sd">    X_test : ndarray</span>
+<span class="sd">        An array with shape (n_test_sample, n_features). The design matrix</span>
+<span class="sd">        for testing data</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pred_centered : ndarray</span>
+<span class="sd">        An array with shape (n_test_sample, n_estimators).</span>
+<span class="sd">        The predictions of each single tree centered by the</span>
+<span class="sd">        mean prediction (i.e. the prediction of the forest)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># reformatting required for single sample arrays</span>
+    <span class="c1"># caution: assumption that number of features always &gt; 1</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># reshape according to the reshaping annotation in scikit-learn</span>
+        <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">forest</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">pred_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pred</span> <span class="o">-</span> <span class="n">pred_mean</span>
+
+
 <div class="viewcode-block" id="random_forest_error"><a class="viewcode-back" href="../../generated/forestci.random_forest_error.html#forestci.random_forest_error">[docs]</a><span class="k">def</span> <span class="nf">random_forest_error</span><span class="p">(</span>
     <span class="n">forest</span><span class="p">,</span>
     <span class="n">X_train</span><span class="p">,</span>
@@ -440,9 +386,7 @@
     <span class="k">if</span> <span class="n">inbag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">inbag</span> <span class="o">=</span> <span class="n">calc_inbag</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">forest</span><span class="p">)</span>
 
-    <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">forest</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">pred_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">pred_centered</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">-</span> <span class="n">pred_mean</span>
+    <span class="n">pred_centered</span> <span class="o">=</span> <span class="n">_centered_prediction_forest</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
     <span class="n">n_trees</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">n_estimators</span>
     <span class="n">V_IJ</span> <span class="o">=</span> <span class="n">_core_computation</span><span class="p">(</span>
         <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">inbag</span><span class="p">,</span> <span class="n">pred_centered</span><span class="p">,</span> <span class="n">n_trees</span><span class="p">,</span> <span class="n">memory_constrained</span><span class="p">,</span> <span class="n">memory_limit</span>
@@ -458,10 +402,13 @@
         <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
 
     <span class="k">if</span> <span class="n">V_IJ_unbiased</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No calibration with n_samples &lt;= 20&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No calibration with n_samples &lt;= 20: &quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;consider using more n_estimators in your model, &quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;for more accurate ci and to avoid negative values.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">V_IJ_unbiased</span>
     <span class="k">if</span> <span class="n">calibrate</span><span class="p">:</span>
-
+        <span class="c1"># Calibration is a correction for converging quicker to the case of infinite n_estimators,</span>
+        <span class="c1"># as presented in Wager (2014) http://jmlr.org/papers/v15/wager14a.html</span>
         <span class="n">calibration_ratio</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="n">n_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_trees</span> <span class="o">/</span> <span class="n">calibration_ratio</span><span class="p">)</span>
         <span class="n">new_forest</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span>
@@ -493,46 +440,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2016--, Kivan Polimis, Ariel Rokem, Bryna Hazelton, The University of Washington.
-
-    </p>
+    <p>&#169; Copyright 2016--, Kivan Polimis, Ariel Rokem, Bryna Hazelton, The University of Washington.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

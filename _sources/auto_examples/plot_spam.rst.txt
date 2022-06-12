@@ -38,38 +38,21 @@ of :func:`sklearn.datasets.make_classification`).
 
     *
 
-      .. image:: /auto_examples/images/sphx_glr_plot_spam_001.png
-          :alt: plot spam
-          :class: sphx-glr-multi-img
+      .. image-sg:: /auto_examples/images/sphx_glr_plot_spam_001.png
+         :alt: plot spam
+         :srcset: /auto_examples/images/sphx_glr_plot_spam_001.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /auto_examples/images/sphx_glr_plot_spam_002.png
-          :alt: plot spam
-          :class: sphx-glr-multi-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/forestci/calibration.py:86: RuntimeWarning: overflow encountered in exp
-      g_eta_raw = np.exp(np.dot(XX, eta)) * mask
-    /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/numpy/core/fromnumeric.py:86: RuntimeWarning: overflow encountered in reduce
-      return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
-    /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/forestci/calibration.py:86: RuntimeWarning: overflow encountered in exp
-      g_eta_raw = np.exp(np.dot(XX, eta)) * mask
-    /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/numpy/core/fromnumeric.py:86: RuntimeWarning: overflow encountered in reduce
-      return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+      .. image-sg:: /auto_examples/images/sphx_glr_plot_spam_002.png
+         :alt: plot spam
+         :srcset: /auto_examples/images/sphx_glr_plot_spam_002.png
+         :class: sphx-glr-multi-img
 
 
 
 
-
-
-|
 
 .. code-block:: default
 
@@ -129,7 +112,7 @@ of :func:`sklearn.datasets.make_classification`).
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.030 seconds)
+   **Total running time of the script:** ( 0 minutes  7.843 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_spam.py:
