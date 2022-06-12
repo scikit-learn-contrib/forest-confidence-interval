@@ -73,7 +73,7 @@ def gfit(X, sigma, p=5, nbin=200, unif_fraction=0.1):
     else:
         noise_rotate = noise_kernel
 
-    XX = np.zeros((p, len(xvals)), dtype=np.float)
+    XX = np.zeros((p, len(xvals)), dtype="float")
     for ind, exp in enumerate(range(1, p+1)):
         mask = np.ones_like(xvals)
         mask[np.where(xvals <= 0)[0]] = 0
