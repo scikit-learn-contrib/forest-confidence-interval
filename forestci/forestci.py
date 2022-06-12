@@ -325,10 +325,11 @@ def random_forest_error(
         return V_IJ_unbiased
 
     if V_IJ_unbiased.shape[0] <= 20:
-        print("No calibration with n_samples <= 20")
+        print("No calibration with n_samples <= 20: consider using more n_estimators in your model, for more accurate ci and to avoid negative values.")
         return V_IJ_unbiased
     if calibrate:
-
+        # Calibration is a correction for converging quicker to the case of infinite n_estimators,
+        # as presented in Wager (2014) http://jmlr.org/papers/v15/wager14a.html
         calibration_ratio = 2
         n_sample = np.ceil(n_trees / calibration_ratio)
         new_forest = copy.deepcopy(forest)
