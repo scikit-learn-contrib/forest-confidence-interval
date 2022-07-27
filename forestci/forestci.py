@@ -90,7 +90,7 @@ def calc_inbag(n_samples, forest):
 
 
 def _core_computation(
-    X_train,
+    X_train_shape,
     X_test,
     inbag,
     pred_centered,
@@ -104,8 +104,8 @@ def _core_computation(
 
     Parameters
     ----------
-    X_train : ndarray
-        An array with shape (n_train_sample, n_features).
+    X_train_shape : tuple (int, int)
+        Shape (n_train_sample, n_features).
 
     X_test : ndarray
         An array with shape (n_test_sample, n_features).
@@ -140,10 +140,10 @@ def _core_computation(
         raise ValueError("If memory_constrained=True, must provide", "memory_limit.")
 
     # Assumes double precision float
-    chunk_size = int((memory_limit * 1e6) / (8.0 * X_train.shape[0]))
+    chunk_size = int((memory_limit * 1e6) / (8.0 * X_train_shape[0]))
 
     if chunk_size == 0:
-        min_limit = 8.0 * X_train.shape[0] / 1e6
+        min_limit = 8.0 * X_train_shape[0] / 1e6
         raise ValueError(
             "memory_limit provided is too small."
             + "For these dimensions, memory_limit must "
@@ -238,7 +238,7 @@ def _centered_prediction_forest(forest, X_test):
 
 def random_forest_error(
     forest,
-    X_train,
+    X_train_shape,
     X_test,
     inbag=None,
     calibrate=True,
@@ -256,9 +256,8 @@ def random_forest_error(
     forest : RandomForest
         Regressor or Classifier object.
 
-    X_train : ndarray
-        An array with shape (n_train_sample, n_features). The design matrix for
-        training data.
+    X_train_shape : tuple (int, int)
+        Shape (n_train_sample, n_features) of the design matrix for training data.
 
     X_test : ndarray
         An array with shape (n_test_sample, n_features). The design matrix
@@ -307,12 +306,12 @@ def random_forest_error(
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
     if inbag is None:
-        inbag = calc_inbag(X_train.shape[0], forest)
+        inbag = calc_inbag(X_train_shape[0], forest)
 
     pred_centered = _centered_prediction_forest(forest, X_test)
     n_trees = forest.n_estimators
     V_IJ = _core_computation(
-        X_train, X_test, inbag, pred_centered, n_trees, memory_constrained, memory_limit
+        X_train_shape, X_test, inbag, pred_centered, n_trees, memory_constrained, memory_limit
     )
     V_IJ_unbiased = _bias_correction(V_IJ, inbag, pred_centered, n_trees)
 
@@ -344,7 +343,7 @@ def random_forest_error(
 
         results_ss = random_forest_error(
             new_forest,
-            X_train,
+            X_train_shape,
             X_test,
             calibrate=False,
             memory_constrained=memory_constrained,
