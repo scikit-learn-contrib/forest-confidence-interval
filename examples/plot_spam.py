@@ -44,7 +44,7 @@ ax.set_ylabel('Number of observations')
 plt.legend()
 
 # Calculate the variance
-spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train,
+spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train.shape,
                                              spam_X_test)
 
 # Plot forest prediction for emails and standard deviation for estimates
