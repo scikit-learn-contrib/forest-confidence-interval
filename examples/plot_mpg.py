@@ -51,7 +51,7 @@ plt.ylabel('Predicted MPG')
 plt.show()
 
 # Calculate the variance
-mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train,
+mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train.shape,
                                             mpg_X_test)
 
 # Plot error bars for predicted MPG using unbiased variance

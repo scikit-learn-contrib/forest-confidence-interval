@@ -26,7 +26,7 @@ def test_random_forest_error():
     for ib in [inbag, None]:
         for calibrate in [True, False]:
             V_IJ_unbiased = fci.random_forest_error(
-                forest, X_train, X_test, inbag=ib, calibrate=calibrate
+                forest, X_train.shape, X_test, inbag=ib, calibrate=calibrate
             )
         npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
 
@@ -60,7 +60,7 @@ def test_bagging_svr_error():
     for ib in [inbag, None]:
         for calibrate in [True, False]:
             V_IJ_unbiased = fci.random_forest_error(
-                bagger, X_train, X_test, inbag=ib, calibrate=calibrate
+                bagger, X_train.shape, X_test, inbag=ib, calibrate=calibrate
             )
         npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
 
@@ -78,7 +78,7 @@ def test_core_computation():
     n_trees = 4
 
     our_vij = fci._core_computation(
-        X_train_ex, X_test_ex, inbag_ex, pred_centered_ex, n_trees
+        X_train_ex.shape, X_test_ex, inbag_ex, pred_centered_ex, n_trees
     )
 
     r_vij = np.concatenate([np.array([112.5, 387.5]) for _ in range(1000)])
@@ -87,7 +87,7 @@ def test_core_computation():
 
     for mc, ml in zip([True, False], [0.01, None]):
         our_vij = fci._core_computation(
-            X_train_ex,
+            X_train_ex.shape,
             X_test_ex,
             inbag_ex,
             pred_centered_ex,
@@ -113,7 +113,7 @@ def test_bias_correction():
     n_trees = 4
 
     our_vij = fci._core_computation(
-        X_train_ex, X_test_ex, inbag_ex, pred_centered_ex, n_trees
+        X_train_ex.shape, X_test_ex, inbag_ex, pred_centered_ex, n_trees
     )
     our_vij_unbiased = fci._bias_correction(
         our_vij, inbag_ex, pred_centered_ex, n_trees
@@ -139,7 +139,7 @@ def test_with_calibration():
         n_trees = 4
         forest = RandomForestRegressor(n_estimators=n_trees)
         forest.fit(X_train, y_train)
-        V_IJ_unbiased = fci.random_forest_error(forest, X_train, X_test)
+        V_IJ_unbiased = fci.random_forest_error(forest, X_train.shape, X_test)
         npt.assert_equal(V_IJ_unbiased.shape[0], y_test.shape[0])
 
 
