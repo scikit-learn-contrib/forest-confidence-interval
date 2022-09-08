@@ -224,10 +224,11 @@ def _centered_prediction_forest(forest, X_test):
         mean prediction (i.e. the prediction of the forest)
 
     """
-    # reformatting required for single sample arrays
-    # caution: assumption that number of features always > 1
+    # In case the user provided a (n_features)-shaped array for a single sample
+    #  shape it as (1, n_features)
+    # NOTE: a single-feature set of samples needs to be provided with shape
+    #       (n_samples, 1) or it will be wrongly interpreted!
     if len(X_test.shape) == 1:
-        # reshape according to the reshaping annotation in scikit-learn
         X_test = X_test.reshape(1, -1)
 
     pred = np.array([tree.predict(X_test) for tree in forest]).T
