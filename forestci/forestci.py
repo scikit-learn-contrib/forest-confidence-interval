@@ -200,7 +200,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def _centered_prediction_forest(forest, X_test, y_output):
+def _centered_prediction_forest(forest, X_test, y_output=None):
     """
     Center the tree predictions by the mean prediction (forest)
 
