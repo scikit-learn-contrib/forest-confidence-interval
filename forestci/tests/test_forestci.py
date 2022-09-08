@@ -40,6 +40,43 @@ def test_random_forest_error():
     )
 
 
+def test_random_forest_error_multioutput():
+    X = np.array([[5, 2], [5, 5], [3, 3], [6, 4], [6, 6]])
+
+    y = np.array([[70, 37], [100, 55], [60, 33], [100,54], [120, 66]])
+
+    train_idx = [2, 3, 4]
+    test_idx = [0, 1]
+
+    y_test = y[test_idx]
+    y_train = y[train_idx]
+    X_test = X[test_idx]
+    X_train = X[train_idx]
+
+    n_trees = 4
+    forest = RandomForestRegressor(n_estimators=n_trees)
+    forest.fit(X_train, y_train)
+    
+    V_IJ_unbiased_target0 = fci.random_forest_error(
+        forest, X_train.shape, X_test, calibrate=True, y_output=0
+    )
+    npt.assert_equal(V_IJ_unbiased_target0.shape[0], y_test.shape[0])
+
+    # With a MultiOutput RandomForestRegressor the user MUST specify a y_output
+    npt.assert_raises(
+        ValueError, 
+        fci.random_forest_error, 
+        forest,
+        X_train.shape,
+        X_test,
+        inbag=None,
+        calibrate=True,
+        memory_constrained=False,
+        memory_limit=None,
+        y_output=None # This should trigger the ValueError
+    )
+
+
 def test_bagging_svr_error():
     X = np.array([[5, 2], [5, 5], [3, 3], [6, 4], [6, 6]])
 
