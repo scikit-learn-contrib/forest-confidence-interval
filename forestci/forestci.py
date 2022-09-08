@@ -232,7 +232,7 @@ def _centered_prediction_forest(forest, X_test, y_output=None):
         X_test = X_test.reshape(1, -1)
 
     pred = np.array([tree.predict(X_test) for tree in forest])
-    if forest.n_outputs_ > 1:
+    if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1:
         pred = pred[:,:,y_output]
 
     pred_mean = np.mean(pred, 0)
