@@ -316,7 +316,7 @@ def random_forest_error(
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
 
-    if forest.n_outputs_ > 1 and y_output == None:
+    if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1 and y_output == None:
         e_s = "MultiOutput regressor: specify the index of the target to analyse (y_output)"
         raise ValueError(e_s)
 
