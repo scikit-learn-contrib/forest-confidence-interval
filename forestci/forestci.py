@@ -231,10 +231,10 @@ def _centered_prediction_forest(forest, X_test):
     if len(X_test.shape) == 1:
         X_test = X_test.reshape(1, -1)
 
-    pred = np.array([tree.predict(X_test) for tree in forest]).T
-    pred_mean = np.mean(pred, 1).reshape(X_test.shape[0], 1)
+    pred = np.array([tree.predict(X_test) for tree in forest])
+    pred_mean = np.mean(pred, 0)
 
-    return pred - pred_mean
+    return (pred - pred_mean).T
 
 
 def random_forest_error(
