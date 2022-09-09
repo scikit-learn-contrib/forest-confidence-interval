@@ -200,7 +200,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def _centered_prediction_forest(forest, X_test):
+def _centered_prediction_forest(forest, X_test, y_output=None):
     """
     Center the tree predictions by the mean prediction (forest)
 
@@ -224,16 +224,20 @@ def _centered_prediction_forest(forest, X_test):
         mean prediction (i.e. the prediction of the forest)
 
     """
-    # reformatting required for single sample arrays
-    # caution: assumption that number of features always > 1
+    # In case the user provided a (n_features)-shaped array for a single sample
+    #  shape it as (1, n_features)
+    # NOTE: a single-feature set of samples needs to be provided with shape
+    #       (n_samples, 1) or it will be wrongly interpreted!
     if len(X_test.shape) == 1:
-        # reshape according to the reshaping annotation in scikit-learn
         X_test = X_test.reshape(1, -1)
 
-    pred = np.array([tree.predict(X_test) for tree in forest]).T
-    pred_mean = np.mean(pred, 1).reshape(X_test.shape[0], 1)
+    pred = np.array([tree.predict(X_test) for tree in forest])
+    if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1:
+        pred = pred[:,:,y_output]
 
-    return pred - pred_mean
+    pred_mean = np.mean(pred, 0)
+
+    return (pred - pred_mean).T
 
 
 def random_forest_error(
@@ -244,6 +248,7 @@ def random_forest_error(
     calibrate=True,
     memory_constrained=False,
     memory_limit=None,
+    y_output=None
 ):
     """
     Calculate error bars from scikit-learn RandomForest estimators.
@@ -286,6 +291,11 @@ def random_forest_error(
         An upper bound for how much memory the itermediate matrices will take
         up in Megabytes. This must be provided if memory_constrained=True.
 
+    y_output: int, mandatory only for MultiOutput regressor.
+        In case of MultiOutput regressor, indicate the index of the target to
+        analyse. The program will return the IJ variance related to that target
+        only.
+
     Returns
     -------
     An array with the unbiased sampling variance (V_IJ_unbiased)
@@ -305,10 +315,15 @@ def random_forest_error(
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
+
+    if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1 and y_output == None:
+        e_s = "MultiOutput regressor: specify the index of the target to analyse (y_output)"
+        raise ValueError(e_s)
+
     if inbag is None:
         inbag = calc_inbag(X_train_shape[0], forest)
 
-    pred_centered = _centered_prediction_forest(forest, X_test)
+    pred_centered = _centered_prediction_forest(forest, X_test, y_output)
     n_trees = forest.n_estimators
     V_IJ = _core_computation(
         X_train_shape, X_test, inbag, pred_centered, n_trees, memory_constrained, memory_limit
@@ -348,6 +363,7 @@ def random_forest_error(
             calibrate=False,
             memory_constrained=memory_constrained,
             memory_limit=memory_limit,
+            y_output=y_output
         )
         # Use this second set of variance estimates
         # to estimate scale of Monte Carlo noise
