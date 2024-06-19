@@ -99,7 +99,6 @@ def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
     if not res.success:
         warnings.warn("Fitting the empirical bayes prior failed with message %s." % res.message)
     eta_hat = res.x
-    print(eta_hat)
     g_eta_raw = np.exp(np.dot(XX, eta_hat)) * mask
     g_eta_main = g_eta_raw / sum(g_eta_raw)
     g_eta = (
