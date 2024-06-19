@@ -68,7 +68,7 @@ def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
     assert sum(mask) > 0
     g_eta_slab = mask / sum(mask)
 
-    XX = np.column_stack([ np.pow(xvals, exp) for exp in range(1, p+1)])
+    XX = np.column_stack([ pow(xvals, exp) for exp in range(1, p+1)])
     XX /= np.sum(XX,axis = 0, keepdims=True) # normalize each feature column for better numerical stability
 
     def neg_loglik(eta):
