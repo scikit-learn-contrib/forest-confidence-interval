@@ -74,3 +74,6 @@ paper/*.txt
 
 # Jupiter notebooks
 .ipynb_checkpoints
+
+# pyenv environment
+.python-version
