@@ -15,8 +15,6 @@ implemented in scikit-learn random forest regression or classification objects.
 The core functions calculate an in-bag and error bars for random forest
 objects.
 
-Compatible with Python2.7 and Python3.6
-
 This module is based on R code from Stefan Wager (see important links below)
 and is licensed under the MIT open source license (see [LICENSE](LICENSE))
 
