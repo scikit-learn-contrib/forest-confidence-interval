@@ -91,7 +91,7 @@ def test_bagging_svr_error():
     X_train = X[train_idx]
 
     n_trees = 4
-    bagger = BaggingRegressor(base_estimator=SVR(), n_estimators=n_trees)
+    bagger = BaggingRegressor(estimator=SVR(), n_estimators=n_trees)
     bagger.fit(X_train, y_train)
     inbag = fci.calc_inbag(X_train.shape[0], bagger)
     for ib in [inbag, None]:

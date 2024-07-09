@@ -39,7 +39,7 @@ mpg_X_train, mpg_X_test, mpg_y_train, mpg_y_test = xval.train_test_split(
 # Create RandomForestRegressor
 n_estimators = 1000
 mpg_bagger = BaggingRegressor(
-    base_estimator=SVR(), n_estimators=n_estimators, random_state=42
+    estimator=SVR(), n_estimators=n_estimators, random_state=42
 )
 mpg_bagger.fit(mpg_X_train, mpg_y_train)
 mpg_y_hat = mpg_bagger.predict(mpg_X_test)
