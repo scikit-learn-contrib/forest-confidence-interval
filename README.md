@@ -21,10 +21,10 @@ This module is based on R code from Stefan Wager
 and is licensed under the MIT open source license (see [LICENSE](LICENSE)).
 The present project makes the algorithm compatible with [`scikit-learn`](https://scikit-learn.org/stable/).
 
-To get the proper confidence interval, you need to use a large number of trees (estimator). 
+To get the proper confidence interval, you need to use a large number of trees (estimators). 
 The [calibration routine](https://github.com/scikit-learn-contrib/forest-confidence-interval/pull/114) 
 (which can be included or excluded on top of the algorithm) tries to extrapolate
-the results for infinite number of trees, but it is instable and it can cause numerical errors:
+the results for an infinite number of trees, but it is instable and it can cause numerical errors:
 if this is the case, the suggestion is to exclude it with `calibrate=False` 
 and test increasing the number of trees in the model to reach convergence.
 
