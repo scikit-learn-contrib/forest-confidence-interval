@@ -13,9 +13,9 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -32,14 +32,14 @@ jobs:
         cd docs
         make html
     - name: Upload docs
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: docs
         path: docs/_build/html
     - name: Publish docs to Github Pages
       if: startsWith(github.event.ref, 'refs/tags')
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: docs/_build/html # The folder the action should deploy.
+        token: ${{ secrets.ACCESS_TOKEN }}
+        branch: gh-pages # The branch the action should deploy to.
+        folder: 'docs/_build/html' # The folder the action should deploy.
