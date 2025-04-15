@@ -45,7 +45,7 @@ pip install git+git://github.com/scikit-learn-contrib/forest-confidence-interval
 Usage:
 
 ```python
-import import forestci as fci
+import forestci as fci
 ci = fci.random_forest_error(
   forest=model, # scikit-learn Forest model fitted on X_train
   X_train_shape=X_train.shape,
