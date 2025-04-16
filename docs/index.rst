@@ -16,13 +16,13 @@ To examine and download the source code, visit our `github repo <https://github.
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
 
-    .. toctree::
-       :maxdepth: 2
+.. toctree::
+   :maxdepth: 2
 
-       installation_guide
-       api
-       auto_examples/index
-       contributing
+   installation_guide
+   api
+   auto_examples/index
+   contributing
 
 .. figure:: _static/eScience_Logo_HR.png
    :align: center

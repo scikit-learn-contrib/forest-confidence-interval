@@ -39,6 +39,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'numpydoc',
     'sphinx_gallery.gen_gallery',
+    'sphinx.ext.githubpages',
 ]
 
 
