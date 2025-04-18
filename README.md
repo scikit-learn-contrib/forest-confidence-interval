@@ -85,8 +85,13 @@ E-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.poli
 
 ## Testing
 
-Requires installation of `nose` package. Tests are located in the `forestci/tests` folder
-and can be run with the `nosetests` command in the main directory.
+Requires installation of `pytest` package.
+
+Tests are located in the `forestci/tests` folder and can be run with this command in the root directory:
+
+```shell
+pytest forestci --doctest-modules
+```
 
 ## Citation
 
