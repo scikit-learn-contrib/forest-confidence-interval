@@ -1,6 +1,6 @@
 pandas
 sphinx
-pytest==5.2.2
+pytest==9.0.3
 pytest-cov==2.8.1
 flake8
 sphinx_gallery
