@@ -6,57 +6,49 @@ Plotting Regression Forest Error Bars
 This example demonstrates using `forestci` to calculate the error bars of
 the predictions of a :class:`sklearn.ensemble.RandomForestRegressor` object.
 
-The data used here are a classical machine learning data-set, describing
-various features of different cars, and their MPG.
+The data used here are scikit-learn's bundled diabetes regression dataset,
+which avoids requiring a network connection when building the documentation.
 """
 
 # Regression Forest Example
 import numpy as np
 from matplotlib import pyplot as plt
+from sklearn.datasets import load_diabetes
 from sklearn.ensemble import RandomForestRegressor
 import sklearn.model_selection as xval
-from sklearn.datasets import fetch_openml
 import forestci as fci
 
-# retreive mpg data from machine learning library
-mpg_data = fetch_openml(data_id=196)
+# Load a regression dataset bundled with scikit-learn
+diabetes_X, diabetes_y = load_diabetes(return_X_y=True)
 
-# separate mpg data into predictors and outcome variable
-mpg_X = mpg_data["data"]
-mpg_y = mpg_data["target"]
-
-# remove rows where the data is nan
-not_null_sel = np.where(mpg_X.isna().sum(axis=1).values == 0)
-mpg_X = mpg_X.values[not_null_sel]
-mpg_y = mpg_y.values[not_null_sel]
-
-# split mpg data into training and test set
-mpg_X_train, mpg_X_test, mpg_y_train, mpg_y_test = xval.train_test_split(
-    mpg_X,
-    mpg_y,
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = xval.train_test_split(
+    diabetes_X,
+    diabetes_y,
     test_size=0.25,
-    random_state=42)
+    random_state=42,
+)
 
 # Create RandomForestRegressor
 n_trees = 2000
-mpg_forest = RandomForestRegressor(n_estimators=n_trees, random_state=42)
-mpg_forest.fit(mpg_X_train, mpg_y_train)
-mpg_y_hat = mpg_forest.predict(mpg_X_test)
+forest = RandomForestRegressor(n_estimators=n_trees, random_state=42)
+forest.fit(X_train, y_train)
+y_pred = forest.predict(X_test)
+target_range = [diabetes_y.min(), diabetes_y.max()]
 
-# Plot predicted MPG without error bars
-plt.scatter(mpg_y_test, mpg_y_hat)
-plt.plot([5, 45], [5, 45], 'k--')
-plt.xlabel('Reported MPG')
-plt.ylabel('Predicted MPG')
+# Plot predictions without error bars
+plt.scatter(y_test, y_pred)
+plt.plot(target_range, target_range, 'k--')
+plt.xlabel('Observed disease progression')
+plt.ylabel('Predicted disease progression')
 plt.show()
 
 # Calculate the variance
-mpg_V_IJ_unbiased = fci.random_forest_error(mpg_forest, mpg_X_train.shape,
-                                            mpg_X_test)
+variance = fci.random_forest_error(forest, X_train.shape, X_test)
 
-# Plot error bars for predicted MPG using unbiased variance
-plt.errorbar(mpg_y_test, mpg_y_hat, yerr=np.sqrt(mpg_V_IJ_unbiased), fmt='o')
-plt.plot([5, 45], [5, 45], 'k--')
-plt.xlabel('Reported MPG')
-plt.ylabel('Predicted MPG')
+# Plot error bars for predictions using unbiased variance
+plt.errorbar(y_test, y_pred, yerr=np.sqrt(variance), fmt='o')
+plt.plot(target_range, target_range, 'k--')
+plt.xlabel('Observed disease progression')
+plt.ylabel('Predicted disease progression')
 plt.show()

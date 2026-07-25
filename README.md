@@ -62,7 +62,10 @@ ci = fci.random_forest_error(
 ## Examples
 
 The examples (gallery below) demonstrates the package functionality with random forest classifiers and regression models.
-The regression example uses a popular UCI Machine Learning data set on cars while the classifier example simulates how to add measurements of uncertainty to tasks like predicting spam emails.
+The regression examples use scikit-learn's bundled diabetes dataset, while the
+classifier example simulates how to add measurements of uncertainty to tasks
+like predicting spam emails. Keeping the regression data bundled makes
+documentation builds reproducible without relying on an external data service.
 
 [Examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
