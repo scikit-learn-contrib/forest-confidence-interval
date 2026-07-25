@@ -1,42 +1,58 @@
 name: Documentation build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: ['3.10']
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/checkout@v7
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v7
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.10'
+    - name: Configure GitHub Pages
+      uses: actions/configure-pages@v6
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-        pip install .
+        python -m pip install -r requirements.txt
+        python -m pip install -r requirements-dev.txt
+        python -m pip install .
     - name: Build docs
-      run: |
-        cd docs
-        make html
-    - name: Upload docs
-      uses: actions/upload-artifact@v4
+      working-directory: docs
+      run: make html
+    - name: Upload GitHub Pages artifact
+      uses: actions/upload-pages-artifact@v5
       with:
-        name: docs
         path: docs/_build/html
-    - name: Publish docs to Github Pages
-      if: startsWith(github.event.ref, 'refs/tags')
-      uses: JamesIves/github-pages-deploy-action@releases/v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages # The branch the action should deploy to.
-        folder: 'docs/_build/html' # The folder the action should deploy.
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy documentation to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v5

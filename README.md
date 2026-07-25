@@ -1,7 +1,7 @@
 # `forestci`: confidence intervals for Forest algorithms
 
 [![Python package](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/pythonpackage.yml/badge.svg?branch=master)](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/pythonpackage.yml)
-[![Documentation build](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/docbuild.yml/badge.svg?branch=master)](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/docbuild.yml)
+[![Documentation](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/docbuild.yml/badge.svg?branch=master)](https://contrib.scikit-learn.org/forest-confidence-interval/)
 [![status](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35/status.svg)](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35)
 
 Forest algorithms are powerful [ensemble methods](http://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) for classification and regression. 
