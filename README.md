@@ -84,13 +84,21 @@ E-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.poli
 
 ## Testing
 
-Requires installation of `pytest` package.
-
-Tests are located in the `forestci/tests` folder and can be run with this command in the root directory:
+Tests live in the top-level `tests/` directory. To test against the
+scikit-learn version already installed in your current environment, install
+only the test runner and the local package without resolving its dependencies:
 
 ```shell
-pytest forestci --doctest-modules
+python -m pip install -r requirements-test.txt
+python -m pip install --no-deps -e .
+python -m pytest
 ```
+
+The GitHub Actions test matrix selects the newest bugfix release from every
+scikit-learn minor series from 1.0 through 1.9. Scikit-learn 1.0–1.2 are tested
+on Python 3.10 because those releases do not provide Python 3.12 wheels; all
+newer series are tested on Python 3.12. A rolling `scikit-learn<2.0` job also
+tests the latest available 1.x release.
 
 ## Citation
 

@@ -1,7 +1,7 @@
+-r requirements-test.txt
+
 pandas
 sphinx
-pytest==9.0.3
-pytest-cov==2.8.1
 flake8
 sphinx_gallery
 sphinx_rtd_theme

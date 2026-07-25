@@ -1,28 +1,74 @@
 name: Python package
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  build:
+  test:
+    name: scikit-learn ${{ matrix.sklearn-version }} / Python ${{ matrix.python-version }}
 
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
+      fail-fast: false
       matrix:
-        python-version: ['3.10']
+        include:
+          - sklearn-version: '1.0'
+            sklearn-spec: 'scikit-learn>=1.0,<1.1'
+            python-version: '3.10'
+          - sklearn-version: '1.1'
+            sklearn-spec: 'scikit-learn>=1.1,<1.2'
+            python-version: '3.10'
+          - sklearn-version: '1.2'
+            sklearn-spec: 'scikit-learn>=1.2,<1.3'
+            python-version: '3.10'
+          - sklearn-version: '1.3'
+            sklearn-spec: 'scikit-learn>=1.3,<1.4'
+            python-version: '3.12'
+          - sklearn-version: '1.4'
+            sklearn-spec: 'scikit-learn>=1.4,<1.5'
+            python-version: '3.12'
+          - sklearn-version: '1.5'
+            sklearn-spec: 'scikit-learn>=1.5,<1.6'
+            python-version: '3.12'
+          - sklearn-version: '1.6'
+            sklearn-spec: 'scikit-learn>=1.6,<1.7'
+            python-version: '3.12'
+          - sklearn-version: '1.7'
+            sklearn-spec: 'scikit-learn>=1.7,<1.8'
+            python-version: '3.12'
+          - sklearn-version: '1.8'
+            sklearn-spec: 'scikit-learn>=1.8,<1.9'
+            python-version: '3.12'
+          - sklearn-version: '1.9'
+            sklearn-spec: 'scikit-learn>=1.9,<1.10'
+            python-version: '3.12'
+          - sklearn-version: 'latest <2.0'
+            sklearn-spec: 'scikit-learn<2.0'
+            python-version: '3.12'
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v7
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-        pip install .
-    - name: Test with pytest
+        python -m pip install -r requirements-test.txt
+        python -m pip install "numpy<2" "${{ matrix.sklearn-spec }}"
+        python -m pip install --no-deps .
+        python -m pip check
+    - name: Show resolved versions
       run: |
-        pytest forestci --doctest-modules
+        python -c "import platform, sklearn; print(f'Python {platform.python_version()} / scikit-learn {sklearn.__version__}')"
+    - name: Run tests
+      run: python -m pytest
