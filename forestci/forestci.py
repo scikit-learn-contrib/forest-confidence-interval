@@ -8,13 +8,25 @@ RandomForestClassifier predictions.
 import numpy as np
 import copy
 
+import sklearn
 from sklearn.ensemble._forest import BaseForest
 from sklearn.ensemble._forest import (_generate_sample_indices,
                                       _get_n_samples_bootstrap)
 from sklearn.ensemble._bagging import BaseBagging
+from sklearn.utils.fixes import parse_version
 
 from .calibration import calibrateEB
 from .due import _due, _BibTeX
+
+# scikit-learn 1.9 made `sample_weight` a required argument of the private
+# helpers `_get_n_samples_bootstrap` and `_generate_sample_indices`
+# (https://github.com/scikit-learn/scikit-learn/pull/31529). Passing None
+# reproduces the previous uniform-bootstrap behavior. Compare against
+# "1.9.0.dev0" so 1.9 pre-releases (which already carry the new signature and
+# sort before the final under PEP 440) are also covered.
+_SKLEARN_GE_19 = (
+    parse_version(sklearn.__version__) >= parse_version("1.9.0.dev0")
+)
 
 __all__ = ("calc_inbag", "random_forest_error", "_bias_correction",
            "_core_computation")
@@ -70,16 +82,34 @@ def calc_inbag(n_samples, forest):
     inbag = np.zeros((n_samples, n_trees))
     sample_idx = []
     if isinstance(forest, BaseForest):
-        n_samples_bootstrap = _get_n_samples_bootstrap(n_samples, forest.max_samples)
+        if _SKLEARN_GE_19:
+            n_samples_bootstrap = _get_n_samples_bootstrap(
+                n_samples, forest.max_samples, None
+            )
+        else:
+            n_samples_bootstrap = _get_n_samples_bootstrap(
+                n_samples, forest.max_samples
+            )
 
         for t_idx in range(n_trees):
-            sample_idx.append(
-                _generate_sample_indices(
-                    forest.estimators_[t_idx].random_state,
-                    n_samples,
-                    n_samples_bootstrap,
+            random_state = forest.estimators_[t_idx].random_state
+            if _SKLEARN_GE_19:
+                sample_idx.append(
+                    _generate_sample_indices(
+                        random_state,
+                        n_samples,
+                        n_samples_bootstrap,
+                        None,
+                    )
                 )
-            )
+            else:
+                sample_idx.append(
+                    _generate_sample_indices(
+                        random_state,
+                        n_samples,
+                        n_samples_bootstrap,
+                    )
+                )
             inbag[:, t_idx] = np.bincount(sample_idx[-1], minlength=n_samples)
     elif isinstance(forest, BaseBagging):
         for t_idx, estimator_sample in enumerate(forest.estimators_samples_):
