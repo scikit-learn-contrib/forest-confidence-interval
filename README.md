@@ -1,8 +1,7 @@
 # `forestci`: confidence intervals for Forest algorithms
 
-[![Travis Status](https://travis-ci.org/scikit-learn-contrib/forest-confidence-interval.svg?branch=master)](https://travis-ci.org/scikit-learn-contrib/forest-confidence-interval)
-[![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/forest-confidence-interval/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/forest-confidence-interval)
-[![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/forest-confidence-interval/tree/master)
+[![Python package](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/pythonpackage.yml/badge.svg?branch=master)](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/pythonpackage.yml)
+[![Documentation build](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/docbuild.yml/badge.svg?branch=master)](https://github.com/scikit-learn-contrib/forest-confidence-interval/actions/workflows/docbuild.yml)
 [![status](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35/status.svg)](http://joss.theoj.org/papers/b40f03cc069b43b341a92bd26b660f35)
 
 Forest algorithms are powerful [ensemble methods](http://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) for classification and regression. 
