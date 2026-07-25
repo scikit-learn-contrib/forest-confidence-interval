@@ -15,6 +15,9 @@ implemented in scikit-learn random forest regression or classification objects.
 The core functions calculate an in-bag and error bars for random forest
 objects.
 
+Version 0.8 supports scikit-learn 1.0 through 1.9, including the signature
+changes introduced in scikit-learn 1.9.
+
 This module is based on R code from Stefan Wager 
 ([`randomForestCI`](https://github.com/swager/randomForestCI) deprecated in favor of [`grf`](https://github.com/swager/grf))
 and is licensed under the MIT open source license (see [LICENSE](LICENSE)).

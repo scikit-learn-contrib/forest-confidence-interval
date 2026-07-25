@@ -66,6 +66,7 @@ dev = [
 
 [project.urls]
 Documentation = "https://contrib.scikit-learn.org/forest-confidence-interval/"
+Changelog = "https://github.com/scikit-learn-contrib/forest-confidence-interval/blob/master/CHANGELOG.md"
 Source = "https://github.com/scikit-learn-contrib/forest-confidence-interval"
 Issues = "https://github.com/scikit-learn-contrib/forest-confidence-interval/issues"
 
