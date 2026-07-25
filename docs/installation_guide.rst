@@ -3,21 +3,17 @@
 Installation Guide
 ==================
 
-Before installing the `forestci` module, you will need `numpy`, `scipy`
-and `scikit-learn`
+To install `forestci` and its dependencies:
 
 .. code-block:: bash
 
-   pip install numpy scipy scikit-learn
+   python -m pip install forestci
 
-Then, to install `forestci`:
-
-.. code-block:: bash
-
-   pip install forestci
-
-If you wish to install from the source code (available `here <https://github.com/scikit-learn-contrib/forest-confidence-interval>`_ ), change your working directory to the top-level directory of the source code, and issue:
+If you wish to install from the source code (available `here <https://github.com/scikit-learn-contrib/forest-confidence-interval>`_),
+change your working directory to the top-level directory and install the
+package in editable mode. Development dependencies are declared in
+``pyproject.toml``:
 
 .. code-block:: bash
 
-   python setup.py install
+   python -m pip install -e ".[dev]"

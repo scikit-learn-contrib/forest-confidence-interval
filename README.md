@@ -31,14 +31,16 @@ and test increasing the number of trees in the model to reach convergence.
 
 Before installing the module you will need `numpy`, `scipy` and `scikit-learn`.
 
-To install `forest-confidence-interval` execute:
+To install `forest-confidence-interval`, run:
+
 ```
-pip install forestci
+python -m pip install forestci
 ```
-If would like to install the development version of the software use:
+
+To install the development version from GitHub, use:
 
 ```shell
-pip install git+git://github.com/scikit-learn-contrib/forest-confidence-interval.git
+python -m pip install git+https://github.com/scikit-learn-contrib/forest-confidence-interval.git
 ```
 
 Usage:
@@ -84,12 +86,25 @@ E-mail [Ariel Rokem](mailto:arokem@gmail.com), [Kivan Polimis](mailto:kivan.poli
 
 ## Testing
 
-Tests live in the top-level `tests/` directory. To test against the
-scikit-learn version already installed in your current environment, install
-only the test runner and the local package without resolving its dependencies:
+The project uses a `pyproject.toml` build configuration and a `src/` package
+layout. Runtime, test, documentation, and development dependencies are declared
+as project dependency groups, while tests live in the top-level `tests/`
+directory.
+
+For a complete development environment, install the editable package and its
+development dependencies:
 
 ```shell
-python -m pip install -r requirements-test.txt
+python -m pip install -e ".[dev]"
+python -m pytest
+```
+
+To test only against the scikit-learn version already installed in the current
+environment, install the test runner and then install `forestci` without
+resolving dependencies:
+
+```shell
+python -m pip install pytest==9.0.3
 python -m pip install --no-deps -e .
 python -m pytest
 ```

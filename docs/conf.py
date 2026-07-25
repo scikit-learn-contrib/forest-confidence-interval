@@ -15,7 +15,6 @@
 import sys
 import os
 
-import sphinx_gallery
 import sphinx_rtd_theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -36,6 +35,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.imgmath',
     'sphinx.ext.viewcode',
     'numpydoc',
     'sphinx_gallery.gen_gallery',
@@ -46,14 +46,6 @@ extensions = [
 # this is needed for some reason...
 # see https://github.com/numpy/numpydoc/issues/69
 numpydoc_show_class_members = False
-
-# pngmath / imgmath compatibility layer for different sphinx versions
-import sphinx
-from distutils.version import LooseVersion
-if LooseVersion(sphinx.__version__) < LooseVersion('1.4'):
-    extensions.append('sphinx.ext.pngmath')
-else:
-    extensions.append('sphinx.ext.imgmath')
 
 # autodoc_default_flags = ['members', 'inherited-members']
 
@@ -150,9 +142,6 @@ html_theme = 'sphinx_rtd_theme'
 # documentation.
 #html_theme_options = {}
 
-# Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 #html_title = None
@@ -229,10 +218,10 @@ htmlhelp_basename = 'forestcidoc'
 intersphinx_mapping = {
     'python': ('https://docs.python.org/{.major}'.format(
         sys.version_info), None),
-    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
-    'matplotlib': ('https://matplotlib.org/', None),
-    'sklearn': ('http://scikit-learn.org/stable', None)
+    'numpy': ('https://numpy.org/doc/stable/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/', None),
+    'matplotlib': ('https://matplotlib.org/stable/', None),
+    'sklearn': ('https://scikit-learn.org/stable/', None)
 }
 
 # sphinx-gallery configuration

@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forestci"
+dynamic = ["version"]
+description = "Confidence intervals for scikit-learn forest algorithms"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Ariel Rokem", email = "arokem@uw.edu" },
+    { name = "Bryna Hazelton" },
+    { name = "Kivan Polimis" },
+]
+maintainers = [
+    { name = "Ariel Rokem", email = "arokem@uw.edu" },
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy>=1.20",
+    "scikit-learn>=1.0,<2.0",
+    "scipy",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==9.0.3",
+]
+docs = [
+    "matplotlib",
+    "numpydoc",
+    "pandas",
+    "pillow",
+    "sphinx",
+    "sphinx-autoapi",
+    "sphinx-gallery",
+    "sphinx-rtd-theme",
+]
+dev = [
+    "flake8",
+    "matplotlib",
+    "numpydoc",
+    "pandas",
+    "pillow",
+    "pytest==9.0.3",
+    "sphinx",
+    "sphinx-autoapi",
+    "sphinx-gallery",
+    "sphinx-rtd-theme",
+]
+
+[project.urls]
+Documentation = "https://contrib.scikit-learn.org/forest-confidence-interval/"
+Source = "https://github.com/scikit-learn-contrib/forest-confidence-interval"
+Issues = "https://github.com/scikit-learn-contrib/forest-confidence-interval/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = { attr = "forestci.version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+testpaths = [
+    "src/forestci",
+    "tests",
+]
