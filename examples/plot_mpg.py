@@ -21,8 +21,12 @@ import sklearn.model_selection as xval
 import forestci as fci
 
 # Load the bundled Auto MPG data
+data_path = Path.cwd() / "data" / "auto_mpg.csv"
+if not data_path.exists():
+    # Also support running ``python examples/plot_mpg.py`` from the repo root.
+    data_path = Path.cwd() / "examples" / "data" / "auto_mpg.csv"
 mpg_data = np.genfromtxt(
-    Path(__file__).parent / "data" / "auto_mpg.csv",
+    data_path,
     delimiter=",",
     skip_header=1,
 )
