@@ -1,12 +1,16 @@
 from inspect import signature
 import sys
 from unittest.mock import patch
+import pytest
 
 import forestci as fci
+import forestci.calibration as calib
 import numpy as np
 import numpy.testing as npt
-import pytest
+
+from sklearn.datasets import make_classification
 from sklearn.ensemble import BaggingRegressor
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 
@@ -239,6 +243,48 @@ def test_centered_prediction_forest():
                 pred_centered_sample[0],
                 pred_centered[n_sample],
             )
+
+
+def test_classifier_calibration_inflation():
+    X, y = make_classification(n_samples=500, n_features=6, random_state=42)
+    clf = RandomForestClassifier(n_estimators=100, random_state=42)
+    clf.fit(X, y)
+    X_test = X[:100]
+    np.random.seed(0)
+    uncalibrated = fci.random_forest_error(clf, X.shape, X_test, calibrate=False)
+    assert np.any(uncalibrated <= 0)
+    np.random.seed(0)
+    calibrated = fci.random_forest_error(clf, X.shape, X_test, calibrate=True)
+    assert calibrated[uncalibrated <= 0].mean() < uncalibrated.mean()
+
+
+def test_gfit_negative_support():
+    X = np.array([-0.8, -0.3, 0.1, 0.4, 0.9, 1.2])
+    xvals, g_eta = calib.gfit(X, sigma=0.1)
+    assert np.min(xvals) < 0
+    assert len(xvals) == 1000
+
+
+@pytest.mark.parametrize(
+    "variances",
+    [
+        np.array([-1.0, -0.5, 0.0, 0.5, 1.0]),
+        np.linspace(-1.0, 1.0, 101),
+        np.array([-0.5, -0.4, -0.3, -0.2, -0.1]),
+    ],
+)
+def test_calibrateEB_is_finite_for_negative_and_symmetric_inputs(variances):
+    calibrated = calib.calibrateEB(variances, sigma2=0.01)
+    assert np.all(np.isfinite(calibrated))
+    assert np.all(calibrated >= 0)
+
+
+@pytest.mark.parametrize("value", [0.0, -0.1])
+def test_gfit_constant_nonpositive_input(value):
+    xvals, prior = calib.gfit(np.full(5, value), sigma=0.1)
+    assert np.all(np.isfinite(prior))
+    npt.assert_allclose(prior.sum(), 1.0)
+    assert np.all(prior[xvals < 0] == 0)
 
 
 def test_show_progress():
