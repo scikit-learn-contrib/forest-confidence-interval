@@ -228,6 +228,7 @@ intersphinx_mapping = {
 sphinx_gallery_conf = {
     'doc_module': 'forestci',
     'backreferences_dir': os.path.join('generated'),
+    "ignore_pattern": r"(?:__init__|generate_calibration_benchmark)\.py", # too expensive to run each time
     'reference_url': {
         'forestci': None}
 }

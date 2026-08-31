@@ -5,6 +5,9 @@
 - Add optional progress reporting for memory-constrained variance
   calculations.
 
+- Improvement of calibration method, with proper documentation and
+  six benchmarks.
+
 ## 0.8 (2026-07-25)
 
 The main feature of this release is compatibility with scikit-learn 1.9.
