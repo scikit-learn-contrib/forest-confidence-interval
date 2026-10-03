@@ -407,6 +407,7 @@ def random_forest_error(
             new_forest,
             X_train_shape,
             X_test,
+            inbag=inbag[:, random_idx],
             calibrate=False,
             memory_constrained=memory_constrained,
             memory_limit=memory_limit,
