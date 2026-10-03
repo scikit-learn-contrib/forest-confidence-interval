@@ -1,6 +1,6 @@
 """
 Class-probability uncertainty for multiclass forests
-==================================================
+====================================================
 
 The Wine dataset has three classes. For each class, ``class_index`` selects
 its column in ``forest.classes_`` and estimates the sampling variance of
