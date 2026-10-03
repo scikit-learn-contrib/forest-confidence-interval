@@ -73,6 +73,45 @@ documentation builds reproducible without relying on an external data service.
 
 [Examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
+## Rebuilding and publishing the documentation
+
+Documentation builds run **only when manually requested**, not on pushes or
+pull requests. In GitHub, open **Actions → Documentation build → Run workflow**,
+select the desired branch under **Use workflow from**, and click **Run workflow**.
+For a pull request, select its source branch in this repository, not `master`;
+the build checks out that selected branch. Runs on different branches do not
+cancel each other. The workflow must be present on the default branch for
+GitHub to offer this button. See GitHub's
+[manual workflow instructions](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
+
+Each run installs the documentation dependencies, refits the benchmark models,
+regenerates the calibration table and the 2,000-estimator confidence-width
+versus observed-error plots, and executes every Python gallery example.
+Generated tables and images are build outputs, not checked-in inputs; even
+local incremental builds rerun the generators and gallery scripts. The legacy
+`paper/` folder is not part of this workflow.
+
+A run on `master` publishes the resulting site to GitHub Pages. A run on another
+branch builds the downloadable `github-pages` artifact without deploying it;
+find it under **Artifacts** on the workflow run page. Use this to inspect changes
+before publishing. Python package tests still run automatically as before.
+
+To build locally from the repository root:
+
+```sh
+python -m pip install -e ".[docs]"
+MPLBACKEND=Agg make -C docs html
+```
+
+Open `docs/_build/html/index.html` after the build. California Housing is fetched
+on the first run (internet access required); scikit-learn may cache the raw
+input dataset. Models, tables and plots are always recomputed. Allow several
+minutes and several GiB of memory: a complete build took about 3 minutes
+38 seconds on a four-core Intel MacBook Pro. The calibration benchmark alone
+previously peaked near 3 GiB. GitHub runner timings may differ.
+Failures in a generator or gallery example fail the build instead of publishing
+incomplete results.
+
 ## Contributing
 
 Contributions are very welcome, but we ask that contributors abide by the

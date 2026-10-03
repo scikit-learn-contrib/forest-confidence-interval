@@ -18,12 +18,15 @@ from sklearn.ensemble import RandomForestClassifier
 import forestci as fci
 from sklearn.datasets import make_classification
 
-spam_X, spam_y = make_classification(5000)
+# Seed the calibration subsampling as well as the fitted models.
+np.random.seed(42)
+
+spam_X, spam_y = make_classification(5000, random_state=42)
 
 # split the datainto training and test set
 spam_X_train, spam_X_test, spam_y_train, spam_y_test = train_test_split(
                                                        spam_X, spam_y,
-                                                       test_size=0.2)
+                                                       test_size=0.2, random_state=42)
 
 # create RandomForestClassifier
 n_trees = 500

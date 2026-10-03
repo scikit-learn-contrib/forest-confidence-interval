@@ -14,6 +14,8 @@
 
 import sys
 import os
+import subprocess
+from pathlib import Path
 
 import sphinx_rtd_theme
 
@@ -35,7 +37,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.imgmath',
+    'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'numpydoc',
     'sphinx_gallery.gen_gallery',
@@ -101,7 +103,7 @@ release = __version__
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', '_templates']
+exclude_patterns = ['_build', '_templates', 'generated/benchmarks/**']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -227,12 +229,26 @@ intersphinx_mapping = {
 # sphinx-gallery configuration
 sphinx_gallery_conf = {
     'doc_module': 'forestci',
+    'run_stale_examples': True,
+    'abort_on_example_error': True,
     'backreferences_dir': os.path.join('generated'),
-    "ignore_pattern": r"(?:__init__|generate_calibration_benchmark)\.py", # too expensive to run each time
+    "ignore_pattern": r"(?:__init__|generate_calibration_benchmark)\.py", # executed by generate_benchmarks below
     'reference_url': {
         'forestci': None}
 }
 
+def generate_benchmarks(app):
+    root = Path(__file__).resolve().parents[1]
+    subprocess.run(
+        [sys.executable, str(root / 'examples/generate_calibration_benchmark.py'),
+         '--output-dir', str(root / 'docs/generated/benchmarks')],
+        cwd=root, check=True,
+        env={**os.environ, 'MPLBACKEND': 'Agg'},
+    )
+
+
 def setup(app):
+    # Generate includes before Sphinx reads pages or executes gallery examples.
+    app.connect('builder-inited', generate_benchmarks, priority=100)
     # a copy button to copy snippet of code from the documentation
     app.add_js_file('js/copybutton.js')

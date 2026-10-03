@@ -1,17 +1,13 @@
 name: Documentation build
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: docs-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -21,6 +17,8 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v7
+      with:
+        ref: ${{ github.ref }}
     - name: Set up Python 3.10
       uses: actions/setup-python@v7
       with:
@@ -33,6 +31,8 @@ jobs:
         python -m pip install ".[docs]"
     - name: Build docs
       working-directory: docs
+      env:
+        MPLBACKEND: Agg
       run: make html
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v5
@@ -40,7 +40,7 @@ jobs:
         path: docs/_build/html
 
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master'
     needs: build
     runs-on: ubuntu-latest
     permissions:
