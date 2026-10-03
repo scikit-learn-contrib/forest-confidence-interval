@@ -73,6 +73,58 @@ documentation builds reproducible without relying on an external data service.
 
 [Examples gallery](http://contrib.scikit-learn.org/forest-confidence-interval/auto_examples/index.html)
 
+## Rebuilding and publishing the documentation
+
+Documentation builds run **only when manually requested**, not on pushes or
+pull requests. In GitHub, open **Actions → Documentation build → Run workflow**,
+select the desired branch under **Use workflow from**, and click **Run workflow**.
+For a pull request, select its source branch in this repository, not `master`;
+the build checks out and publishes that selected branch. Because every branch
+publishes to the same website, a new run cancels any previous unfinished run.
+The workflow must be present on the default branch for
+GitHub to offer this button. See GitHub's
+[manual workflow instructions](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
+
+Each run installs the documentation dependencies, refits the benchmark models,
+regenerates the calibration table and the 2,000-estimator confidence-width
+versus observed-error plots, and executes every Python gallery example.
+Generated tables and images are build outputs, not checked-in inputs; even
+local incremental builds rerun the generators and gallery scripts. The legacy
+`paper/` folder is not part of this workflow.
+
+Every selected branch publishes to the same
+[documentation website](https://contrib.scikit-learn.org/forest-confidence-interval/).
+To preview a PR before merging, run the action on its source branch and follow
+the deployment link on the completed run. This temporarily replaces the public
+documentation; it does not create a separate preview URL or merge the PR.
+To restore the documentation from `master`, start a new run with `master`
+selected and wait for deployment to finish. The last successfully deployed
+version stays online while a build runs or if it fails. The downloadable
+`github-pages` artifact is also available under **Artifacts** on each run.
+Python package tests still run automatically as before.
+
+Repository setup: GitHub Pages must use **GitHub Actions** as its source, and
+**Settings → Environments → github-pages → Deployment branches and tags** must
+allow the branches you want to publish (choose **No restriction** to permit
+any selected branch). A `master`-only environment rule prevents PR branches
+from deploying even when the workflow itself allows them.
+
+To build locally from the repository root:
+
+```sh
+python -m pip install -e ".[docs]"
+MPLBACKEND=Agg make -C docs html
+```
+
+Open `docs/_build/html/index.html` after the build. California Housing is fetched
+on the first run (internet access required); scikit-learn may cache the raw
+input dataset. Models, tables and plots are always recomputed. Allow several
+minutes and several GiB of memory: a complete build took about 3 minutes
+38 seconds on a four-core Intel MacBook Pro. The calibration benchmark alone
+previously peaked near 3 GiB. GitHub runner timings may differ.
+Failures in a generator or gallery example fail the build instead of publishing
+incomplete results.
+
 ## Contributing
 
 Contributions are very welcome, but we ask that contributors abide by the

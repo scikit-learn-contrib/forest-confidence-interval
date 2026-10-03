@@ -21,6 +21,9 @@ from sklearn.svm import SVR
 import sklearn.model_selection as xval
 import forestci as fci
 
+# Seed the calibration subsampling as well as the fitted models.
+np.random.seed(42)
+
 # Load the bundled Auto MPG data
 data_path = Path.cwd() / "data" / "auto_mpg.csv"
 if not data_path.exists():

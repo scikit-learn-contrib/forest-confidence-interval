@@ -1,10 +1,15 @@
-import os
+"""Generate calibration tables and confidence-interval diagnostics at build time."""
+
+import argparse
+import time
+
 import numpy as np
 import pandas as pd
 from pathlib import Path
 from sklearn.datasets import fetch_california_housing, load_diabetes, load_breast_cancer, make_classification, make_regression
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier, BaggingRegressor
 from sklearn.model_selection import train_test_split
+from sklearn.svm import SVR
 import forestci as fci
 
 
@@ -13,12 +18,8 @@ def get_datasets():
     
     # 1. Auto MPG
     # Load the bundled Auto MPG data
-    data_path = Path.cwd() / "data" / "auto_mpg.csv"
-    if not data_path.exists():
-        # Also support running ``python examples/plot_mpg.py`` from the repo root.
-        data_path = Path.cwd() / "examples" / "data" / "auto_mpg.csv"
-    mpg_path = os.path.join(data_path, 'examples', 'data', 'auto_mpg.csv')
-    df = pd.read_csv(mpg_path)
+    data_path = Path(__file__).resolve().parent / "data" / "auto_mpg.csv"
+    df = pd.read_csv(data_path)
     df = df.replace('?', np.nan).dropna()
     y_mpg = df['mpg'].values
     X_mpg = df.drop(['mpg'], axis=1).values.astype(float)
@@ -49,7 +50,13 @@ def get_datasets():
 def rmse(y_true, y_pred):
     return np.sqrt(np.mean((y_true - y_pred)**2))
 
-def run_benchmark():
+def run_benchmark(output_dir=None):
+    started = time.perf_counter()
+    np.random.seed(42)
+    if output_dir is not None:
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+    plots = []
     datasets = get_datasets()
     tree_counts = [50, 100, 200]
     results = []
@@ -70,7 +77,11 @@ def run_benchmark():
         # Calculate reference variance using inbag
         inbag_ref = fci.calc_inbag(X_train.shape[0], ref_model)
         ref_var = fci.random_forest_error(ref_model, X_train.shape, X_test, inbag=inbag_ref, calibrate=False)
+        if output_dir is not None:
+            plots.append(plot_prediction_error(
+                name, ref_model, X_test, y_test, ref_var, output_dir))
         ref_var = np.maximum(ref_var, 0) # reference is clipped to positive
+        del inbag_ref, ref_model
         
         for n_trees in tree_counts:
             print(f"  Trees: {n_trees}")
@@ -118,5 +129,82 @@ def run_benchmark():
         print(f"     - {r['Var RMSE (Cal)']}")
         print(f"     - {r['Relative Improvement']}")
 
+    if output_dir is not None:
+        write_table(results, output_dir / 'calibration_table.rst')
+        plots.extend(gallery_comparisons(datasets['Auto MPG'], output_dir))
+        (output_dir / 'prediction_error_figures.rst').write_text(
+            '\n'.join(plots), encoding='utf-8')
+    print(f"Total generation time: {time.perf_counter() - started:.1f} seconds")
+    return results
+
+
+def write_table(results, path):
+    lines = ['.. list-table:: Recomputed calibration benchmark',
+             '   :header-rows: 1', '',
+             '   * - ' + '\n     - '.join(results[0])]
+    for result in results:
+        lines.append('   * - ' + '\n     - '.join(map(str, result.values())))
+    path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+
+def plot_prediction_error(name, model, X_test, y_test, variance, output_dir):
+    from matplotlib import pyplot as plt
+
+    # Match forestci's estimand: the mean of individual tree predictions.
+    # For binary classification this is a vote fraction, not predict_proba.
+    prediction = np.mean([tree.predict(X_test) for tree in model], axis=0)
+    error = np.abs(y_test - prediction)
+    half_width = 1.96 * np.sqrt(np.maximum(variance, 0))
+    if not (np.isfinite(error).all() and np.isfinite(half_width).all()):
+        raise ValueError(f'Non-finite diagnostic values for {name}')
+    negative_count = np.count_nonzero(variance < 0)
+    fig, ax = plt.subplots(figsize=(6.4, 5.2), layout='constrained')
+    ax.scatter(error, half_width, s=12, alpha=0.45, edgecolors='none')
+    limit = max(error.max(), half_width.max()) * 1.04
+    ax.plot([0, limit], [0, limit], '--', color='0.4', label='Equal magnitudes')
+    ax.set(xlim=(0, limit), ylim=(0, limit),
+           xlabel='Observed absolute prediction error',
+           ylabel='Approximate 95% CI half-width (1.96 × IJ SE)',
+           title=f'{name}: 2,000 estimators; {len(y_test):,} test samples')
+    ax.set_aspect('equal', adjustable='box')
+    ax.legend(loc='upper left')
+    filename = name.lower().replace(' ', '_') + '_prediction_error.png'
+    fig.savefig(output_dir / filename, dpi=150)
+    plt.close(fig)
+    return (f'{name}\n' + '~' * len(name) + '\n\n'
+            f'.. figure:: generated/benchmarks/{filename}\n'
+            f'   :alt: Observed absolute error versus estimated CI half-width for {name}.\n\n'
+            f'   {len(y_test):,} held-out samples; {negative_count} negative raw IJ '
+            'variances clipped to zero for plotting.\n')
+
+
+def gallery_comparisons(auto_mpg, output_dir):
+    plots = []
+    spam_X, spam_y = make_classification(5000, random_state=42)
+    mpg_X, mpg_y, _ = auto_mpg
+    cases = [
+        ('Spam', spam_X, spam_y, 0.2,
+         RandomForestClassifier(max_features=5, n_estimators=2000,
+                                random_state=42, n_jobs=-1)),
+        ('Auto MPG bagged SVR', mpg_X, mpg_y, 0.25,
+         BaggingRegressor(estimator=SVR(), n_estimators=2000,
+                          random_state=42, n_jobs=-1)),
+    ]
+    for name, X, y, test_size, model in cases:
+        print(f'Running gallery comparison: {name}', flush=True)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=42)
+        model.fit(X_train, y_train)
+        variance = fci.random_forest_error(
+            model, X_train.shape, X_test, calibrate=False)
+        plots.append(plot_prediction_error(
+            name, model, X_test, y_test, variance, output_dir))
+    return plots
+
+
 if __name__ == '__main__':
-    run_benchmark()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output-dir', type=Path,
+                        help='Write generated documentation tables and plots here.')
+    args = parser.parse_args()
+    run_benchmark(args.output_dir)

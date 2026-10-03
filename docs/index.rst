@@ -22,6 +22,7 @@ To examine and download the source code, visit our `github repo <https://github.
    installation_guide
    auto_examples/index
    calibration_benchmark
+   prediction_error
    api
    contributing
 
