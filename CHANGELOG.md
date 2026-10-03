@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Remove duecredit integration and preserve scientific citations in docstrings.
+- Remove unused coverage configuration and the obsolete root GitHub Pages marker.
 
 - Add optional progress reporting for memory-constrained variance
   calculations.
