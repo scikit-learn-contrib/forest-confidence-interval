@@ -7,10 +7,12 @@ RandomForestClassifier predictions.
 
 import copy
 import warnings
+from numbers import Integral
 
 import numpy as np
 
 import sklearn
+from sklearn.base import is_classifier
 from sklearn.ensemble._forest import BaseForest
 from sklearn.ensemble._forest import (_generate_sample_indices,
                                       _get_n_samples_bootstrap)
@@ -233,7 +235,7 @@ def _bias_correction(V_IJ, inbag, pred_centered, n_trees):
     return V_IJ_unbiased
 
 
-def _centered_prediction_forest(forest, X_test, y_output=None):
+def _centered_prediction_forest(forest, X_test, y_output=None, class_index=None):
     """
     Center the tree predictions by the mean prediction (forest)
 
@@ -264,13 +266,25 @@ def _centered_prediction_forest(forest, X_test, y_output=None):
     if len(X_test.shape) == 1:
         X_test = X_test.reshape(1, -1)
 
-    pred = np.array([tree.predict(X_test) for tree in forest])
+    if class_index is None:
+        pred = np.array([tree.predict(X_test) for tree in forest])
+    else:
+        # Binary probabilities are complements. Center one shared coordinate
+        # so their variances (and inputs to the sensitive EB fit) are identical
+        # up to sign, rather than differing through subtraction roundoff.
+        probability_index = 1 if len(forest.classes_) == 2 else class_index
+        pred = np.array([
+            tree.predict_proba(X_test)[:, probability_index] for tree in forest
+        ])
     if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1:
         pred = pred[:,:,y_output]
 
     pred_mean = np.mean(pred, 0)
 
-    return (pred - pred_mean).T
+    centered = (pred - pred_mean).T
+    if class_index == 0 and len(forest.classes_) == 2:
+        centered = -centered
+    return centered
 
 
 def random_forest_error(
@@ -283,6 +297,8 @@ def random_forest_error(
     memory_limit=None,
     y_output=None,
     show_progress=False,
+    *,
+    class_index=None,
 ):
     """
     Calculate error bars from scikit-learn RandomForest estimators.
@@ -336,6 +352,16 @@ def random_forest_error(
         optional ``tqdm`` dependency. Calibration displays a second bar for its
         reduced forest computation. Default: False.
 
+    class_index : int, optional, keyword-only
+        Column index in ``forest.classes_`` of the class probability whose
+        sampling variance is requested. Supported for single-output forest
+        classifiers. This is a column position, not a class label. With this
+        argument, individual trees' ``predict_proba`` values are used.
+        Without it, the legacy hard-prediction calculation is preserved:
+        binary classifiers estimate vote-fraction variance; multiclass
+        classifiers emit a warning because numeric class codes have no
+        meaningful variance. Regressors must leave this argument unset.
+
     Returns
     -------
     An array with the unbiased sampling variance (V_IJ_unbiased)
@@ -351,10 +377,39 @@ def random_forest_error(
     as described in [Wager2014]_ and is a Python implementation of the R code
     provided at: https://github.com/swager/randomForestCI
 
+    Class-probability results are marginal sampling variances of the fitted
+    probabilities, not outcome variances or simultaneous confidence regions.
+    Calibration mitigates finite-tree noise in the variance estimate; it does
+    not calibrate class probabilities or remove prediction bias.
+
     .. [Wager2014] S. Wager, T. Hastie, B. Efron. "Confidence Intervals for
        Random Forests: The Jackknife and the Infinitesimal Jackknife", Journal
        of Machine Learning Research vol. 15, pp. 1625-1651, 2014.
     """
+
+    if is_classifier(forest):
+        multioutput_classifier = getattr(forest, "n_outputs_", 1) > 1
+        if class_index is not None and multioutput_classifier:
+            raise ValueError("Multi-output classifiers are not supported.")
+        if class_index is not None:
+            if not isinstance(forest, BaseForest):
+                raise ValueError("class_index requires a forest classifier.")
+            if (isinstance(class_index, (bool, np.bool_))
+                    or not isinstance(class_index, Integral)
+                    or not 0 <= class_index < len(forest.classes_)):
+                raise ValueError(
+                    "class_index must be an integer column index in forest.classes_."
+                )
+        elif not multioutput_classifier and len(forest.classes_) > 2:
+            warnings.warn(
+                "Multiclass hard-prediction variance depends on arbitrary class "
+                "codes. Specify class_index to estimate class-probability "
+                "variance. The legacy multiclass calculation is deprecated.",
+                FutureWarning,
+                stacklevel=2,
+            )
+    elif class_index is not None:
+        raise ValueError("class_index is only supported for forest classifiers.")
 
     if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1 and y_output == None:
         e_s = "MultiOutput regressor: specify the index of the target to analyse (y_output)"
@@ -363,7 +418,9 @@ def random_forest_error(
     if inbag is None:
         inbag = calc_inbag(X_train_shape[0], forest)
 
-    pred_centered = _centered_prediction_forest(forest, X_test, y_output)
+    pred_centered = _centered_prediction_forest(
+        forest, X_test, y_output, class_index=class_index
+    )
     n_trees = forest.n_estimators
     V_IJ = _core_computation(
         X_train_shape,
@@ -413,6 +470,7 @@ def random_forest_error(
             memory_limit=memory_limit,
             y_output=y_output,
             show_progress=show_progress,
+            class_index=class_index,
         )
         # Use this second set of variance estimates
         # to estimate scale of Monte Carlo noise

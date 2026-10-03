@@ -53,13 +53,21 @@ We use a Random Forest with ``n_estimators=2000`` as an empirical reference, not
     3. **Relative Improvement**: Computed as ``(Var RMSE (Uncal) - Var RMSE (Cal)) / Var RMSE (Uncal) * 100``. Positive values mean calibration improves agreement with the 2000-tree empirical reference, while negative values mean calibration worsens it.
 
 **Datasets**:
-The benchmark covers both regression and classification across six datasets, including the repository's `auto_mpg.csv` example dataset.
+The benchmark covers both regression and classification across seven datasets, including the repository's `auto_mpg.csv` example dataset.
 1. `auto_mpg.csv <https://github.com/scikit-learn-contrib/forest-confidence-interval/blob/master/examples/data/auto_mpg.csv>`_: Regression, 392 samples, 7 features.
 2. California Housing: Regression, 20,640 samples, 8 features.
 3. Diabetes: Regression, 442 samples, 10 features.
 4. Breast Cancer: Classification, 569 samples, 30 features.
 5. Synthetic Hard: Classification, 2000 samples, 20 features, 10 informative features.
 6. Synthetic Reg: Regression, 1000 samples, 10 features, noise=0.1.
+7. Wine: Multiclass classification, 178 samples, 13 features, three classes.
+
+Classification rows estimate the variance of ``predict_proba`` using an explicit
+``class_index``: column 1 for binary tasks and each of the three columns
+separately for Wine. Each class has its own calibration and reference variance;
+classes are not pooled or treated as independent. This is variance calibration,
+not calibration of the predicted probabilities. See the
+:doc:`multiclass example <auto_examples/plot_multiclass>`.
 
 Benchmark Results
 -----------------

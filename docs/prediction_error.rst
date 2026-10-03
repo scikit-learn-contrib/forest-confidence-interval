@@ -21,14 +21,18 @@ noise and model bias, so a nominal 95% confidence interval need not contain
 relative to the true conditional mean.
 
 For regression, the prediction is the mean of the individual estimator
-predictions. For binary classification, ``forestci`` uses individual trees'
-0/1 class predictions, so we compare their mean vote fraction with the observed
-0/1 outcome. This matches the quantity used internally by the IJ computation;
-it is not ``RandomForestClassifier.predict_proba`` or a hard-class error rate.
+predictions. For classification, we use ``predict_proba(X_test)[:, k]`` and
+compute its IJ variance with ``class_index=k``. The observed residual is
+:math:`|\mathbf{1}(y_i = c_k) - \hat p_k(x_i)|`, where :math:`c_k` is
+``forest.classes_[k]``. Binary tasks use column 1; Wine has a separate panel
+for each of its three classes. The classes are not treated as independent,
+and these marginal intervals do not provide simultaneous coverage.
 The normal approximation is descriptive and is not clipped to [0, 1].
 
-The first six panels use the same datasets, 80/20 splits, and reference forests
-as :doc:`calibration_benchmark`. Auto MPG covers the random-forest regression
+The first nine panels use the same seven datasets, 80/20 splits, and reference
+forests as :doc:`calibration_benchmark`. The three Wine panels also match the
+:doc:`multiclass gallery example <auto_examples/plot_multiclass>`.
+Auto MPG covers the random-forest regression
 gallery example, using the benchmark's 20% test split rather than the gallery's
 25%. Additional panels cover the spam classifier (20% test split) and Auto MPG
 bagged SVR (25% test split), with their gallery model settings except that the

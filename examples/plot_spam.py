@@ -48,7 +48,7 @@ plt.legend()
 
 # Calculate the variance
 spam_V_IJ_unbiased = fci.random_forest_error(spam_RFC, spam_X_train.shape,
-                                             spam_X_test)
+                                             spam_X_test, class_index=1)
 
 # Plot forest prediction for emails and standard deviation for estimates
 # Blue points are spam emails; Green points are non-spam emails
