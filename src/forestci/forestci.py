@@ -18,7 +18,6 @@ from sklearn.ensemble._bagging import BaseBagging
 from sklearn.utils.fixes import parse_version
 
 from .calibration import calibrateEB
-from .due import _due, _BibTeX
 
 # scikit-learn 1.9 made `sample_weight` a required argument of the private
 # helpers `_get_n_samples_bootstrap` and `_generate_sample_indices`
@@ -32,26 +31,6 @@ _SKLEARN_GE_19 = (
 
 __all__ = ("calc_inbag", "random_forest_error", "_bias_correction",
            "_core_computation")
-
-_due.cite(
-    _BibTeX(
-        """
-@ARTICLE{Wager2014-wn,
-  title       = "Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife",
-  author      = "Wager, Stefan and Hastie, Trevor and Efron, Bradley",
-  journal     = "J. Mach. Learn. Res.",
-  volume      =  15,
-  number      =  1,
-  pages       = "1625--1651",
-  month       =  jan,
-  year        =  2014,}"""
-    ),
-    description=(
-        "Confidence Intervals for Random Forests:",
-        "The Jackknife and the Infinitesimal Jackknife",
-    ),
-    path="forestci",
-)
 
 
 def calc_inbag(n_samples, forest):
