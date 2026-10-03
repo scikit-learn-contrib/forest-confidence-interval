@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.9 (2026-10-03)
 
 - Add opt-in class-probability IJ variance via `class_index`, preserving binary
   vote-fraction behavior and warning on legacy multiclass hard-label variance.
