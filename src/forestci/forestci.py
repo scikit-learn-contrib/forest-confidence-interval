@@ -164,8 +164,10 @@ def _core_computation(
             + "be greater than or equal to %.3e" % min_limit
         )
 
-    chunk_edges = np.arange(0, X_test.shape[0] + chunk_size, chunk_size)
-    inds = range(X_test.shape[0])
+    # Predictions already normalize a single sample to one row.
+    n_test_samples = pred_centered.shape[0]
+    chunk_edges = np.arange(0, n_test_samples + chunk_size, chunk_size)
+    inds = range(n_test_samples)
     chunks = [
         inds[chunk_edges[i] : chunk_edges[i + 1]] for i in range(len(chunk_edges) - 1)
     ]
