@@ -79,8 +79,9 @@ Documentation builds run **only when manually requested**, not on pushes or
 pull requests. In GitHub, open **Actions → Documentation build → Run workflow**,
 select the desired branch under **Use workflow from**, and click **Run workflow**.
 For a pull request, select its source branch in this repository, not `master`;
-the build checks out that selected branch. Runs on different branches do not
-cancel each other. The workflow must be present on the default branch for
+the build checks out and publishes that selected branch. Because every branch
+publishes to the same website, a new run cancels any previous unfinished run.
+The workflow must be present on the default branch for
 GitHub to offer this button. See GitHub's
 [manual workflow instructions](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
 
@@ -91,10 +92,22 @@ Generated tables and images are build outputs, not checked-in inputs; even
 local incremental builds rerun the generators and gallery scripts. The legacy
 `paper/` folder is not part of this workflow.
 
-A run on `master` publishes the resulting site to GitHub Pages. A run on another
-branch builds the downloadable `github-pages` artifact without deploying it;
-find it under **Artifacts** on the workflow run page. Use this to inspect changes
-before publishing. Python package tests still run automatically as before.
+Every selected branch publishes to the same
+[documentation website](https://contrib.scikit-learn.org/forest-confidence-interval/).
+To preview a PR before merging, run the action on its source branch and follow
+the deployment link on the completed run. This temporarily replaces the public
+documentation; it does not create a separate preview URL or merge the PR.
+To restore the documentation from `master`, start a new run with `master`
+selected and wait for deployment to finish. The last successfully deployed
+version stays online while a build runs or if it fails. The downloadable
+`github-pages` artifact is also available under **Artifacts** on each run.
+Python package tests still run automatically as before.
+
+Repository setup: GitHub Pages must use **GitHub Actions** as its source, and
+**Settings → Environments → github-pages → Deployment branches and tags** must
+allow the branches you want to publish (choose **No restriction** to permit
+any selected branch). A `master`-only environment rule prevents PR branches
+from deploying even when the workflow itself allows them.
 
 To build locally from the repository root:
 

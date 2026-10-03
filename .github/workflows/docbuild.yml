@@ -7,7 +7,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: docs-${{ github.ref }}
+  # All branches publish to the same site; the latest requested run wins.
+  group: pages
   cancel-in-progress: true
 
 jobs:
@@ -40,7 +41,6 @@ jobs:
         path: docs/_build/html
 
   deploy:
-    if: github.ref == 'refs/heads/master'
     needs: build
     runs-on: ubuntu-latest
     permissions:
