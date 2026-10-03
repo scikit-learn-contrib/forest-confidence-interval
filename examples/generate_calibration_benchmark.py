@@ -6,7 +6,7 @@ import time
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from sklearn.datasets import fetch_california_housing, load_diabetes, load_breast_cancer, make_classification, make_regression
+from sklearn.datasets import fetch_california_housing, load_diabetes, load_breast_cancer, load_wine, make_classification, make_regression
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier, BaggingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
@@ -44,6 +44,9 @@ def get_datasets():
     # 6. Synthetic Reg
     X_sr, y_sr = make_regression(n_samples=1000, n_features=10, noise=0.1, random_state=42)
     datasets['Synthetic Reg'] = (X_sr, y_sr, 'regression')
+
+    wine = load_wine()
+    datasets['Wine'] = (wine.data, wine.target, 'classification')
     
     return datasets
 
@@ -74,54 +77,63 @@ def run_benchmark(output_dir=None):
         ref_model = model_class(n_estimators=2000, random_state=42, n_jobs=-1)
         ref_model.fit(X_train, y_train)
         
-        # Calculate reference variance using inbag
+        # Keep each probability's calibration separate; reuse fitted forests.
+        class_indices = ([None] if task == 'regression' else
+                         [1] if len(ref_model.classes_) == 2 else
+                         list(range(len(ref_model.classes_))))
         inbag_ref = fci.calc_inbag(X_train.shape[0], ref_model)
-        ref_var = fci.random_forest_error(ref_model, X_train.shape, X_test, inbag=inbag_ref, calibrate=False)
-        if output_dir is not None:
-            plots.append(plot_prediction_error(
-                name, ref_model, X_test, y_test, ref_var, output_dir))
-        ref_var = np.maximum(ref_var, 0) # reference is clipped to positive
+        reference = {}
+        for k in class_indices:
+            label = name if k is None else f"{name} class {ref_model.classes_[k]}"
+            ref_var = fci.random_forest_error(
+                ref_model, X_train.shape, X_test, inbag=inbag_ref,
+                calibrate=False, class_index=k)
+            if output_dir is not None:
+                plots.append(plot_prediction_error(
+                    label, ref_model, X_test, y_test, ref_var, output_dir,
+                    class_index=k))
+            reference[k] = (label, np.maximum(ref_var, 0))
         del inbag_ref, ref_model
-        
+
         for n_trees in tree_counts:
-            print(f"  Trees: {n_trees}")
+            print(f"  Trees: {n_trees}", flush=True)
             model = model_class(n_estimators=n_trees, random_state=42, n_jobs=-1)
             model.fit(X_train, y_train)
             inbag = fci.calc_inbag(X_train.shape[0], model)
-            
-            var_uncal = fci.random_forest_error(model, X_train.shape, X_test, inbag=inbag, calibrate=False)
-            var_cal = fci.random_forest_error(model, X_train.shape, X_test, inbag=inbag, calibrate=True)
-            
-            neg_rate = np.mean(var_uncal < 0) * 100
-            
-            var_uncal_clipped = np.maximum(var_uncal, 0)
-            rmse_uncal = rmse(ref_var, var_uncal_clipped)
-            rmse_cal = rmse(ref_var, var_cal)
-            
-            rel_imp = ((rmse_uncal - rmse_cal) / rmse_uncal) * 100
-            
-            results.append({
-                'Dataset': name,
-                'Trees': n_trees,
-                'Neg Rate (Uncal)': f"{neg_rate:.1f}%",
-                'Var RMSE (Uncal)': f"{rmse_uncal:.3f}" if rmse_uncal < 10 else f"{rmse_uncal:.1f}",
-                'Var RMSE (Cal)': f"{rmse_cal:.3f}" if rmse_cal < 10 else f"{rmse_cal:.1f}",
-                'Relative Improvement': f"{rel_imp:.1f}%"
-            })
-            
+            for k, (label, ref_var) in reference.items():
+                var_uncal = fci.random_forest_error(
+                    model, X_train.shape, X_test, inbag=inbag,
+                    calibrate=False, class_index=k)
+                var_cal = fci.random_forest_error(
+                    model, X_train.shape, X_test, inbag=inbag,
+                    calibrate=True, class_index=k)
+                neg_rate = np.mean(var_uncal < 0) * 100
+                rmse_uncal = rmse(ref_var, np.maximum(var_uncal, 0))
+                rmse_cal = rmse(ref_var, var_cal)
+                rel_imp = ((rmse_uncal - rmse_cal) / rmse_uncal * 100
+                           if rmse_uncal > 0 else np.nan)
+                results.append({
+                    'Dataset': label,
+                    'Trees': n_trees,
+                    'Neg Rate (Uncal)': f"{neg_rate:.1f}%",
+                    'Var RMSE (Uncal)': f"{rmse_uncal:.3f}" if rmse_uncal < 10 else f"{rmse_uncal:.1f}",
+                    'Var RMSE (Cal)': f"{rmse_cal:.3f}" if rmse_cal < 10 else f"{rmse_cal:.1f}",
+                    'Relative Improvement': f"{rel_imp:.1f}%"
+                })
+
     print("\nBenchmark Results:")
     print("-" * 110)
     print(f"{'Dataset':<20} | {'Trees':<6} | {'Neg Rate (Uncal)':<16} | {'Var RMSE (Uncal)':<16} | {'Var RMSE (Cal)':<16} | {'Relative Improvement'}")
     print("-" * 110)
     for r in results:
-        dataset_name = r['Dataset'] if r['Trees'] == 50 else ""
+        dataset_name = r['Dataset']
         print(f"{dataset_name:<20} | {r['Trees']:<6} | {r['Neg Rate (Uncal)']:<16} | {r['Var RMSE (Uncal)']:<16} | {r['Var RMSE (Cal)']:<16} | {r['Relative Improvement']}")
     print("-" * 110)
 
     # Also output RST format for easy copy-paste
     print("\nRST Table format:")
     for r in results:
-        dataset_name = r['Dataset'] if r['Trees'] == 50 else ""
+        dataset_name = r['Dataset']
         print(f"   * - {dataset_name}")
         print(f"     - {r['Trees']}")
         print(f"     - {r['Neg Rate (Uncal)']}")
@@ -147,12 +159,15 @@ def write_table(results, path):
     path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
-def plot_prediction_error(name, model, X_test, y_test, variance, output_dir):
+def plot_prediction_error(name, model, X_test, y_test, variance, output_dir,
+                          class_index=None):
     from matplotlib import pyplot as plt
 
-    # Match forestci's estimand: the mean of individual tree predictions.
-    # For binary classification this is a vote fraction, not predict_proba.
-    prediction = np.mean([tree.predict(X_test) for tree in model], axis=0)
+    if class_index is None:
+        prediction = model.predict(X_test)
+    else:
+        prediction = model.predict_proba(X_test)[:, class_index]
+        y_test = (y_test == model.classes_[class_index]).astype(float)
     error = np.abs(y_test - prediction)
     half_width = 1.96 * np.sqrt(np.maximum(variance, 0))
     if not (np.isfinite(error).all() and np.isfinite(half_width).all()):
@@ -195,10 +210,13 @@ def gallery_comparisons(auto_mpg, output_dir):
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=test_size, random_state=42)
         model.fit(X_train, y_train)
+        class_index = 1 if isinstance(model, RandomForestClassifier) else None
         variance = fci.random_forest_error(
-            model, X_train.shape, X_test, calibrate=False)
+            model, X_train.shape, X_test, calibrate=False,
+            class_index=class_index)
         plots.append(plot_prediction_error(
-            name, model, X_test, y_test, variance, output_dir))
+            name, model, X_test, y_test, variance, output_dir,
+            class_index=class_index))
     return plots
 
 

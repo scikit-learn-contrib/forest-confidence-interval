@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add opt-in class-probability IJ variance via `class_index`, preserving binary
+  vote-fraction behavior and warning on legacy multiclass hard-label variance.
+  Add Wine multiclass examples and per-class calibration/error diagnostics.
+
 - Remove duecredit integration and preserve scientific citations in docstrings.
 - Remove unused coverage configuration and the obsolete root GitHub Pages marker.
 
