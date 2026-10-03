@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove duecredit integration and preserve scientific citations in docstrings.
+
 - Add optional progress reporting for memory-constrained variance
   calculations.
 
