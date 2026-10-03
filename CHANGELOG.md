@@ -8,6 +8,9 @@
 - Improvement of calibration method, with proper documentation and
   six benchmarks.
 
+- fix `inbag[0:n_trees]` improperly trimming the matrix in the case 
+  n_train > n_trees, for the calculation of the bias correction
+
 ## 0.8 (2026-07-25)
 
 The main feature of this release is compatibility with scikit-learn 1.9.
