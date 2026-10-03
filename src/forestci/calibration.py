@@ -4,31 +4,19 @@ Calibration based on empirical Bayes estimation [Efron2014]_.
 This calibration procedure can be useful when the number of trees in the
 random forest is small.
 
+References
+----------
+.. [Efron2014] B. Efron. "Two modeling strategies for empirical Bayes
+   estimation", Statistical Science, vol. 29, no. 2, pp. 285-301, 2014.
+
 """
 import warnings
 import numpy as np
 from scipy.optimize import minimize
 from scipy.signal import fftconvolve
 from scipy.stats import norm
-from .due import _due, _BibTeX
 
 __all__ = ("gfit", "gbayes", "calibrateEB")
-
-
-_due.cite(_BibTeX("""
-@ARTICLE{Wager2014-wn,
-  title       = "Two modeling strategies for empirical Bayes estimation.",
-  author      = Efron, Bradley
-  journal     = "Stat. Sci.",
-  volume      =  29,
-  number      =  2,
-  pages       = "285--301",
-  month       =  feb,
-  year        =  2014,}"""),
-          description=("Confidence Intervals for Random",
-          " Forests: The Jackknife and the Infinitesimal",
-                       "Jackknife"),
-          path='forestci')
 
 
 def gfit(X, sigma, p=2, nbin=1000, unif_fraction=0.1):
@@ -166,7 +154,7 @@ def gbayes(x0, g_est, sigma):
 
 def calibrateEB(variances, sigma2):
     """
-    Calibrate noisy variance estimates with empirical Bayes.
+    Calibrate noisy variance estimates with empirical Bayes [Efron2014]_.
 
     Parameters
     ----------
