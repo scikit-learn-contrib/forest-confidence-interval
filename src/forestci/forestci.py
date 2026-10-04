@@ -274,7 +274,8 @@ def _centered_prediction_forest(forest, X_test, y_output=None, class_index=None)
         # up to sign, rather than differing through subtraction roundoff.
         probability_index = 1 if len(forest.classes_) == 2 else class_index
         pred = np.array([
-            tree.predict_proba(X_test)[:, probability_index] for tree in forest
+            tree.predict_proba(X_test)[:, probability_index].copy()
+            for tree in forest
         ])
     if 'n_outputs_' in dir(forest) and forest.n_outputs_ > 1:
         pred = pred[:,:,y_output]
